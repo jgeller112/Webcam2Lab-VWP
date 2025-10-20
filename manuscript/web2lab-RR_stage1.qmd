@@ -1,0 +1,191 @@
+---
+title: "Bringing Sexy (Webcam Eye-tracking) Back into the lab"
+# If blank, the running header is the title in 
+running-head: "Webcam eye-tracking in lab"
+# Set names and affiliations.
+# It is nice to specify everyone's orcid, if possible.
+# There can be only one corresponding author, but declaring one is optional.
+author:
+  - name: Jason Geller
+    corresponding: true
+    orcid: 0000-0002-7459-4505
+    email: drjasongeller@gmail.com
+    # Roles are optional. 
+    # Select from the CRediT: Contributor Roles Taxonomy https://credit.niso.org/
+    # conceptualization, data curation, formal Analysis, funding acquisition, investigation, 
+    # methodology, project administration, resources, software, supervision, validation, 
+    # visualization, writing, editing
+    roles:
+      - Conceptualization
+      - Writing
+      - Data curation
+      - Editing
+      - Software
+      - Formal analysis
+    affiliations:
+      - id: 1
+        name: "Boston College"
+        department: Department of Psychology and Neuroscience
+        address: Mcguinn Hall 405
+        city: Chestnut Hill
+        region: MA
+        country: USA
+        postal-code: 02467-9991
+
+  - name: João Veríssimo
+    orcid: 0000-0002-1264-3017
+    roles:
+      - Editing
+      - Formal analysis
+    affiliations: 
+      - id: 2
+        name: "University of Lisbon"
+        department: School of Arts and Humanities
+  - name: Julia Droulin
+    orcid: 0000-0002-9689-4189
+    roles: 
+      - Editing
+      - Validation
+      - Formal analysis
+    affiliations:
+     - id: 3
+       name: "Univetsity of North Carolina - Chapel Hill"
+       department: Speech and Hearing Divison
+author-note:
+  status-changes: 
+    affiliation-change: ~
+    deceased: ~
+  disclosures:
+    # Example: This study was registered at X (Identifier Y).
+    # Acknowledge and cite data/materials to be shared.
+    data-sharing: Data, code, and materials for this manuscript can be found at  https://osf.io/6sy7k/. 
+    related-report: ~
+    conflict-of-interest: The authors have no conflicts of interest to disclose.
+    authorship-agreements: ~
+abstract: "Webcam-based eye-tracking offers a scalable and accessible alternative to traditional lab-based systems. While recent studies demonstrate that webcam eye-tracking can replicate canonical effects across domains such as language, memory, and decision-making, questions remain about its precision and reliability. In particular, spatial accuracy, temporal resolution, and attrition rates are often poorer than those observed with research-grade systems, raising the possibility that environmental and hardware factors introduce substantial noise. The present registered report directly tests this hypothesis by bringing webcam eye-tracking back into a controlled laboratory setting. In Experiment 1, we examine the effect of webcam quality (high vs. low) in a single word Visual World Paradigm (VWP) task, testing whether higher-quality webcams yield stronger competition effects, earlier effect onsets, and reduced attrition. In Experiment 2, we assess the impact of head stabilization (chinrest vs. no chinrest) under identical environmental conditions. Together, these studies isolate the causal influence of hardware and movement on webcam eye-tracking data quality. Results will inform a more methodological understanding of webcam-based eye-tracking, clarifying whether its current limitations are intrinsic to the technology or can be mitigated through improved hardware and experimental control."
+
+keywords: [Webcams, Eye-tracking, VWP, Lab, Competition, Spoken word recognition]
+authornote: |
+  Created with Quarto {{< version >}} and *preprint-typst* 
+floatsintext: true
+numbered-lines: true
+bibliography: "references.bib"
+suppress-title-page: false
+link-citations: false
+mask: false
+masked-citations:
+draft-date: false
+lang: en
+language: 
+  citation-last-author-separator: "and"
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+  email: "drjasongeller@gmail.com"
+  csl: https://www.zotero.org/styles/apa
+  title-block-author-note: "Author Note"
+  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+format:
+  preprint-typst:
+    wordcount: true
+    line-number: true
+  
+execute: 
+  echo: false
+  warning: false
+  message: false
+  fig-align: "center"
+  tbl-align: "center"
+  keep-with-next: true
+  code-overflow: wrap
+  cache: true
+  ft-align: "center"
+  out-width: 50%
+  fig-dpi: 500
+
+knitr:
+  opts_chunk: 
+    dev: "ragg_png"
+---
+
+Online experimentation in the behavioral sciences has advanced considerably since its introduction at the Society for Computers in Psychology (SCiP) conference in Chicago, IL, in the mid-1990s [@reips2021], and its use has grown substantially in the years since. One methodological domain that has shown particular promise in moving online is eye tracking. Traditionally, eye-tracking studies required controlled laboratory settings equipped with specialized and costly hardware—a process that is both resource- and time-intensive. More recently, however, a growing body of research has shown that eye tracking can be successfully adapted to online environments [e.g., @bogdan2024; @bramlett2024; @özsoy2023; @prystauka2024; @slim2023; @slim2024; @vandercruyssen2023; @vos2022; @jamesWhatParadigmsCan2025; @yangWebcambasedOnlineEyetracking2021]. By leveraging standard webcams, researchers can now record eye movements remotely, making it possible to collect data from virtually any location at any time. This shift not only enhances scalability but also broadens access to more diverse and representative participant samples.
+
+Webcam-based eye tracking is straightforward to implement for research purposes. It typically requires only a standard computing device—such as a laptop, desktop computer, tablet, or smartphone—equipped with a built-in or external webcam. Data collection is conducted through a web browser running specialized software that records and estimates eye movements in real time. The accessibility of webcam eye tracking has been greatly enhanced by its integration into several popular experimental platforms, including Gorilla [@Anwyl-Irvine2020], PsychoPy/Psycho[@Peirce2019], jsPsych [@de2015] , and PCIbex ([@zehr2022].
+
+To reliably estimate where users are looking, webcam-based eye tracking typically relies on appearance-based methods, which infer gaze direction directly from visual features of the eye region (e.g., pupil and iris appearance). Recent work has extended these methods using deep learning to learn gaze–appearance mappings directly from data [e.g., @Kaduk2024; @saxenaDeepLearningModels2024]. This contrasts with research-grade eye trackers, which use model-based algorithms combining infrared illumination with geometric modeling of the pupil and corneal reflections [@chengAppearancebasedGazeEstimation2024].
+
+The most widely used library for webcam eye tracking is WebGazer.js [@papoutsakiWebGazerScalableWebcam2016a; @patterson2025]. WebGazer.js is an open-source JavaScript library that performs real-time gaze estimation using standard webcams. It leverages computer vision techniques to detect the face and eyes, extract image features, and map these features onto known screen coordinates during a brief calibration procedure. Once trained, gaze locations on the screen are estimated via ridge regression [@papoutsakiWebGazerScalableWebcam2016a].
+
+\
+Although webcam eye-tracking is still relatively new, validation efforts are steadily accumulating and the results are encouraging. Researchers have successfully applied webcam-based methods to domains such as language [e.g., @bramlettArtWranglingWorking2025; @prystauka2024; @gellerLanguageBordersStepbystep2025f], judgment and decision-making [@yangWebcambasedOnlineEyetracking2021], and memory [@jamesWhatParadigmsCan2025] Overall, these studies replicate canonical effects and show strong convergence with findings from traditional lab-based eye-tracking systems.
+
+However, there are a few shortcomings to web-based eye-tracking. First, effect sizes are often smaller than in lab-based studies (Bogdan et al., 2024; Degen et al., 2021; Kandel & Snedeker, 2024; Slim et al., 2024; Slim & Hartsuiker, 2022; Van der Cruyssen et al., 2024), which typically requires larger samples to achieve comparable power. Second, relative to research-grade eye-trackers, spatial and temporal precision are poorer: webcam approaches can commonly yield spatial accuracy of roughly 4° [@semmelmann2018] and temporal resolution can range from 50 ms-1000 ms [@semmelmann2018; @slim2024; @slim2023; @gellerLanguageBordersStepbystep2025f]. These constraints make webcam eye-tracking less suitable for research that requires fine-grained spatial or temporal fidelity—for example, designs with many areas of interest (AOI) distributed across the screen  or small AOIs [AOIs; @jamesWhatParadigmsCan2025], or tasks requiring precise moment-to-moment processing [@slim2024]. Lastly, webcam eye-tracking yields high attrition rates. Looking at a number of webcam eye-tracking studies @patterson2025 found the attrition rate was on average 13%, with some studies reporting attraition as higher as 75% [@gellerLanguageBordersStepbystep2025f].
+
+An open question is whether the limitations of web-based eye-tracking stem from the WebGazer.js algorithm itself or from environmental and hardware constraints—and, importantly, whether future improvements can address these issues. On the algorithm side of things, recent work [@jamesWhatParadigmsCan2025] showed that modifying [WebGazer.js](http://webgazer.js) insofar that the sampling rate is polled consistently and timestamps are aligned to acquisition (when data are received) rather than at completion (when processing finishes) markedly improves temporal resolution. Implementations of these changes in online experiment platforms (e.g., Gorilla and jsPsych) have brought webcam eye-tracking studies closer to the timing fidelity seen in lab-based eye-tracking. For instance, using the Gorilla platform observed a 50 ms timing difference between lab-based effects and online effects and Geller et al noted a 100 ms timing difference
+
+To our knowledge, no study has directly tested how environmental and hardware constraints impact webcam-based eye-tracking data. @slim2023 provided some evidence suggesting that hardware quality may underlie some of these limitations, reporting a positive correlation between webcam sample rate and calibration accuracy. Similarly, @gellerLanguageBordersStepbystep2025f found that participants who failed calibration more often reported using low-quality built-in webcams and working in suboptimal environments (e.g., natural lighting). Together, these findings suggest that both hardware and environmental factors may contribute to the increased noise commonly observed in online eye-tracking data.
+
+## Proposed Research
+
+To address environmental and technical sources of noise in webcam eye-tracking, we plan to bring participants into the lab to complete a Gorilla-hosted webcam task under standardized conditions. We will manipulate two factors across two experiments. Experiment 1 will vary webcam quality (high- vs. low-quality external cameras). Experiment 2 varies head stabilization (with vs. without a chinrest). All sessions will be conducted under standardized conditions: identical ambient lighting, fixed viewing distance, the same display/computer model, and controlled network settings. This design allows us to isolate the causal effects of hardware and movement on data quality. Our key questions are whether higher-quality webcams and reduced head movement decrease noise, thereby (a) increasing effect sizes, (b) yielding earlier onsets of established effects, and (c) reducing calibration failures/attrition rate. As  noted above
+
+To examine these factors, we replicate a paradigm widely used in psycholinguistics—the Visual World Paradigm [VWP; @cooper1974; @tanenhaus1995]. The VWP has been used quite successfully with webcam eye-tracking [@bramlett2024; @bramlettArtWranglingWorking2025; @gellerLanguageBordersStepbystep2025f; @prystauka2024]. While there are slight variations in how the paradigm is implemented [see @huettig2011], in the version most relevant to the current study, on each trial four images appear in one of four screen quadrants while a spoken word is played. Participants then select the picture that matched the utterance. Related to the current experiment, item sets are sometimes constructed so that the display contains a target (e.g., CARROT), a cohort competitor (CARRIAGE) , a rhyme competitor (PARROT), and an unrelated distractor (TADPOLE). A setup such as this allows one to examine how competition dynamics (i.e., cohort vs. unrelated items or rhyme vs. unrelated items) unfold over the time course of language processing [@colby2023]. Importantly, competition effects have previously been observed in webcam eye-tracking studies using a similar design [i.e., @gellerLanguageBordersStepbystep2025f] thus serve as good testing case herein.
+
+# Experiment 1: High quality webcam vs. low quality webcam
+
+@slim2023 and @gellerLanguageBordersStepbystep2025f observed a relationship between webcam quality and calibration accuracy. Building on this, Experiment 1 will test how webcam quality influences competition effects in a single-word  VWP/ Specifically, we ask whether a higher-quality webcam yields (a) a greater proportion of looks (i.e., stronger detectability of competition), (b) earlier emergence of the effect over time, and (c) lower attrition rates relative to a lower-quality webcam.
+
+## **Hypotheses**
+
+We hypothesize several effects related to competition, onset, and attrition.
+
+Competition Effects
+
+(H1a) Participants will show a competition effect, with more looks directed toward cohort competitors than unrelated distractors. (H1b) Webcam quality (high vs. low) will influence the overall proportion of looks, with higher-quality webcams detecting a greater number of looks. (H1c) There will be an interaction between webcam quality and competition, such that the magnitude of the competition effect will be larger in the high-quality webcam condition than in the low-quality condition.
+
+Onset Effects
+
+(H2a) Looks to cohort competitors will emerge earlier than looks to unrelated distractors. (H2b) The onset of looks will occur earlier in the high-quality webcam condition than in the low-quality condition. (H2c) Consequently, the competition effect will emerge sooner in the high-quality webcam condition compared to the low-quality condition.
+
+Attrition (H3) Attrition rates will be lower in the high-quality webcam condition than in the low-quality webcam condition.
+
+# Method
+
+## Sampling Goal
+
+We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the webgazeR package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and low-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the low-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition_num × webcam_group interaction—was refit to each simulated dataset (5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. Analysis scripts are available at \[link to be inserted/blinded for review\]. Results indicated that a total of **35 participants per group (N = 70)** would provide approximately **90% power** to detect the hypothesized reduction in the cohort effect and overall fixation rate under low-quality webcam conditions. We will therefore recruit participants until we have 35 in each group (N = 70 total). For the calibration analysis (see below), all participants who enter the study will be included.
+
+## Materials
+
+### VWP
+
+#### Items
+
+Stimuli were adapted from @colby2023 . Each set comprised four images: a target, an onset (cohort) competitor, a rhyme competitor, and an unrelated item (e.g., rocket, rocker, pocket, bubble). For the webcam study, we used 30 sets (15 monosyllabic, 15 bisyllabic).
+
+Within each set, only the target and its onset competitor served as auditory targets once each, yielding two trial types: TCRU (target–cohort–rhyme–unrelated) and TCUU (target–cohort–unrelated–unrelated). This resulted in 60 trials total (30 sets × 2 targets per set). A MATLAB script generated a unique randomized list per participant, pseudo-randomizing display positions so that each image type was approximately equally likely to appear in any quadrant across subjects.
+
+All 120 images were from a commercial clipart database that were selected by a small focus group of students and edited to have a cohesive style using a standard lab protocol [@mcmurray2010]
+
+### Auditory Stimuli
+
+Auditory stimuli were recorded by a female monolingual speaker of English in a sound-attenuated room sampled at 44.1 kHz. Auditory tokens were edited to reduce noise and remove clicks. They were then amplitude normalized to 70 dB SPL. . All .wav files were converted to .mp3 for online data collection. 
+
+## Experimental Setup and Procedure
+
+All tasks will be completed in a single session lasting approximately 30 minutes. The sequence of tasks will be fixed: (1) informed consent, (2) the spoken-word Visual World Paradigm (VWP) task, and (3) a demographic questionnaire.
+
+The experiment will be programmed and administered in Gorilla [@Anwyl-Irvine2020] and conducted on a 23-inch Dell U2312HM monitor (1920 × 1080 px). Participants will wear Sony MDR-7506 headphones to ensure consistent audio presentation and minimize background noise.
+
+To manipulate recording quality, two webcams will be used:
+
+-   High-quality condition: A Logitech Brio webcam will record in 4 K resolution (up to 4096 × 2160 px) with a 90° field of view, providing high-fidelity video suitable for accurate gaze estimation and pupil tracking.
+
+-   Standard-quality condition: A Logitech C270 HD webcam will record in 720 p resolution, producing video comparable to that of a typical laptop webcam, thereby simulating lower-quality online recordings.
+
+Both webcams will be mounted in a fixed position above the monitor to maintain consistent framing across participants. Lighting will be standardized to ensure uniform image quality across all sessions.
+
+At the start of the study, participants will receive information about the experiment and provide informed consent. They will then adjust their headphone volume to a comfortable level while sample noise plays.
+
+Before the main task, an instructional video will demonstrate the calibration procedure. Calibration will occur twice—once at the start and again after 30 trials—with up to three attempts allowed each time. In each calibration phase, participants will view nine calibration targets and five validation points, looking directly at each target as instructed. Participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. Eye movements are recorded continuously during each trials. Following the main VWP task, participants will complete a brief demographic questionnaire, after which they will be thanked for their participation.
