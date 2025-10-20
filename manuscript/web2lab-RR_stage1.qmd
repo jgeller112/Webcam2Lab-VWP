@@ -189,3 +189,114 @@ Both webcams will be mounted in a fixed position above the monitor to maintain c
 At the start of the study, participants will receive information about the experiment and provide informed consent. They will then adjust their headphone volume to a comfortable level while sample noise plays.
 
 Before the main task, an instructional video will demonstrate the calibration procedure. Calibration will occur twice—once at the start and again after 30 trials—with up to three attempts allowed each time. In each calibration phase, participants will view nine calibration targets and five validation points, looking directly at each target as instructed. Participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. Eye movements are recorded continuously during each trials. Following the main VWP task, participants will complete a brief demographic questionnaire, after which they will be thanked for their participation.
+
+## Data Preprocessing and Exclusions
+
+We will follow guidelines outlined in @gellerLanguageBordersStepbystep2025f. At the participant level, individuals with overall task accuracy below 80% will be excluded. At the trial level, only correct-response trials (accuracy = 1) will be retained. Reaction times (RTs) outside ±2.5 SD of the participant-level distribution (computed within condition) will be discarded.
+
+For eye-tracking preprocessing we will use the {webgazeR} package in R that contains helper functions to preprocess webcam eye-tracking data. All webcam eye-tracking files will be merged. Data quality will be screened via sampling-rate checks with very low-frequency recordings (e.g., \< 5 Hz) by subject and trial excluded (**Bramlett & Wiener, 2024)**. We will quantify out-of-bounds (OOB) samples—gaze points outside the normalized screen (1,1)—and remove participants and trials with excessive OOB data ( \> 30%). OOB samples will be discarded prior to analysis. In addition, Gorilla provides calibration/quality metrics (“convergence” and “confidence,” both 0–1); trials with convergence \< 0.5 or confidence \> 0.5 will be excluded.
+
+Areas of Interest (AOIs) will be defined in normalized coordinates as the four screen quadrants, and gaze samples will be assigned to AOIs. To create a uniform time base, data will be resampled into 100-ms bins. Trial time will be aligned to the actual stimulus onset by taking the audio onset provided by Gorilla. We then subtract 200 ms to approximate saccade programming () and execution latency and an additional 100 ms due to silence prefixed to the audio recording. 
+
+For analysis, within each participant × trial × time bin we will compute, for each AOI, the number of valid gaze samples in that AOI (“successes”) and the total number of valid samples in the bin (“trials”). These binomial counts (or their proportions) will serve as inputs to the statistical models and summaries; subject- and condition-level aggregates will be obtained by averaging across trials for descriptive plots.
+
+## Analysis Plan
+
+### Competition and Onset Effects
+
+To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; Wood, 2017). GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP and eye-tracking data/inetsnive longitidudnianl data in general (Brown-Schmidt et al., 2025; Hotteiger, 2025’ Veríssimo & Sol, 2025). These models capture nonlinear effects by fitting smoothing splines—or “wiggles”—to the data using data-driven, machine-learning-based methods. This approach reduces the risk of overfitting and eliminates the need to prespecify polynomial terms, as required in traditional growth curve models (Mirman, 2012). Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition. 
+
+Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the **{mgcv}** package (Wood, 2023). For visualization, we will employ the plot_smooth() and plot_diff() functions from the **{itsadug}** package (Rij et al., 2022), and use the **{onsets}** package to examine onset latencies. The dependent variable consisted of gaze counts to  cohort and unrelated pictures, for each participant and in each 100 ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
+
+The model will include fixed effects of webcam type (effects-coded: high = 0.5, low = –0.5) and item type (effects-coded: cohort = 0.5, unrelated = –0.5), along with their interaction, capturing the overall (parametric) effects. To model how webcam type modulates the cohort effect over time, the two factors will be combined into a single four-level factor. Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated categorically. This specification allows the model to capture both the overall differences in fixation proportions between conditions (via the parametric component) and the dynamic temporal patterns unique to each condition (via the smooth terms), while properly accounting for within-subject dependencies. Below is some sample model syntax we will use to fit the data. Note that we will be fitting an intiral model to get autocorrelation for the model. Although larger timebins suffer less from autocorrelation, it does not entirely get rid of it, and we want to make sure we capture it in the model.
+
+```{r}
+#| eval: false
+# quick rho estimate (fit once without AR to get residual ACF ~ lag1)
+
+m0   <- bam(cbind(fix, fail) ~ 1 + cond_c*cam_c +
+
+              s(time, k = 10) +
+
+              s(time, by = condfactor, k = 10) +      # condition-specific curves interaction
+
+              s(participant, bs = "re") +        # random intercepts
+
+              s(time, participant, by=conditionfactor,  bs = "re"),  # subject smooths
+
+            family = binomial(), method = "fREML",
+
+            discrete = TRUE, data = dat, na.action = na.omit, select = TRUE)
+
+
+
+rho  <- acf(residuals(m0, type = "pearson"), plot = FALSE)$acf[2]
+
+
+
+# final model with AR(1) to handle within-series autocorrelation
+
+m1 <- bam(cbind(fix, fail) ~ 1 + cond_c*cam_c +
+
+              s(time, k = 10) +
+
+              s(time, by = condfactor, k = 10) +      # condition-specific curves interaction
+
+              s(participant, bs = "re") +        # random intercepts
+
+              s(time, participant, by=conditionfactor,  bs = "re"),  # subject smooths
+
+            family = binomial(), method = "fREML",
+
+            discrete = TRUE, data = dat, na.action = na.omit, select = TRUE), 
+
+          discrete = TRUE, rho = rho, AR.start = dat$AR.start,
+
+          data = dat, na.action = na.omit, select = TRUE)
+
+summary(m1)
+
+```
+
+## Onset timing
+
+```{r}
+#| eval: false
+#| 
+# Obain onsets in each condition (and their differences)
+
+(onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
+
+                          time_var = "time",           # Name of time variable
+
+                          by_var = "conditionfactor",        # Name of condition/group variable
+
+                          difference = T,              # Obtain differences between onsets
+
+                          n_samples = 10000,           # Large number of samples (less variable results)
+
+                          seed = 1,                    # Random seed for reproducibility
+
+                          silent = T))                 # Cleaner output in documentation
+
+
+```
+
+## Calibration
+
+To examine whether webcam affects calibration rejection, we will fit a logistic regression model using the glm function. 
+
+```{r}
+glm(calibration ~ webcam, family = binomial(link = "logit"))
+```
+
+# Experiment 2: Chin rest vs. no chin rest
+
+In Experiment 2, using the high quality webcam, we will examine how participant head movement affects competition effects.  We hypothesize several effects related to competition, onset, and attrition. **Competition Effects:** (H1a) Participants will show a competition effect, with more looks directed toward cohort competitors than unrelated distractors. (H1b) Use of a chin rest (vs. no chin rest) is not expected to influence the overall proportion of looks. However, (H1c) the magnitude of the competition effect is predicted to be larger in the chin rest condition than in the no chin rest condition. **Onset Effects:** (H2a) Looks to cohort competitors will emerge earlier than looks to unrelated distractors. (H2b) The onset of looks is expected to occur earlier in the chin rest condition than in the no chin rest condition. (H2c) Accordingly, the competition effect should emerge sooner in the chin rest condition compared to the no chin rest condition. **Attrition:** (H3) Attrition rates are expected to be lower in the chin rest condition compared to the no chin rest condition.
+
+## Sampling goal, materials , procedure
+
+The sampling goal, materials, and procedure are the same as Experiment 1. The difference is whether participants use a chin rest or not. 
+
+\
+\
