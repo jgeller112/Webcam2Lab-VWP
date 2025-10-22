@@ -210,27 +210,30 @@ For analysis, within each participant × trial × time bin we will compute, for 
 
 To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; Wood, 2017). GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel]. These models capture nonlinear effects by fitting smoothing splines—or “wiggles”—to the data using data-driven, machine-learning-based methods. This approach reduces the risk of under and over-fitting and eliminates the need to prespecify polynomial terms, as required in traditional growth curve models [@mirman]. Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
-Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the **{mgcv}** package [@Wood2017]. For visualization, we will employ the `plot_smooth()` and `plot_diff()` functions from the **{itsadug}** package [@itsadug], and use the **{onsets}** package [@verissimo2025novel] to examine onset latencies. The dependent variable consisted of gaze counts to cohort and unrelated pictures, for each participant and in each 100 ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
+Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {**mgcv}** package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], and use the **{onsets}** package [@verissimo2025novel] to examine onset latencies. The dependent variable consisted of gaze counts to cohort and unrelated pictures, for each participant and in each 100 ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
 
-The model will include fixed effects of webcam type (effects-coded: high = 0.5, low = –0.5) and item type (effects-coded: cohort = 0.5, unrelated = –0.5), as well as their interaction, capturing the overall (parametric) effects. To examine how webcam type modulates the cohort effect over time, these two factors will be combined into a single four-level factor. Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated as a categorical variable. This specification allows the model to capture both the overall differences in fixation proportions between conditions (via the parametric component) and the dynamic, time-varying patterns unique to each condition (via the smooth terms), while appropriately accounting for within-subject dependencies. We will first fit an initial model to estimate the autocorrelation parameter, which will then be included in the final model. Although using larger time bins reduces autocorrelation, it does not eliminate it entirely, and we aim to ensure that any remaining temporal dependencies are properly modeled.
+We will fit a model including parametric terms for webcam type (effects-coded: high = 0.5, low = –0.5), item type (effects-coded: cohort = 0.5, unrelated = –0.5), and their interaction, capturing the overall (time-independent) effects. To examine how webcam type moderates the cohort effect over time, these two factors will also be combined into a single four-level factor. [^1]Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated as a categorical variable. To account for individual differences, we include random smooths by participant and random smooths for time by participant for each level of condition. This specification allows the model to capture (a) overall differences in fixation proportions between conditions (via the parametric terms), (b) dynamic, time-varying trajectories unique to each condition (via the smooth terms), and (c) participant-specific deviations from these group-level patterns (via the random smooths). While it is common to specify the maximal model [@barr2013], these can be costly when fitting GAMMS [@verissimo2025novel].
 
-::: callout-important
-Why dont we model random wiggliness bs="fs"?)
-:::
+[^1]: GAMs are inherently additive, meaning that interactions between nonlinear (smooth) terms cannot be estimated directly. To evaluate time-varying interactions or simple effects, it is therefore standard practice to combine relevant factors into a single composite factor and fit condition-specific smooths [@coretta2024].
+
+To account for autocorrelation in the residuals, we will first fit the model without an autoregressive term in order to estimate the autocorrelation parameter (ρ). We will then re-fit the model including a first-order autoregressive process (AR(1)) to properly model temporal dependencies. Although using larger time bins can reduce autocorrelation, it does not eliminate it entirely, so explicitly modeling residual autocorrelation ensures valid statistical inference. Template code to fit the code is included below.
 
 ```{r}
 #| eval: false
 # quick rho estimate (fit once without AR to get residual ACF ~ lag1)
 
+dat$cond4 <- interaction(dat$condition, dat$webcam, drop = TRUE)
+
+
 m0   <- bam(cbind(fix, fail) ~ 1 + cond_c*cam_c +
 
-              s(time, k = 10) +
+       s(time, k = 10) +
 
-              s(time, by = condfactor, k = 10) +      # condition-specific curves interaction
+              s(time, by = cond4 k = 10) +      # condition-specific curves interaction
 
               s(participant, bs = "re") +        # random intercepts
 
-              s(time, participant, by=conditionfactor,  bs = "re"),  # subject smooths
+              s(time, participant, by=cond4,  bs = "re"),  # random fucntional smooths for time/subject by cond
 
             family = binomial(), method = "fREML",
 
@@ -248,11 +251,11 @@ m1 <- bam(cbind(fix, fail) ~ 1 + cond_c*cam_c +
 
               s(time, k = 10) +
 
-              s(time, by = condfactor, k = 10) +      # condition-specific curves interaction
+              s(time, by = cond4, k = 10) +      # condition-specific curves interaction
 
               s(participant, bs = "re") +        # random intercepts
 
-              s(time, participant, by=conditionfactor,  bs = "re"),  # subject smooths
+              s(time, participant, by=cond4,  bs = "re"),  # subject smooths
 
             family = binomial(), method = "fREML",
 
@@ -273,9 +276,8 @@ summary(m1)
 
 (onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
 
-                          time_var = "time",           # Name of time variable
-
-                          by_var = "conditionfactor",        # Name of condition/group variable
+                          time_var = "time",           # Name of time variabl
+                       by_var = "conditionfactor",        # Name of condition/group variable
 
                           difference = T,              # Obtain differences between onsets
 
