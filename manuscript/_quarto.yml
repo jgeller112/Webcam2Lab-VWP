@@ -26,7 +26,8 @@ format:
     line-number: true
     include-before-body:
       - text: "#show <refs>: set par(hanging-indent: 1.4em)"
-  preprint-html: 
+  html: 
+    theme: cosmo
     toc: true
     mainfont: Fira Sans
     toc-depth: 2
