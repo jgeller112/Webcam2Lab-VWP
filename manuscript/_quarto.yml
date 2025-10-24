@@ -14,7 +14,7 @@ language:
   title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
-  csl: https://www.zotero.org/styles/apa
+  csl: apa.csl
 
 format:
 
