@@ -1,0 +1,26 @@
+project:
+  title: "Web 2 Lab - Stage 1 RR"
+  render:
+    - web2lab-RR_stage1.qmd
+
+site-url: "https://jgeller112.github.io/beta_regression_tutorial/"
+
+format:
+  preprint-typst:
+    wordcount: true
+    line-number: true
+    include-before-body:
+      - text: "#show <refs>: set par(hanging-indent: 1.4em)"
+  preprint-html: 
+    toc: true
+    toc-depth: 2
+    toc-title: "Manuscript Outline"
+    toc-location: right
+    code-tools: true
+    code-fold: true
+    code-summary: "Show R code"
+    execute:
+      echo: true
+
+comments:
+  hypothesis: true

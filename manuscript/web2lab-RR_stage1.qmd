@@ -86,14 +86,7 @@ language:
   title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
-format:
-  preprint-typst:
-    wordcount: true
-    line-number: true
-    include-before-body:
-      - text: "#show <refs>: set par(hanging-indent: 1.4em)"
 
-  
 execute: 
   echo: true
   eval: false
@@ -190,7 +183,7 @@ Both webcams will be mounted in a fixed position above the monitor to maintain c
 
 All tasks will be completed in a single session lasting approximately 30 minutes. The experiment will be programmed and administered in Gorilla [@Anwyl-Irvine2020]. Participants will be brought into a room in the Human Neuroscience Lab at Boston College and seated in front of a 23-inch Dell U2312HM monitor (1920 × 1080 px) approximately 65 cm from the screen. Audiotry information will be presented over Sony MDR-7506 headphones to ensure consistent audio presentation and minimize background noise. The experimental tasks will be fixed and presented in this order: informed consent, single word VWP, and a demographic questionnaire. The entire experiment can be viewed on Gorilla at this link:.
 
-Before the main task, an instructional video will demonstrate the calibration procedure. Calibration will occur twice—once at the start and again after 30 trials—with up to three attempts allowed each time. In each calibration phase, participants will view nine calibration targets and five validation points, looking directly at each target as instructed. Participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. Eye movements are recorded continuously during each trials. Following the main VWP task, participants will complete a brief demographic questionnaire, after which they will be thanked for their participation.
+Before the main task, an instructional video will demonstrate the calibration procedure. Calibration will occur twice—once at the start and again after 30 trials—with up to three attempts allowed each time. In each calibration phase, participants will view nine calibration targets and five validation points, looking directly at each target as instructed. Participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. Eye movements are recorded continuously during each . Following the main VWP task, participants will complete a brief demographic questionnaire, after which they will be thanked for their participation.
 
 ## Data Preprocessing and Exclusions
 
@@ -210,7 +203,7 @@ To analyze overall competition effects and onset latency, we will use generalize
 
 Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {**mgcv}** package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], and use the **{onsets}** package [@verissimo2025novel] to examine onset latencies. The dependent variable consisted of gaze counts to cohort and unrelated pictures, for each participant and in each 100 ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
 
-We will fit a model including parametric terms for webcam type (effects-coded: high = 0.5, standard = –0.5), item type (effects-coded: cohort = 0.5, unrelated = –0.5), and their interaction, capturing the overall (time-independent) effects. To examine how webcam type moderates the cohort effect over time, these two factors will also be combined into a single four-level factor. [^1]Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated as a categorical variable. To account for individual differences, we include random smooths by participant and random smooths for time by participant for each level of condition. This model specification allows the model to capture (a) overall differences in fixation proportions between conditions (via the parametric terms), (b) dynamic, time-varying trajectories unique to each condition (via the smooth terms), and (c) participant-specific deviations from these group-level patterns (via the random smooths). While it is common to specify maximal model [@barr2013], these can be costly when fitting GAMMS [@verissimo2025novel]. The current model specifications follows @verissimo2025novel. Effects will be judged as statistically significant if the *p* value is \< .05.
+We will fit a model including parametric terms for webcam type (effects-coded: high = 0.5, standard = –0.5), item type (effects-coded: cohort = 0.5, unrelated = –0.5), and their interaction, capturing the overall (time-independent) effects. To examine how webcam type moderates the cohort effect over time, these two factors will also be combined into a single four-level factor. [^1]Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated as a categorical variable. To account for individual differences, we include random smooths by participant and random smooths for time by participant for each level of condition. This model specification allows the model to capture (a) overall differences in fixation proportions between conditions (via the parametric terms), (b) dynamic, time-varying trajectories unique to each condition (via the smooth terms), and (c) participant-specific deviations from these group-level patterns (via the random smooths). While it is common to specify maximal model [@barr2013], these can be costly when fitting GAMMS [@verissimo2025novel]. The current model specifications follows @verissimo2025novel. All effects will be judged as statistically significant if the *p* value is \< .05.
 
 [^1]: GAMs are inherently additive, meaning that interactions between nonlinear (smooth) terms cannot be estimated directly. To evaluate time-varying interactions or simple effects, it is therefore standard practice to combine relevant factors into a single composite factor and fit condition-specific smooths [@coretta2024].
 
@@ -259,7 +252,7 @@ summary(m1)
 
 
 (onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
-                          time_var = "time",           # Name of time variabl
+                       time_var = "time",           # Name of time variabl
                  by_var = "conditionfactor",        # Name of condition/group variable
                           difference = T,              # Obtain differences between onsets
                           n_samples = 10000,           # Large number of samples (less variable results)
