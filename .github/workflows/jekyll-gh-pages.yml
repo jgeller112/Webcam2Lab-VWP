@@ -1,0 +1,88 @@
+# Render a Quarto .qmd and deploy the HTML to GitHub Pages
+name: Render and Deploy Quarto manuscript
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  QMD_PATH: manuscript/web2lab-RR_stage1.qmd
+  OUTDIR: public
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: false  # set true if you also render PDFs
+
+      # If you use R chunks inside the QMD, uncomment:
+      # - name: Set up R
+      #   uses: r-lib/actions/setup-r@v2
+      # - name: Restore R packages (optional)
+      #   if: hashFiles('**/renv.lock') != ''
+      #   run: |
+      #     Rscript -e 'if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")'
+      #     Rscript -e 'renv::restore(prompt = FALSE)'
+
+      - name: Render Quarto document
+        run: |
+          set -euo pipefail
+          quarto --version
+          test -f "$QMD_PATH" || { echo "::error::Missing $QMD_PATH"; exit 1; }
+          quarto render "$QMD_PATH" --to html
+
+      - name: Prepare site for deployment
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUTDIR"
+
+          HTML="${QMD_PATH%.qmd}.html"
+          STEM="$(basename "${HTML%.html}")"
+          SRC_DIR="$(dirname "$HTML")"
+
+          cp "$HTML" "$OUTDIR/index.html"
+
+          if [ -d "${SRC_DIR}/${STEM}_files" ]; then
+            cp -r "${SRC_DIR}/${STEM}_files" "$OUTDIR/"
+          fi
+          [ -f "${SRC_DIR}/${STEM}.pdf" ] && cp "${SRC_DIR}/${STEM}.pdf" "$OUTDIR/"
+          [ -f "${SRC_DIR}/${STEM}.docx" ] && cp "${SRC_DIR}/${STEM}.docx" "$OUTDIR/"
+          [ -d "${SRC_DIR}/Figures" ] && cp -r "${SRC_DIR}/Figures" "$OUTDIR/"
+
+          echo "Deployment folder contents:"
+          ls -lah "$OUTDIR"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.OUTDIR }}
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
