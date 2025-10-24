@@ -3,9 +3,24 @@ project:
   render:
     - web2lab-RR_stage1.qmd
 
-site-url: "https://jgeller112.github.io/beta_regression_tutorial/"
+site-url: "https://jgeller112.github.io/Webcam2Lab-VWP/"
+
+language: 
+  citation-last-author-separator: "and"
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+  email: "drjasongeller@gmail.com"
+  title-block-author-note: "Author Note"
+  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+  csl: https://www.zotero.org/styles/apa
 
 format:
+
+  preprint-docx:
+    output-file: web2lab-RR_stage1.docx
+
   preprint-typst:
     wordcount: true
     line-number: true
@@ -13,6 +28,7 @@ format:
       - text: "#show <refs>: set par(hanging-indent: 1.4em)"
   preprint-html: 
     toc: true
+    mainfont: Fira Sans
     toc-depth: 2
     toc-title: "Manuscript Outline"
     toc-location: right
@@ -21,6 +37,7 @@ format:
     code-summary: "Show R code"
     execute:
       echo: true
+
 
 comments:
   hypothesis: true

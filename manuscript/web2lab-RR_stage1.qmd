@@ -76,16 +76,18 @@ mask: false
 masked-citations:
 draft-date: false
 lang: en
+
 language: 
   citation-last-author-separator: "and"
   citation-masked-author: "Masked Citation"
   citation-masked-date: "n.d."
   citation-masked-title: "Masked Title"
   email: "drjasongeller@gmail.com"
-  csl: https://www.zotero.org/styles/apa
   title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+  csl: https://www.zotero.org/styles/apa
+
 
 execute: 
   echo: true
