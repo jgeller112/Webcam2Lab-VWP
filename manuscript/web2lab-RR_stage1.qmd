@@ -64,7 +64,7 @@ author-note:
     authorship-agreements: ~
 abstract: "Webcam-based eye-tracking offers a scalable and accessible alternative to traditional lab-based systems. While recent studies demonstrate that webcam eye-tracking can replicate canonical effects across domains such as language, memory, and decision-making, questions remain about its precision and reliability. In particular, spatial accuracy, temporal resolution, and attrition rates are often poorer than those observed with research-grade systems, raising the possibility that environmental and hardware factors introduce substantial noise. The present registered report directly tests this hypothesis by bringing webcam eye-tracking back into a controlled laboratory setting. In Experiment 1, we examine the effect of webcam quality (high vs. low) in a single word Visual World Paradigm (VWP) task, testing whether higher-quality webcams yield stronger competition effects, earlier effect onsets, and reduced attrition. In Experiment 2, we assess the impact of head stabilization (chinrest vs. no chinrest) under identical environmental conditions. Together, these studies isolate the causal influence of hardware and movement on webcam eye-tracking data quality. Results will inform a more methodological understanding of webcam-based eye-tracking, clarifying whether its current limitations are intrinsic to the technology or can be mitigated through improved hardware and experimental control."
 
-keywords: [Webcams, Eye-tracking, VWP, Lab, Competition, Spoken word recognition]
+keywords: [Webcam, Eye-tracking, VWP, Lab, Competition, Spoken word recognition]
 authornote: |
   Created with Quarto {{< version >}} and *preprint-typst* 
 floatsintext: true
