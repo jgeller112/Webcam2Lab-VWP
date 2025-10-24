@@ -124,43 +124,45 @@ The most widely used library for webcam eye tracking is WebGazer.js [@papoutsaki
 \
 Although webcam eye-tracking is still relatively new, validation efforts are steadily accumulating and the results are encouraging. Researchers have successfully applied webcam-based methods to domains such as language [e.g., @bramlettArtWranglingWorking2025; @prystauka2024; @gellerLanguageBordersStepbystep2025f], judgment and decision-making [@yangWebcambasedOnlineEyetracking2021], and memory [@jamesWhatParadigmsCan2025] Overall, these studies replicate canonical effects and show strong convergence with findings from traditional lab-based eye-tracking systems.
 
-However, there are a few shortcomings to web-based eye-tracking. First, effect sizes are often smaller than in lab-based studies (Bogdan et al., 2024; Degen et al., 2021; Kandel & Snedeker, 2024; Slim et al., 2024; Slim & Hartsuiker, 2022; Van der Cruyssen et al., 2024), which typically requires larger samples to achieve comparable power. Second, relative to research-grade eye-trackers, spatial and temporal precision are poorer: webcam approaches can commonly yield spatial accuracy of roughly 4° [@semmelmann2018] and temporal resolution can range from 50 ms-1000 ms [@semmelmann2018; @slim2024; @slim2023; @gellerLanguageBordersStepbystep2025f]. These constraints make webcam eye-tracking less suitable for research that requires fine-grained spatial or temporal fidelity—for example, designs with many areas of interest (AOI) distributed across the screen  or small AOIs [AOIs; @jamesWhatParadigmsCan2025], or tasks requiring precise moment-to-moment processing [@slim2024]. Lastly, webcam eye-tracking yields high attrition rates. Looking at a number of webcam eye-tracking studies @patterson2025 found the attrition rate was on average 13%, with studies reporting a considerable range around this [@gellerLanguageBordersStepbystep2025f; @prystauka2024].
+However, there are a few shortcomings to web-based eye-tracking. First, effect sizes are often smaller than in lab-based studies [@bogdan2024; @degen2021; @kandel2024; @slim2024; @slim2023; @vandercruyssen2023], which typically requires larger samples to achieve comparable power. Second, relative to research-grade eye-trackers, spatial and temporal precision are poorer: webcam approaches can commonly yield spatial accuracy of roughly 4° [@semmelmann2018] and temporal resolution can range from 50 ms-1000 ms [@semmelmann2018; @slim2024; @slim2023; @gellerLanguageBordersStepbystep2025f]. These constraints make webcam eye-tracking less suitable for research that requires fine-grained spatial or temporal fidelity—for example, designs with many areas of interest (AOI) distributed across the screen  or small AOIs [AOIs; @jamesWhatParadigmsCan2025], or tasks requiring precise moment-to-moment processing [@slim2024]. Lastly, webcam eye-tracking yields high attrition rates. Looking at a number of webcam eye-tracking studies @patterson2025 found the attrition rate was on average 13%, with studies reporting a considerable range around this [see @gellerLanguageBordersStepbystep2025f; @prystauka2024].
 
-An open question is whether the limitations of web-based eye-tracking stem from the WebGazer.js algorithm itself or from environmental and hardware constraints—and, importantly, whether future improvements can address these issues. On the algorithm side of things, recent work [@jamesWhatParadigmsCan2025] showed that modifying [WebGazer.js](http://webgazer.js) insofar that the sampling rate is polled consistently and timestamps are aligned to acquisition (when data are received) rather than at completion (when processing finishes) markedly improves temporal resolution. Implementations of these changes in online experiment platforms (e.g., Gorilla and jsPsych) have brought webcam eye-tracking studies closer to the timing fidelity seen in lab-based eye-tracking. For instance, @prystauka2024, using the Gorilla platform, observed a 50 ms timing difference between lab-based effects and online effects while @gellerLanguageBordersStepbystep2025f noted a 100 ms timing difference.
+An open question is whether the limitations of web-based eye-tracking stem from the WebGazer.js algorithm itself or from environmental and hardware constraints—and, importantly, whether future improvements can address these issues. On the algorithm side of things, recent work [@jamesWhatParadigmsCan2025] showed that modifying [WebGazer.js](http://webgazer.js) insofar that the sampling rate is polled consistently and timestamps are aligned to acquisition (when data are received) rather than at completion (when processing finishes) markedly improves temporal resolution. Implementations of these changes in online experiment platforms (e.g., Gorilla and jsPsych) have brought webcam eye-tracking studies closer to the timing fidelity seen in lab-based eye-tracking. For instance, using the Gorilla experimental platform, @prystauka2024 observed a 50 ms timing difference while @gellerLanguageBordersStepbystep2025f noted a 100 ms timing difference between lab-based effects and online effects.
 
-To our knowledge, no study has directly tested how environmental and hardware constraints impact webcam-based eye-tracking data. @slim2023 provided some evidence suggesting that hardware quality may underlie some of these limitations, reporting a positive correlation between webcam sample rate and calibration accuracy. Similarly, @gellerLanguageBordersStepbystep2025f found that participants who failed calibration more often reported using low-quality built-in webcams and working in suboptimal environments (e.g., natural lighting). Together, these findings suggest that both hardware and environmental factors may contribute to the increased noise commonly observed in online eye-tracking data.
+To our knowledge, no study has directly tested how environmental and hardware constraints impact webcam-based eye-tracking data. @slim2023 provided some evidence suggesting that hardware quality may underlie some of these limitations, reporting a positive correlation between webcam sample rate and calibration accuracy. Similarly, @gellerLanguageBordersStepbystep2025f found that participants who failed calibration more often reported using standard-quality built-in webcams and working in suboptimal environments (e.g., natural lighting). Together, these findings suggest that both hardware and environmental factors may contribute to the increased noise commonly observed in online eye-tracking data.
 
 ## Proposed Research
 
-To address environmental and technical sources of noise in webcam eye-tracking, we plan to bring participants into the lab to complete a Gorilla-hosted webcam task under standardized conditions. We will manipulate two factors across two experiments. Experiment 1 will vary webcam quality (high- vs. low-quality external cameras). Experiment 2 varies head stabilization (with vs. without a chinrest). All sessions will be conducted under standardized conditions: identical ambient lighting, fixed viewing distance, the same display/computer model, and controlled network settings. This design allows us to isolate the causal effects of hardware and movement on data quality. Our key questions are whether higher-quality webcams and reduced head movement decrease noise, thereby (a) increasing effect sizes (higher proportion of looks), (b) yielding earlier onsets of established effects, and (c) reducing calibration failures/attrition rate. As noted above
+To address environmental and technical sources of noise in webcam eye-tracking, we plan to bring participants into the lab to complete a Gorilla-hosted webcam task under standardized conditions. We will manipulate two factors across two experiments. Experiment 1 will vary webcam quality (high- vs. standard-quality external cameras). Experiment 2 varies head stabilization (with vs. without a chinrest). All sessions will be conducted under standardized conditions: identical ambient lighting, fixed viewing distance, the same display/computer model, and controlled network settings. This design allows us to isolate the causal effects of hardware and movement on data quality. Our key questions are whether higher-quality webcams and reduced head movement decrease noise, thereby (a) increasing effect sizes (higher proportion of looks), (b) yielding earlier onsets of established effects, and (c) reducing calibration failures/attrition rate. As noted above
 
 To examine these factors, we replicate a paradigm widely used in psycholinguistics—the Visual World Paradigm [VWP; @cooper1974; @tanenhaus1995]. The VWP has been used quite successfully with webcam eye-tracking [@bramlett2024; @bramlettArtWranglingWorking2025; @gellerLanguageBordersStepbystep2025f; @prystauka2024]. While there are slight variations in how the paradigm is implemented [see @huettig2011], in the version most relevant to the current study, on each trial four images appear in one of four screen quadrants while a spoken word is played. Participants then select the picture that matched the utterance. Related to the current experiment, item sets are sometimes constructed so that the display contains a target (e.g., CARROT), a cohort competitor (e.g., CARRIAGE) , a rhyme competitor (e.g., PARROT), and an unrelated distractor (e.g., TADPOLE). A setup such as this allows one to examine how competition dynamics (i.e., CARRIAGE vs. TADPOLE or PARROT vs. TADPOLE) unfold over the time course of language processing [@colby2023]. Importantly, competition effects have previously been observed in webcam eye-tracking studies using a similar design [i.e., @gellerLanguageBordersStepbystep2025f] thus serve as good testing case herein.
 
 # Experiment 1
 
-@slim2023 and @gellerLanguageBordersStepbystep2025f observed a relationship between webcam quality and calibration accuracy. Building on this, Experiment 1 will test how webcam quality influences competition effects in a single-word  VWP/ Specifically, we ask whether a higher-quality webcam yields (a) a greater proportion of looks (i.e., stronger detectability of competition), (b) earlier emergence of the effect over time, and (c) lower attrition rates relative to a lower-quality webcam.
+Both @slim2023 and @gellerLanguageBordersStepbystep2025f observed a relationship between webcam quality and calibration accuracy. Building on this, Experiment 1 will test how webcam quality influences competition effects in a single-word  VWP. Specifically, we ask whether a higher-quality webcam yields (a) a greater proportion of looks (i.e., stronger detectability of competition), (b) earlier emergence of the effect over time, and (c) lower attrition rates relative to a lower-quality webcam.
 
-## **Hypotheses**
+## Hypotheses
 
 We hypothesize several effects related to competition, onset, and attrition.
 
-Competition Effects
+### Competition Effects
 
-(H1a) Participants will show a competition effect, with more looks directed toward cohort competitors than unrelated distractors. (H1b) Webcam quality (high vs. low) will influence the overall proportion of looks, with higher-quality webcams detecting a greater number of looks. (H1c) There will be an interaction between webcam quality and competition, such that the magnitude of the competition effect will be larger in the high-quality webcam condition than in the low-quality condition.
+(H1a) Participants will show a competition effect, with more looks directed toward cohort competitors than unrelated distractors. (H1b) Webcam quality (high vs. standard) will influence the overall proportion of looks, with higher-quality webcams detecting a greater number of looks. (H1c) There will be an interaction between webcam quality and competition, such that the magnitude of the competition effect will be larger in the high-quality webcam condition than in the standard-quality condition.
 
-Onset Effects
+### Onset Effects
 
-(H2a) Looks to cohort competitors will emerge earlier than looks to unrelated distractors. (H2b) The onset of looks will occur earlier in the high-quality webcam condition than in the low-quality condition. (H2c) Consequently, the competition effect will emerge sooner in the high-quality webcam condition compared to the low-quality condition.
+(H2a) Looks to cohort competitors will emerge earlier than looks to unrelated distractors. (H2b) The onset of looks will occur earlier in the high-quality webcam condition than in the standard-quality condition. (H2c) Consequently, the competition effect will emerge sooner in the high-quality webcam condition compared to the standard-quality condition.
 
-Attrition (H3) Attrition rates will be lower in the high-quality webcam condition than in the low-quality webcam condition.
+### Attrition
+
+(H3) Attrition rates will be lower in the high-quality webcam condition than in the standard-quality webcam condition.
 
 # Method
 
-All stimuli (audio and images), code, and data will be stored on OSF (<https://osf.io/cf6xr/overview>).
+All stimuli (audio and images), code, and data will be stored on OSF (https://osf.io/cf6xr/overview ). The entire experiment will be stored on Gorilla's open mateirals with a link to preeview the tasks. In addition, the code will be fully reproducible using Quarto and the package manager nix in combination with the R package rix. Together, nix and rix enable reproducible computational environments at both the system and package levels.
 
 ## Sampling Goal
 
-We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the webgazeR package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and low-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the low-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition_num × webcam_group interaction—was refit to each simulated dataset (5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. The analysis script to run this power analysis is located here: <https://osf.io/mywtq/overview>. Results indicated that a total of 35 participants per group (N = 70) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under low-quality webcam conditions. We will therefore recruit participants until we have 35 in each group (N = 70 total). For the calibration analysis (see below), all participants who enter the study will be included.
+We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the webgazeR package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and standard-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the standard-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition × webcam interaction—was refit to each simulated dataset (*N*= 5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. The analysis script to run this power analysis is located here: <https://osf.io/mywtq/overview>. Results indicated that a total of 35 participants per group (N = 70) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under standard-quality webcam conditions. We will therefore recruit participants until we have 35 in each group (N = 70 total). We will run our study until we have 70 usable participants (35 in each group). For the calibration analysis (see below), all participants who enter the study will be included.
 
 ## Materials
 
@@ -180,17 +182,13 @@ Auditory stimuli were recorded by a female monolingual speaker of English in a s
 
 #### Webcams
 
-To manipulate recording quality, two webcams will be used:
-
--   High-quality condition: A Logitech Brio webcam will record in 4K resolution (up to 4096 × 2160 px) with a 90° field of view, providing high-fidelity video suitable for accurate gaze estimation and pupil tracking.
-
--   Standard-quality condition: A Logitech C270 HD webcam will record in 720 p resolution, producing video comparable to that of a typical laptop webcam, thereby simulating lower-quality online recordings.
+To manipulate recording quality, two webcams will be used. In the high-quality condition we will use a Logitech Brio webcam that records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view, providing high-fidelity video. In the standard-quality condition we will use a Logitech C270 HD webcam will record in 720 p resolution, producing video comparable to that of a typical laptop webcam, thereby simulating lower-quality online recordings.
 
 Both webcams will be mounted in a fixed position above the monitor to maintain consistent framing across participants. Lighting will be standardized to ensure uniform image quality across all sessions.
 
 ## Experimental Setup and Procedure
 
-All tasks will be completed in a single session lasting approximately 30 minutes. The experiment will be programmed and administered in Gorilla [@Anwyl-Irvine2020]. Participants will be brought into a room in the Human Neuroscience Lab at Boston College and seated in front of a 23-inch Dell U2312HM monitor (1920 × 1080 px) approximately 65 cm from the screen. Audiotry information will be presented over Sony MDR-7506 headphones to ensure consistent audio presentation and minimize background noise. The experimental tasks will be fixed: informed consent, single word VWP, and a demographic questionnaire. The entire experiment can be viewed on Gorilla at this link:.
+All tasks will be completed in a single session lasting approximately 30 minutes. The experiment will be programmed and administered in Gorilla [@Anwyl-Irvine2020]. Participants will be brought into a room in the Human Neuroscience Lab at Boston College and seated in front of a 23-inch Dell U2312HM monitor (1920 × 1080 px) approximately 65 cm from the screen. Audiotry information will be presented over Sony MDR-7506 headphones to ensure consistent audio presentation and minimize background noise. The experimental tasks will be fixed and presented in this order: informed consent, single word VWP, and a demographic questionnaire. The entire experiment can be viewed on Gorilla at this link:.
 
 Before the main task, an instructional video will demonstrate the calibration procedure. Calibration will occur twice—once at the start and again after 30 trials—with up to three attempts allowed each time. In each calibration phase, participants will view nine calibration targets and five validation points, looking directly at each target as instructed. Participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. Eye movements are recorded continuously during each trials. Following the main VWP task, participants will complete a brief demographic questionnaire, after which they will be thanked for their participation.
 
@@ -198,7 +196,7 @@ Before the main task, an instructional video will demonstrate the calibration pr
 
 We will follow guidelines outlined in @gellerLanguageBordersStepbystep2025f. At the participant level, individuals with overall task accuracy below 80% will be excluded. At the trial level, only correct-response trials (accuracy = 1) will be retained. Reaction times (RTs) outside ±2.5 SD of the participant-level distribution (computed within condition) will be discarded.
 
-For eye-tracking preprocessing we will use the {webgazeR} package in R that contains helper functions to preprocess webcam eye-tracking data. All webcam eye-tracking files will be merged. Data quality will be screened via sampling-rate checks with very low-frequency recordings (e.g., \< 5 Hz) by subject and trial excluded (**Bramlett & Wiener, 2024)**. We will quantify out-of-bounds (OOB) samples—gaze points outside the normalized screen (1,1)—and remove participants and trials with excessive OOB data ( \> 30%). OOB samples will be discarded prior to analysis. In addition, Gorilla provides calibration/quality metrics (“convergence” and “confidence,” both 0–1); trials with convergence \< 0.5 or confidence \> 0.5 will be excluded.
+For eye-tracking preprocessing we will use the {webgazeR} package in R that contains helper functions to preprocess webcam eye-tracking data. All webcam eye-tracking files will be merged. Data quality will be screened via sampling-rate checks with very low-frequency recordings (e.g., \< 5 Hz) by-participant and by-trial excluded [@bramlettArtWranglingWorking2025; @vos2022]. We will quantify out-of-bounds (OOB) samples—gaze points outside the normalized screen (1,1)—and remove participants and trials with excessive OOB data ( \> 30%). OOB samples will be discarded prior to analysis. In addition, Gorilla provides calibration/quality metrics (“convergence” and “confidence,” both 0–1); trials with convergence \< 0.5 or confidence \> 0.5 will be excluded.
 
 Areas of Interest (AOIs) will be defined in normalized coordinates as the four screen quadrants, and gaze samples will be assigned to AOIs. To create a uniform time base, data will be resampled into 100-ms bins. Trial time will be aligned to the actual stimulus onset by taking the audio onset provided by Gorilla. We then subtract 200 ms to approximate saccade programming and execution latency [@viviani1990], and an additional 100 ms due to silence prefixed to the audio recording. 
 
@@ -208,13 +206,17 @@ For analysis, within each participant × trial × time bin we will compute, for 
 
 ### Competition and Onset Effects
 
-To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; Wood, 2017). GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel]. These models capture nonlinear effects by fitting smoothing splines—or “wiggles”—to the data using data-driven, machine-learning-based methods. This approach reduces the risk of under and over-fitting and eliminates the need to prespecify polynomial terms, as required in traditional growth curve models [@mirman]. Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
+To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; Wood, 2017). GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture nonlinear effects by fitting smoothing splines—or “wiggles”—to the data using data-driven, machine-learning-based methods. This approach reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman]. Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
 Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {**mgcv}** package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], and use the **{onsets}** package [@verissimo2025novel] to examine onset latencies. The dependent variable consisted of gaze counts to cohort and unrelated pictures, for each participant and in each 100 ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
 
-We will fit a model including parametric terms for webcam type (effects-coded: high = 0.5, low = –0.5), item type (effects-coded: cohort = 0.5, unrelated = –0.5), and their interaction, capturing the overall (time-independent) effects. To examine how webcam type moderates the cohort effect over time, these two factors will also be combined into a single four-level factor. [^1]Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated as a categorical variable. To account for individual differences, we include random smooths by participant and random smooths for time by participant for each level of condition. This specification allows the model to capture (a) overall differences in fixation proportions between conditions (via the parametric terms), (b) dynamic, time-varying trajectories unique to each condition (via the smooth terms), and (c) participant-specific deviations from these group-level patterns (via the random smooths). While it is common to specify the maximal model [@barr2013], these can be costly when fitting GAMMS [@verissimo2025novel].
+We will fit a model including parametric terms for webcam type (effects-coded: high = 0.5, standard = –0.5), item type (effects-coded: cohort = 0.5, unrelated = –0.5), and their interaction, capturing the overall (time-independent) effects. To examine how webcam type moderates the cohort effect over time, these two factors will also be combined into a single four-level factor. [^1]Nonlinear, time-dependent effects will be modeled using factor smooths for time and for time-by-condition interactions, with condition treated as a categorical variable. To account for individual differences, we include random smooths by participant and random smooths for time by participant for each level of condition. This model specification allows the model to capture (a) overall differences in fixation proportions between conditions (via the parametric terms), (b) dynamic, time-varying trajectories unique to each condition (via the smooth terms), and (c) participant-specific deviations from these group-level patterns (via the random smooths). While it is common to specify maximal model [@barr2013], these can be costly when fitting GAMMS [@verissimo2025novel]. The current model specifications follows @verissimo2025novel. Effects will be judged as statistically significant if the *p* value is \< .05.
 
 [^1]: GAMs are inherently additive, meaning that interactions between nonlinear (smooth) terms cannot be estimated directly. To evaluate time-varying interactions or simple effects, it is therefore standard practice to combine relevant factors into a single composite factor and fit condition-specific smooths [@coretta2024].
+
+::: callout-note
+## Debating Bayesian models 
+:::
 
 To account for autocorrelation in the residuals, we will first fit the model without an autoregressive term in order to estimate the autocorrelation parameter (ρ). We will then re-fit the model including a first-order autoregressive process (AR(1)) to properly model temporal dependencies. Although using larger time bins can reduce autocorrelation, it does not eliminate it entirely, so explicitly modeling residual autocorrelation ensures valid statistical inference. Template code to fit the code is included below.
 
@@ -222,48 +224,29 @@ To account for autocorrelation in the residuals, we will first fit the model wit
 #| eval: false
 # quick rho estimate (fit once without AR to get residual ACF ~ lag1)
 
+# combine levels of both factors into one factor 
+
 dat$cond4 <- interaction(dat$condition, dat$webcam, drop = TRUE)
 
-
 m0   <- bam(cbind(fix, fail) ~ 1 + cond_c*cam_c +
-
-       s(time, k = 10) +
-
-              s(time, by = cond4 k = 10) +      # condition-specific curves interaction
-
-              s(participant, bs = "re") +        # random intercepts
-
-              s(time, participant, by=cond4,  bs = "re"),  # random fucntional smooths for time/subject by cond
-
-            family = binomial(), method = "fREML",
-
-            discrete = TRUE, data = dat, na.action = na.omit, select = TRUE)
-
-
+  s(time, k = 10) +
+  s(time, by = cond4 k = 10) +      # condition-specific curves interaction
+  s(participant, bs = "re") +        # random intercepts
+  s(time, participant, by=cond4,  bs = "re"),  # random fucntional smooths for time/subject by cond
+  family = binomial(), method = "fREML",
+  discrete = TRUE, data = dat, na.action = na.omit, select = TRUE)
 
 rho  <- acf(residuals(m0, type = "pearson"), plot = FALSE)$acf[2]
-
-
 
 # final model with AR(1) to handle within-series autocorrelation
 
 m1 <- bam(cbind(fix, fail) ~ 1 + cond_c*cam_c +
-
               s(time, k = 10) +
-
               s(time, by = cond4, k = 10) +      # condition-specific curves interaction
-
               s(participant, bs = "re") +        # random intercepts
-
               s(time, participant, by=cond4,  bs = "re"),  # subject smooths
-
-            family = binomial(), method = "fREML",
-
-            discrete = TRUE, data = dat, na.action = na.omit, select = TRUE), 
-
-          discrete = TRUE, rho = rho, AR.start = dat$AR.start,
-
-          data = dat, na.action = na.omit, select = TRUE)
+                                 family = binomial(), method = "fREML",
+            discrete = TRUE, data = dat, na.action = na.omit, select = TRUE)
 
 summary(m1)
 
@@ -274,17 +257,13 @@ summary(m1)
 #| 
 # Obain onsets in each condition (and their differences)
 
+
 (onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
-
                           time_var = "time",           # Name of time variabl
-                       by_var = "conditionfactor",        # Name of condition/group variable
-
+                 by_var = "conditionfactor",        # Name of condition/group variable
                           difference = T,              # Obtain differences between onsets
-
                           n_samples = 10000,           # Large number of samples (less variable results)
-
                           seed = 1,                    # Random seed for reproducibility
-
                           silent = T))                 # Cleaner output in documentation
 
 ```
@@ -299,13 +278,10 @@ glm(calibration ~ webcam, family = binomial(link = "logit"))
 
 # Experiment 2
 
-In Experiment 2, we will use the same low-quality webcam as in Experiment 1 and manipulate head stability by comparing a chin-rest condition to a no–chin-rest condition. Some online platforms [e.g., Labvanced; @Finger2017LabVanced] mitigate head motion by warning participants when they move outside a predefined region; however, it remains unclear how such motion control interacts with WebGazer.js estimates of event detection and onset latency. We therefore test the following hypotheses regarding competition, onset, and attrition.
+In Experiment 2, we will use the same standard-quality webcam as in Experiment 1 and manipulate head stability by comparing a chin-rest condition to a no–chin-rest condition. Some online platforms [e.g., Labvanced; @Finger2017LabVanced] mitigate head motion by warning participants when they move outside a predefined region; however, it remains unclear how such motion control interacts with WebGazer.js estimates of event detection and onset latency. We therefore test the following hypotheses regarding competition, onset, and attrition.
 
 We hypothesize several effects concerning competition, onset, and attrition. Participants are expected to show a competition effect, with more looks directed toward cohort competitors than to unrelated distractors. The use of a chin rest is predicted to influence the overall proportion of looks. The competition effect is predicted to be larger when participants use a chin rest than when they do not. We also expect looks to cohort competitors to emerge earlier than looks to unrelated distractors, with overall gaze onsets occurring sooner in the chin-rest condition. Finally, we anticipate that attrition rates will be lower in the chin-rest condition compared to the no–chin-rest condition
 
 ## Sampling goal, materials , procedure
 
-The sampling goal, materials, and procedure are the same as Experiment 1. The difference is whether participants use a chin rest or not. 
-
-\
-\
+The sampling goal, materials, and procedure are the same as Experiment 1. The difference is whether participants use a chin rest or not.
