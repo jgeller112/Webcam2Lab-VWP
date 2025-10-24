@@ -5,16 +5,7 @@ project:
 
 site-url: "https://jgeller112.github.io/Webcam2Lab-VWP/"
 
-language: 
-  citation-last-author-separator: "and"
-  citation-masked-author: "Masked Citation"
-  citation-masked-date: "n.d."
-  citation-masked-title: "Masked Title"
-  email: "drjasongeller@gmail.com"
-  title-block-author-note: "Author Note"
-  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
-  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
-  csl: apa.csl
+csl: apa.csl
 
 format:
 
