@@ -8,10 +8,6 @@ site-url: "https://jgeller112.github.io/Webcam2Lab-VWP/"
 csl: apa.csl
 
 format:
-
-  preprint-docx:
-    output-file: web2lab-RR_stage1.docx
-
   preprint-typst:
     wordcount: true
     line-number: true
@@ -29,6 +25,9 @@ format:
     code-summary: "Show R code"
     execute:
       echo: true
+
+  preprint-docx:
+    output-file: web2lab-RR_stage1.docx
 
 comments:
   hypothesis: true
