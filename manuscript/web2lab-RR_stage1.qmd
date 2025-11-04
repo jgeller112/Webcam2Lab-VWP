@@ -156,7 +156,7 @@ We hypothesize several effects related to competition, onset, and attrition.
 
 # Method
 
-All stimuli (audio and images), code, and data (raw and summary) will be stored on OSF <https://osf.io/cf6xr/overview>). The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks. In addition, the code will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels.
+All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: <https://osf.io/cf6xr/overview>. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks. In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it can be found on GitHub: <https://github.com/jgeller112/Webcam2Lab-VWP>.
 
 ## Sampling Goal
 
@@ -178,7 +178,7 @@ All 120 images were from a commercial clipart database that were selected by a s
 
 Auditory stimuli were recorded by a female monolingual speaker of English in a sound-attenuated room sampled at 44.1 kHz. Auditory tokens were edited to reduce noise and remove clicks. They were then amplitude normalized to 70 dB SPL. . All .wav files were converted to .mp3 for online data collection. 
 
-#### Webcameras
+#### Webcams
 
 To manipulate recording quality, two webcams will be used. In the high-quality condition we will use a Logitech Brio webcam that records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view, providing high-fidelity video. In the standard-quality condition we will use a Logitech C270 HD webcam will record in 720 p resolution, producing video comparable to that of a typical laptop webcam, thereby simulating lower-quality online recordings.
 
@@ -213,7 +213,7 @@ We will fit a model including parametric terms for webcam type (effects-coded: h
 [^1]: GAMs are inherently additive, meaning that interactions between nonlinear (smooth) terms cannot be estimated directly. To evaluate time-varying interactions or simple effects, it is therefore standard practice to combine relevant factors into a single composite factor and fit condition-specific smooths [@coretta2024].
 
 ::: callout-note
-## Debating Bayesian models
+## Debating Bayesian models 
 :::
 
 To account for autocorrelation in the residuals, we will first fit the model without an autoregressive term in order to estimate the autocorrelation parameter (ρ). We will then re-fit the model including a first-order autoregressive process (AR(1)) to properly model temporal dependencies. Although using larger time bins can reduce autocorrelation, it does not eliminate it entirely, so explicitly modeling residual autocorrelation ensures valid statistical inference. Template code to fit the models is included below.
