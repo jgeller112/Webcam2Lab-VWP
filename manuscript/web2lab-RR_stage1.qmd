@@ -146,9 +146,9 @@ We hypothesize several effects related to competition, onset, and attrition.
 
 (H1a) Participants will show an overall greater proportion of looks to competitors. (H1b) Webcam quality (high vs. standard) will influence the overall proportion of looks, with higher-quality webcams detecting a greater proportion of looks.
 
-### Onset/Timing Effects
+### Timing/Onset Effects
 
-(H2a) Each webcam condition will show different effects of time. (H2b) For standard-quality webcams vs. high-quality webcam, onsets will be detected later due to increased noise.
+(H2a) Each webcam condition will show effects of time. (H2b) For standard-quality webcams vs. high-quality webcam, onsets will be detected later due to increased noise.
 
 ### Attrition
 
@@ -292,7 +292,7 @@ We hypothesize several effects related to competition, onset, and attrition. The
 
 (H1a) Participants will show an overall greater proportion of looks to competitors. (H1b) Head stabilization (chin rest vs. no chin rest) will influence the overall proportion of looks, with chin rest condition detecting a greater proportion of looks.
 
-### Onset/Timing Effects
+### Timing/Onset Effects
 
 (H2a) Chin-rest and no chine rest conditions will show effects on time. (H2b) For no chin-rest condition vs. chin rest comparison onsets will be detected later due to increased noise.
 
@@ -302,4 +302,4 @@ We hypothesize several effects related to competition, onset, and attrition. The
 
 ## Sampling Goal, Materials , Procedure, and Analysis Plan
 
-The sampling goal, materials, and procedure are the same as Experiment 1. The main difference is whether participants use a chin rest or not.
+The sampling goal, materials, procedure, and analysis plan are the same as Experiment 1. The main difference is whether participants use a chin rest or not.
