@@ -178,7 +178,7 @@ All 120 images were from a commercial clipart database that were selected by a s
 
 Auditory stimuli were recorded by a female monolingual speaker of English in a sound-attenuated room sampled at 44.1 kHz. Auditory tokens were edited to reduce noise and remove clicks. They were then amplitude normalized to 70 dB SPL. . All .wav files were converted to .mp3 for online data collection. 
 
-#### Webcams
+### Webcams
 
 To manipulate recording quality, two webcams will be used. In the high-quality condition, we will use a Logitech Brio webcam, which records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view and samples at 60 Hz. This setup provides high-fidelity video with greater spatial and temporal precision. In the standard-quality condition, we will use a Logitech C270 HD webcam, which records in 720p resolution and samples at 30 Hz, producing video quality comparable to that of a typical built-in laptop webcam and therefore simulating lower-quality online recordings.
 
@@ -204,7 +204,7 @@ For the analysis portion we will count the number of looks to cohort (vs. unrela
 
 ### Competition and Onset Effects
 
-To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; [@Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course. This approach reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates \[@vanrij2019\]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
+To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; [@Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course. This approach reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates [@vanrij2019]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
 Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {mgcv} package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], and use the {onsets} package [@verissimo2025novel] to examine onset latencies and the {itsadug} [@itsadug] package for AR functions and to test differences in smooth splines across the time (`get_differences()`). The dependent variable will consist of gaze counts to cohorts compared to unrelated items[^1], for each participant and in each 50ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
 
@@ -267,7 +267,7 @@ bam(cbind(fix_cohort, fix_unrelated) ~ 1 +
 
 ```{r}
 #| eval: false
-#|  lst-label: lst-onset
+#| lst-label: lst-onset
 #| lst-cap: Getting onset differences using the {onsets} package
 # Obain onsets in each condition (and their differences)
 
@@ -285,7 +285,7 @@ To examine whether webcam type affects calibration rejection, we will fit a logi
 
 ```{r}
 #| lst-label: lst-glm
-#| lst-cap: Logistic model to examine the effect of webcams on calirbation
+#| lst-cap: Logistic model to examine the effect of webcams on calibration
 
 # fit glm model
 glm(calibration ~ camera, family = binomial(link = "logit"))
