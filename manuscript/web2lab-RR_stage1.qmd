@@ -380,7 +380,7 @@ We hypothesize several effects related to competition, onset, and attrition. The
 
 ### Timing/Onset Effects
 
-(H2a) Chin-rest and no chine rest conditions will show effects on time. (H2b) For no chin-rest condition vs. chin rest comparison onsets will be detected later due to increased noise.
+(H2a) Each condition will show a change in the proportion of looks across time. More specifically we hypothesize the proportion change will be non-linear across time and that there will be a difference between the two conditions across time. (H2b) For the no chin-rest condition compared to the chin-rest condition, onsets will be detected later due to increased noise.
 
 ### Attrition
 
