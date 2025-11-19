@@ -128,7 +128,7 @@ To our knowledge, no study has directly tested how environmental and hardware co
 
 To address environmental and technical sources of noise in webcam eye-tracking, we plan to bring participants into the lab to complete a Gorilla‐hosted webcam task under standardized conditions. We manipulate two key factors (between subjects) across two experiments. Experiment 1 varies external webcam quality (high‐ vs. standard‐quality external cameras). Experiment 2 varies head stabilization (with vs. without a chinrest). All sessions will use identical ambient lighting, fixed viewing distance, the same display/computer model, and controlled network settings. These manipulations specifically target sources of measurement noise induced by the quality of the webcam and the amount of movement by the participant. If noise is reduced, the measured gaze signal should become more stable and less variable across time and trials. In turn, this can make existing effects easier to detect, potentially manifesting as (a) larger effects (i.e., clearer differences in looking proportions), (b) earlier and more reliable detection of effect onsets when using time‐course methods, and (c) lower calibration failure and attrition rates.
 
-To examine these factors, we employed a paradigm widely used in psycholinguistics—the Visual World Paradigm (VWP) [@cooper1974; @tanenhaus1995]. The VWP has been successfully adapted for webcam-based eye tracking [@bramlett2024; @bramlettArtWranglingWorking2025; @gellerLanguageBordersStepbystep2025f; @prystauka2024]. Although implementations vary across studies [see @huettig2011], the version used here investigates phonemic competition, wherein item sets are typically constructed so that the display contains a target (e.g., *carrot*), a cohort competitor (e.g., *carriage)*, a rhyme competitor (e.g., *parrot*), and an unrelated distractor (e.g., *tadpole*). This configuration allows researchers to examine the dynamics of lexical competition—for instance, how phonologically similar words such as *carriage* (cohort effect) or *parrot* (rhyme effect) influence online spoken-word processing. Typically, fixations to cohort or rhyme competitors persist longer or emerge earlier than fixations to unrelated distractors, reflecting transient lexical activation. In the present study, we focus specifically on cohort competition effects, which have been robustly demonstrated in online VWP research [e.g., @gellerLanguageBordersStepbystep2025f; @slim2024], making this paradigm an ideal test case for our investigation.
+To examine these factors, we employed a paradigm widely used in psycholinguistics—the Visual World Paradigm (VWP) [@cooper1974; @tanenhaus1995]. The VWP has been successfully adapted for webcam-based eye tracking [@bramlett2024; @bramlettArtWranglingWorking2025; @gellerLanguageBordersStepbystep2025f; @prystauka2024]. Although implementations vary across studies [see @huettig2011], the version used here investigates phonemic competition, wherein item sets are typically constructed so that the display contains a target (e.g., carrot), a cohort competitor (e.g., carriage), a rhyme competitor (e.g., parrot), and an unrelated distractor (e.g., tadpole). This configuration allows researchers to examine the dynamics of lexical competition—for instance, how phonologically similar words such as carriage (cohort effect) or parrot (rhyme effect) influence online spoken-word processing. Typically, fixations to cohort or rhyme competitors persist longer or emerge earlier than fixations to unrelated distractors, reflecting transient lexical activation. In the present study, we focus specifically on cohort competition effects, which have been robustly demonstrated in online VWP research [e.g., @gellerLanguageBordersStepbystep2025f; @slim2024], making this paradigm an ideal test case for our investigation.
 
 The current research aims to inform best practices for webcam-based eye tracking, with particular attention to hardware and physical setup considerations (e.g., head-movement). While these guidelines will be useful for researchers conducting webcam eye tracking in the wild, they will also be valuable for studies conducted in a laboratory-setting. In particular, this work can inform researchers who may wish to use webcam eye tracking in place of more expensive infrared eye-tracking systems. 
 
@@ -160,7 +160,9 @@ All stimuli (audio and images), code, and data (raw and summary) will be placed 
 
 ## Sampling Goal
 
-We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the webgazeR package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and standard-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the standard-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition × webcam interaction—was refit to each simulated dataset (*N*= 5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. The analysis script to run this power analysis is located here: <https://osf.io/4trmn/files/a46g8>. Results indicated that a total of 35 participants per group (*N* = 70) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under standard-quality webcam conditions. Becasue this analysis only examines overall proportions and we plan to also examine effects across time, we will plan to recruit 50 participants in each group (*N* = 100 total). We will run our study until we have 100 usable participants (50 in each group). For the calibration analysis (see below), all participants who enter the study will be included.
+We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the {webgazeR} (@gellerLanguageBordersStepbystep2025f) package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and standard-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the standard-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition × webcam interaction—was refit to each simulated dataset (N= 5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. The analysis script to run this power analysis is located here: <https://osf.io/4trmn/files/a46g8>. Results indicated that a total of 35 participants per group (N = 70) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under standard-quality webcam conditions. Becasue this analysis only examines overall proportions and we plan to also examine effects across time, we will plan to recruit 50 participants in each group (N = 100 total). We will run our study until we have 100 usable participants (50 in each group). For the calibration analysis (see below), all participants who enter the study will be included.
+
+Participants will give informed consent before participating. At the present time is approved by the Boston College IRB.
 
 ## Materials
 
@@ -192,7 +194,7 @@ Before the main task, an instructional video will demonstrate the calibration pr
 
 ## Data Preprocessing and Exclusions
 
-We will follow guidelines outlined in @gellerLanguageBordersStepbystep2025f. At the participant level, individuals with overall task accuracy below 80% and fewer than 40 trials will be removed from the analysis. At the trial level, only correct-response trials (accuracy = 1) will be retained. Reaction times (RTs) outside ±2.5 SD of the participant-level distribution (computed within condition) will be discarded.
+We will follow the guidelines outlined in @gellerLanguageBordersStepbystep2025f and exclude participants with overall task accuracy below 80%, fewer than 40 trials, those who report English as not their first language, and those with non-normal or uncorrected vision. At the trial level, only correct-response trials (accuracy = 1) will be retained. Reaction times (RTs) outside ±2.5 SD of the participant-level distribution (computed within condition) will be discarded.
 
 For eye-tracking preprocessing we will use the {webgazeR} package in R that contains helper functions to preprocess webcam eye-tracking data. All webcam eye-tracking files and behavioral data will be merged. Data quality will be screened via sampling-rate checks with very low-frequency recordings (e.g., \< 15 Hz) by-participant and by-trial excluded [@bramlettArtWranglingWorking2025; @vos2022]. We will quantify out-of-bounds (OOB) samples—gaze points outside the normalized screen (1,1)—and remove participants and trials with excessive OOB data ( \> 30%). OOB samples will be discarded prior to analysis. In addition, Gorilla provides calibration/quality metrics (“convergence” and “confidence,” both 0–1); trials with convergence \< 0.5 or confidence \> 0.5 will be excluded.
 
@@ -204,13 +206,15 @@ The display contained two types of critical trials: TCRU (target–cohort–rhym
 
 ## Analysis Plan
 
-### Competition and Onset Effects
+### GAMMs
 
 To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; [@Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary nonlinearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course. This approach reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates [@vanrij2019]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
-Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {mgcv} package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], the {onsets} package [@verissimo2025novel] to examine onset latencies, and the {itsadug} [@itsadug] package for AR functions and to test differences in smooth splines across the time (`get_differences()`). The dependent variable will consist of gaze counts to cohorts compared to unrelated items, for each participant and in each 50ms time bin. All analyses were conducted on a window ranging from -100 ms from target onset to 1200 ms.
+#### Competition Effects
 
-The right model in the context of GAMMs is a difficult one. The results can vary depending on whether one uses an ordered factor scheme or unordered factor scheme. Because of this we plan to fit the model multiple ways to test for robustness. In one model (@lst-gamm) we will fit a model that includes a parametric term for webcam type that is unordered where the reference level will be the standard quality webcamera (treatment-coded such that high-quality = 1 and standard-quality = 0). To examine whether webcam type moderates the cohort effect over time, we will include smooth terms for time-by-condition interactions with camera.To account for individual differences, we will include participant-specific random smooths for time, and participant-specific random smooths for time within each level of the camera factor.
+Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {mgcv} package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], the {onsets} package [@verissimo2025novel] to examine onset latencies, and the {itsadug} [@itsadug] package for AR functions and to test differences in smooth splines across the time (`get_differences()`). The dependent variable will consist of gaze counts to cohorts compared to unrelated items, for each participant and in each 50ms time bin. All analyses were conducted on a window ranging from stimulus onset (100 ms) to 1200 ms.
+
+The right model in the context of GAMMs is a difficult one. The results can vary depending on whether one uses an ordered factor scheme or unordered factor scheme [@oltrogge2025]. Because of this we plan to fit the model multiple ways to test for robustness. In one model (@lst-gamm) we will fit a model that includes a parametric term for webcam type that is unordered where the reference level will be the standard quality webcamera (treatment-coded such that high-quality = 1 and standard-quality = 0). To examine whether webcam type moderates the cohort effect over time, we will include smooth terms for time-by-condition interactions with camera. To account for individual differences, we will include participant-specific random smooths for time, and participant-specific random smooths for time within each level of the camera factor.
 
 This specification allows the model to capture three components:
 
@@ -218,29 +222,37 @@ This specification allows the model to capture three components:
 2.  Condition-specific, time-varying trajectories in cohort competition (via the smooth terms), which support inferences about the timing (onsets) and dynamics of cohort effects across conditions. By fitting the model with an unordered factor we can examine the time smooths for each condition separately and then compare offset differences between them (H2a and H2b).
 3.  Deviations from these group-level trajectories at the individual participant level (via random smooths)
 
-In another instantion of the model (see @lst-gamm-ordered) we will include a parametric term for webcam type that is ordered. To examine whether webcam type moderates the cohort effect over time, we will include smooth terms for time and time-by-condition interactions (which is needed when fitting ordered factor). To account for individual differences, we will include participant-specific random smooths for time, and participant-specific random smooths for time within each level of the camera factor.
+In a second instantiation of the model (see @lst-gamm-ordered), we will include a parametric term for webcam type treated as an **ordered factor**. To assess whether webcam type moderates the cohort-over-unrelated effect over time, we will incorporate smooth terms for time as well as time-by-condition interactions, as required when fitting ordered factors. To account for individual variability, we will include participant-specific random smooths for time and participant-specific random smooths for time within each level of the webcam factor.
 
-This specification allows the model to capture three components:
+This specification allows the model to capture the same effects above with one key difference: By including an ordered factor we must include a smooth for time and the time x webcam type. This model estimates a baseline smooth for the standard-quality webcam and a difference smooth for the high-quality webcam. Because the webcam factor is ordered, the difference smooth directly represents how the trajectory for high-quality deviates from the standard-quality trajectory. This structure enables inferences about the timing and dynamics of cohort effects across webcam conditions, including onset differences (H2a, H2b). We will also look at how changing the order affects inferences.
 
-1.  The overall (parametric) effect of webcam type. With webcam type coded as an ordered factor with standard-quality as the reference level, the model intercept represents the expected proportion of looks in the standard-quality condition, and the webcam coefficient represents the difference between high-quality and standard-quality webcams (H1a, H1b).
+Although “maximal” random-effects structures are often recommended in linear mixed-effects models [@barr2013], such specifications can be computationally prohibitive in GAMMs. The present specification follows the recommendations of @verissimo2025novel. Statistical significance will be assessed at $\alpha$ = .05. When fitting difference curves with ordered factors with simultaneous CIs, we will correct for multiple comparisons using a Bnefornni correction [@krause2024].
 
-2.  Condition-specific, time-varying trajectories in cohort competition. By including factor-smooths for time and the time x webcam type, the model estimates a baseline smooth for the standard-quality webcam and a *difference* smooth for the high-quality webcam. Because the webcam factor is ordered, the difference smooth directly represents how the trajectory for high-quality deviates from the standard-quality trajectory. This structure enables inferences about the timing and dynamics of cohort effects across webcam conditions, including onset differences (H2a, H2b). We will also look at how changing the order affects inferences.
+Finally, we set the basis functions that capture "wigglyness" of the smooth to 9 (*k* = 10) for all smooth terms which is the default in {mgcv}. This default seems to work generally well [@oltrogge2025]; however deviations from this default will reported and robustness will be tested.
 
-3.  Deviations from these group-level trajectories at the individual participant level (via random smooths).
+To account for autocorrelation in the residuals, we will first fit the model without an autoregressive term in order to estimate the autocorrelation parameter (ρ). We will then re-fit the model including a first-order autoregressive process (AR(1)) to properly model temporal dependencies. Although using larger time bins can reduce autocorrelation, it does not eliminate it entirely, so explicitly modeling residual autocorrelation ensures valid statistical inference.
 
-Although “maximal” random-effects structures are often recommended in linear mixed-effects models [@barr2013], such specifications can be computationally prohibitive in GAMMs. The present specification follows the recommendations of @verissimo2025novel. Statistical significance will be assessed at $\alpha$ = .05. When fitting difference curves with ordered factors with simultaneous CIs, we will correct for multiple comparisons using a Bnefornni correction\[[@krause2024]\].
+#### Onset Effects
 
-To account for autocorrelation in the residuals, we will first fit the model without an autoregressive term in order to estimate the autocorrelation parameter (ρ). We will then re-fit the model including a first-order autoregressive process (AR(1)) to properly model temporal dependencies. Although using larger time bins can reduce autocorrelation, it does not eliminate it entirely, so explicitly modeling residual autocorrelation ensures valid statistical inference. Template code to fit the models is included below.
+Once the models are fit, we will extract predicted gaze curves for each condition using the {onsets} package [@verissimo2025novel]. This package draws 10,000 simulated gaze curves from each fitted model, providing a posterior distribution that reflects uncertainty in the onset estimates. For each simulated curve, the temporal point at which a predictive effect first appears is identified by comparing the predicted gaze proportion at each timepoint to a predefined criterion.
+
+We define an onset as the earliest time at which the predicted gaze proportion is significantly greater than the predicted proportion at the first timepoint of the analysis window. The resulting distribution of 10,000 onset estimates is then used to compute a 95% confidence interval. Between-condition differences are obtained by subtracting onset times from paired simulations, yielding a corresponding distribution of onset differences and its associated 95% confidence interval (see @lst-onset).
 
 ```{r}
 #| eval: false
 #| lst-label: lst-gamm 
 #| lst-cap: GAMM model set--up unordered camera factor
-#| 
+
+
+# set contrasts
+options(contrasts = rep("contr.treatment", 2)) # treament code variables
+
+# load packages
 library(mgcv) # perform gam
 library(tidygam) # visualization of gams
 library(itsadug) # get_differences
 library(onsets)  # onset differences
+
 # combine levels of both factors into one factor 
 dat$camera <- as.factor(dat$camera)
 
@@ -277,16 +289,8 @@ bam(cbind(fix_cohort, fix_unrelated) ~ 1 +
 #| eval: false
 #| lst-label: lst-gamm-ordered
 #| lst-cap: GAMM model set--up ordered camera factor
-#| 
-library(mgcv) # perform gam
-library(tidygam) # visualization of gams
-library(itsadug) # get_differences
-library(onsets)  # onset differences
-# combine levels of both factors into one factor 
 
-dat$camera_ord <- as.factor(dat$camera)
-dat$camera_ord  <- as.ordered(dat$camera) # get ordered
-
+dat$camera_ord <- factor(dat$camera, ordered = T)
 
 # get start event for AR
 start_event = start_event(., column = "Time", # for ar
@@ -347,8 +351,7 @@ onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
 
 onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
                        time_var = "time",           # Name of time variabl
-                 by_var = "camera",    # Name of condition/group variable
-                          cov_vars = "" ,  # every fixed effect must be included
+                 by_var = "camera_ord",    # Name of condition/group variable
                           compare = T,              # Obtain differences between onsets
                           n_samples = 10000,           # Large number of samples (less variable results)
                           seed = 1,                    # Random seed for reproducibility
