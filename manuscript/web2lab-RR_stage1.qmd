@@ -42,7 +42,7 @@ author:
         name: "University of Lisbon"
         department: School of Arts and Humanities
   - name: Julia Droulin
-    orcid: 0000-0002-9689-4189
+    orcid: 0000-0003-0798-3268
     roles: 
       - Editing
       - Validation
