@@ -8,11 +8,7 @@ site-url: "https://jgeller112.github.io/Webcam2Lab-VWP/"
 csl: apa.csl
 
 format:
-  preprint-typst:
-    wordcount: true
-    line-number: true
-    include-before-body:
-      - text: "#show <refs>: set par(hanging-indent: 1.4em)"
+  apaquarto-typst: default
   html: 
     theme: cosmo
     toc: true
