@@ -142,7 +142,7 @@ We hypothesize several effects related to competition, onset, and attrition.
 
 # Method
 
-All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: [https://osf.io/cf6xr/overview](https://osf.io/cf6xr/overview?view_only=e698a6e95aa946eeb357be7864310839){.uri}. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks. In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it will be stored on GitHub.
+All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: [https://osf.io/cf6xr/overview](https://osf.io/cf6xr/overview?view_only=e698a6e95aa946eeb357be7864310839){.uri}. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks (<https://app.gorilla.sc/openmaterials/1134157>). In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it will be stored on GitHub.
 
 ## Sampling Goal
 
@@ -156,9 +156,7 @@ Participants will give informed consent before participating. At the present tim
 
 #### Picture Stimuli
 
-Stimuli were adapted from @colby2023 . Each set comprised four images: a target, an onset (cohort) competitor, a rhyme competitor, and an unrelated item (e.g., rocket, rocker, pocket, bubble). For the webcam study, we used 30 sets (15 monosyllabic, 15 bisyllabic).
-
-Within each set, only the target and its onset competitor served as auditory targets once each, yielding two trial types: TCRU (target–cohort–rhyme–unrelated) and TCUU (target–cohort–unrelated–unrelated). This resulted in 60 trials total (30 sets × 2 targets per set). A MATLAB script generated a unique randomized list per participant, pseudo-randomizing display positions so that each image type was approximately equally likely to appear in any quadrant across subjects.
+Stimuli were adapted from @colby2023. Each stimulus set comprised four images. For the webcam study, we used 30 sets (15 monosyllabic, 15 bisyllabic). Within each set, only the target and its onset competitor served as auditory targets, each presented once, yielding two trial types: TCRU trials, in which a target, cohort, rhyme, and unrelated picture were displayed (e.g., rocket, rocker, pocket, bubble), and TCUU trials, in which a target, cohort, and two unrelated images were displayed (e.g., mouth, mouse, house, chain). This design resulted in 60 trials total (30 sets × 2 target types per set). A custom MATLAB script generated a unique randomized list for each participant, pseudo-randomizing display positions so that each image type was approximately equally likely to appear in any quadrant across subjects.
 
 All 120 images were from a commercial clipart database that were selected by a small focus group of students and edited to have a cohesive style using a standard lab protocol [@mcmurray2010]. Images were all scaled to 300 × 300 pixels.
 
@@ -196,7 +194,7 @@ The display contained two types of critical trials: TCRU (target–cohort–rhym
 
 To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; [@Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary non-linearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course is (one can think of this as the number of bowpoints of a curve). A benefit of this approach is that it reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates [@vanrij2019]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
-#### Competition Effects (H1a and H1a)
+#### Competition Effects (H1a and H1b)
 
 Gaze samples will be analyzed with a binomial (logistic) GAMM using the `bam()` function from the {mgcv} package [@Wood2017]. For visualization, we will employ functions from the {tidygam} package [@tidygam], the {onsets} package [@verissimo2025novel] to examine onset latencies, and the {itsadug} [@itsadug] package for AR functions and to test differences in smooth splines across the time (`get_differences()`). The dependent variable will consist of gaze counts to cohorts compared to unrelated items, for each participant and in each 50ms time bin. All analyses were conducted on a window ranging from stimulus onset (100 ms) to 1200 ms.
 
@@ -212,7 +210,7 @@ In a second instantiation of the model (see @lst-gamm-ordered), we will include 
 
 This specification allows the model to capture the same effects above with one key difference: By including an ordered factor we must include separate smooths for time (the reference) and time x webcam type. This model estimates a baseline smooth for the standard-quality webcam and a difference smooth for the high-quality webcam. Because the webcam factor is ordered, the difference smooth directly represents how the trajectory for high-quality deviates from the standard-quality trajectory. This structure enables inferences about the timing and dynamics of cohort effects across webcam conditions. We will also look at how changing the order affects inferences.
 
-For both models, we use default arguments for the smooth functions. We use k = 9 (number of knots) to capture the "wigglyness" of the smooths. Smooths were fit with a thin plate regression spline. This default seems to work generally well [@oltrogge2025]; however deviations from this default will reported and robustness will be tested.
+For both models, we use default arguments for the smooth functions. We use *k* = 9 (number of knots) to capture the "wigglyness" of the smooths. Smooths were fit with a thin plate regression spline. This default seems to work generally well [@oltrogge2025]; however deviations from this default will reported and robustness will be tested.
 
 Although “maximal” random-effects structures are often recommended in linear mixed-effects models [@barr2013], such specifications can be computationally prohibitive in GAMMs. The present specification follows the recommendations of @verissimo2025novel. Statistical significance will be assessed at $\alpha$ = .05. When fitting difference curves with ordered factors with simultaneous CIs, we will correct for multiple comparisons using a Bonferroni correction [@krause2024].
 
