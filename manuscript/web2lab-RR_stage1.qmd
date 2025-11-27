@@ -35,7 +35,7 @@ author:
     orcid: 0000-0003-0798-3268
     affiliations:
      - id: 3
-       name: "Univetsity of North Carolina - Chapel Hill"
+       name: "University of North Carolina - Chapel Hill"
        department: Speech and Hearing Divison
 author-note:
   status-changes: 
@@ -142,7 +142,7 @@ We hypothesize several effects related to competition, onset, and attrition.
 
 # Method
 
-All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: [https://osf.io/cf6xr/overview](https://osf.io/cf6xr/overview?view_only=e698a6e95aa946eeb357be7864310839){.uri}. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks (<https://app.gorilla.sc/openmaterials/1134157>). In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it will be stored on GitHub.
+All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: [https://osf.io/cf6xr/overview](https://osf.io/cf6xr/overview?view_only=e698a6e95aa946eeb357be7864310839){.uri}. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks. In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it will be stored on GitHub.
 
 ## Sampling Goal
 
@@ -180,7 +180,7 @@ Before the main task, an instructional video will demonstrate the calibration pr
 
 We will follow the guidelines outlined in @gellerLanguageBordersStepbystep2025f and exclude participants with overall task accuracy below 80%, fewer than 40 trials, those who report English as not their first language, and those with non-normal or uncorrected vision. At the trial level, only correct-response trials (accuracy = 1) will be retained. Reaction times (RTs) outside ±2.5 SD of the participant-level distribution (computed within condition) will be discarded.
 
-For eye-tracking preprocessing we will use the {webgazeR} package in R that contains helper functions to preprocess webcam eye-tracking data. All webcam eye-tracking files and behavioral data will be merged. Data quality will be screened via sampling-rate checks with very low-frequency recordings (e.g., \< 15 Hz) by-participant and by-trial excluded [@bramlettArtWranglingWorking2025; @vos2022]. We will quantify out-of-bounds (OOB) samples—gaze points outside the normalized screen (1,1)—and remove participants and trials with excessive OOB data ( \> 30%). OOB samples will be discarded prior to analysis. In addition, Gorilla provides calibration/quality metrics (“convergence” and “confidence,” both 0–1); trials with convergence \< 0.5 or confidence \> 0.5 will be excluded.
+For eye-tracking preprocessing we will use the {webgazeR} package in R that contains helper functions to preprocess webcam eye-tracking data. All webcam eye-tracking files and behavioral data will be merged. Data quality will be screened via sampling-rate checks with very low-frequency recordings (e.g., \< 15 Hz) by-participant and by-trial excluded [@bramlettArtWranglingWorking2025; @vos2022]. We will quantify out-of-bounds (OOB) samples—gaze points outside the normalized screen (1,1)—and remove participants and trials with excessive OOB data (> 30%). OOB samples will be discarded prior to analysis. In addition, Gorilla provides calibration/quality metrics (“convergence” and “confidence,” both 0–1); trials with convergence \< 0.5 or confidence \> 0.5 will be excluded.
 
 Areas of Interest (AOIs) will be defined in normalized coordinates as the four screen quadrants, and gaze samples will be assigned to AOIs. To create a uniform time base, data will be downsampled into 50-ms bins. Trial time will be aligned to the actual stimulus onset by taking the audio onset metric provided by Gorilla. We then subtract 100 ms due to silence prefixed to the audio recording. 
 
@@ -192,7 +192,7 @@ The display contained two types of critical trials: TCRU (target–cohort–rhym
 
 ### GAMMs
 
-To analyze overall competition effects and onset latency, we will use generalized additive mixed models (GAMMs; [@Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary non-linearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course is (one can think of this as the number of bowpoints of a curve). A benefit of this approach is that it reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates [@vanrij2019]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
+To analyze overall competition effects and onset latency, we will use generalized additive mixed models [GAMMs; [@Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary non-linearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course is (one can think of this as the number of bowpoints of a curve). A benefit of this approach is that it reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates [@vanrij2019]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
 #### Competition Effects (H1a and H1b)
 
@@ -222,17 +222,23 @@ Once the models are fit, we will extract predicted gaze curves for each conditio
 
 ```{r}
 #| eval: false
-#| lst-label: lst-gamm 
-#| lst-cap: GAMM model set--up unordered camera factor
-
-# set contrasts
-options(contrasts = rep("contr.treatment", 2)) # treament code variables
+#| lst-label: lst-pack
+#| lst-cap: R packages to load
 
 # load packages
 library(mgcv) # perform gam
 library(tidygam) # visualization of gams
 library(itsadug) # get_differences
 library(onsets)  # onset differences
+```
+
+```{r}
+#| lst-label: lst-gamm 
+#| lst-cap: GAMM model set--up unordered camera factor
+
+
+# set contrasts
+options(contrasts = rep("contr.treatment", 2)) # treament code variables
 
 # combine levels of both factors into one factor 
 dat$camera <- as.factor(dat$camera)
@@ -373,3 +379,28 @@ We hypothesize several effects related to competition, onset, and attrition. The
 ## Sampling Goal, Materials , Procedure, and Analysis Plan
 
 The sampling goal, materials, procedure, and analysis plan are the same as Experiment 1. The main difference is whether participants use a chin rest or not.
+
+# Declarations
+
+## Funding
+This study was funded by the main author.
+
+## Conflicts of Interest
+The authors declare no conflicts of interest.
+
+## Ethics Approval
+This study was approved by the relevant ethics committee.
+
+## Consent to Participate
+All participants provided informed consent to participate.
+
+## Availability of Data and Materials
+All data and materials will be stored on OSF, GitHub, and archived on Zenodo.
+
+## Code Availability
+All code will be made available on OSF, GitHub, and Zenodo.
+
+## Authors’ Contributions
+- JG - Writing—original draft
+- JV - Writing—review & editing
+- JD - Writing—review & editing
