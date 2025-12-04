@@ -1,14 +1,15 @@
 project:
   title: "Web 2 Lab - Stage 1 RR"
   render:
-    - web2lab-RR_stage1.qmd
+    - ./manuscript/web2lab-RR_stage1.qmd
 
 site-url: "https://jgeller112.github.io/Webcam2Lab-VWP/"
 
 csl: apa.csl
 
 format:
-  apaquarto-typst: default
+  preprint-typst:
+    wordcount: true
   html: 
     theme: cosmo
     toc: true
