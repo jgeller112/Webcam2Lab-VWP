@@ -346,7 +346,7 @@ onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
 
 ## Calibration (H3c)
 
-To examine whether webcam type affects calibration rejection, we will fit a logistic regression model using the `glm()` function (see @lst-glm. Calibration outcome will be coded as a binary variable, where *0* indicates that a participant failed to calibrate at either of the calibration phases, and *1* indicates that the participant successfully passed both calibration phases. This model will allow us to estimate whether the webcam condition reliably predicts the probability of successful calibration.
+To examine whether webcam type affects calibration rejection, we will fit a logistic regression model using the `glm()` function (see @lst-glm). Calibration outcome will be coded as a binary variable, where *0* indicates that a participant failed to calibrate at either of the calibration phases, and *1* indicates that the participant successfully passed both calibration phases. This model will allow us to estimate whether the webcam condition reliably predicts the probability of successful calibration.
 
 ```{r}
 #| lst-label: lst-glm
@@ -392,7 +392,7 @@ The authors declare no conflicts of interest.
 This study was approved by the relevant ethics committee.
 
 ## Consent to Participate
-All participants provided informed consent to participate.
+All participants will provide informed consent prior to participation.
 
 ## Availability of Data and Materials
 All data and materials will be stored on OSF, GitHub, and archived on Zenodo.
