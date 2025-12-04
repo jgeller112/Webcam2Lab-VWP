@@ -235,6 +235,7 @@ library(onsets)  # onset differences
 ```{r}
 #| lst-label: lst-gamm 
 #| lst-cap: GAMM model set--up unordered camera factor
+#| eval: false
 
 
 # set contrasts
@@ -351,6 +352,7 @@ To examine whether webcam type affects calibration rejection, we will fit a logi
 ```{r}
 #| lst-label: lst-glm
 #| lst-cap: Logistic model to examine the effect of webcams on calibration
+#| eval: false
 
 # fit glm model
 glm(calibration ~ camera, family = binomial(link = "logit"))
