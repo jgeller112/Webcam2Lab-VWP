@@ -42,7 +42,7 @@ jobs:
       # --- Install needed R packages (edit this list) ---
       - name: Install R packages
         run: |
-         Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org")); install.packages(c("knitr", "rmarkdown", "tidyverse", "broom", "ragg", "ggplot2"))'
+         Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org")); install.packages(c("knitr", "rmarkdown", "tidyverse", "broom","ggplot2"))'
 
       # --- Install Quarto ---
       - name: Set up Quarto
