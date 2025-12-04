@@ -88,10 +88,6 @@ execute:
   ft-align: "center"
   out-width: 50%
   fig-dpi: 500
-
-knitr:
-  opts_chunk: 
-    dev: "ragg_png"
 ---
 
 Online experimentation in the behavioral sciences has advanced considerably since its introduction at the 1996 Society for Computers in Psychology (SCiP) conference in Chicago, IL [@reips2021]. One methodological domain that has shown particular promise in moving online is eye tracking. Traditionally, eye-tracking studies required controlled laboratory settings equipped with specialized and costly hardware—a process that is both resource- and time-intensive. More recently, however, a growing body of research has shown that eye tracking can be successfully adapted to online environments [e.g., @bogdan2024; @bramlett2024; @özsoy2023; @prystauka2024; @slim2023; @slim2024; @vandercruyssen2023; @vos2022; @jamesWhatParadigmsCan2025; @yangWebcambasedOnlineEyetracking2021]. By leveraging computers with webcameras, researchers can now record eye movements remotely, making it possible to collect data from virtually any location at any time. This shift not only enhances scalability, but also broadens access to more diverse and representative participant samples.
