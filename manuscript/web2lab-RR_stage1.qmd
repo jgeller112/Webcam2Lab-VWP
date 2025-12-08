@@ -1,5 +1,5 @@
 ---
-title: "Improving Webcam Eye-Tracking: Impact of Hardware and Head Stabilization on Data Quality"
+title: "Registered Report /n Improving Webcam Eye-Tracking: Impact of Hardware and Head Stabilization on Data Quality"
 # If blank, the running header is the title in 
 shorttitle: "Webcam Eye-Tracking in the Lab"
 # Set names and affiliations.
