@@ -88,9 +88,8 @@ execute:
   ft-align: "center"
   out-width: 50%
   fig-dpi: 500
----
 
-------------------------------------------------------------------------
+---
 
 Online experimentation in the behavioral sciences has advanced considerably since its introduction at the 1996 Society for Computers in Psychology (SCiP) conference in Chicago, IL [@reips2021]. One methodological domain that has shown particular promise in moving online is eye tracking. Traditionally, eye-tracking studies required controlled laboratory settings equipped with specialized and costly hardware—a process that is both resource- and time-intensive. More recently, however, a growing body of research has shown that eye tracking can be successfully adapted to online environments [e.g., @bogdan2024; @bramlett2024; @özsoy2023; @prystauka2024; @slim2023; @slim2024; @vandercruyssen2023; @vos2022; @jamesWhatParadigmsCan2025; @yangWebcambasedOnlineEyetracking2021]. By leveraging computers with webcameras, researchers can now record eye movements remotely, making it possible to collect data from virtually any location at any time. This shift not only enhances scalability, but also broadens access to more diverse and representative participant samples.
 
@@ -146,11 +145,11 @@ if (H2a) Each webcam condition will show a change in the proportion of looks acr
 
 # Method
 
-All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: https://osf.io/cf6xr/overview. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks. In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it will be stored on GitHub.
+All stimuli (audio and images), code, and data (raw and summary) will be placed on OSF at this link: <https://osf.io/cf6xr/overview>. The entire experiment will be stored on Gorilla's open materials with a link to preview the tasks. In addition, the code and manuscript will be fully reproducible using Quarto and the package manager nix [@nix] in combination with the R package {rix} [@rix] . Together, nix and {rix} enable reproducible computational environments at both the system and package levels. This manuscript and all of the necessary files to reproduce it will be stored on GitHub.
 
 ## Sampling Goal
 
-We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the {webgazeR} (@gellerLanguageBordersStepbystep2025f) package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and standard-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the standard-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition × webcam interaction—was refit to each simulated dataset (N= 5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. The analysis script to run this power analysis is located here: <https://osf.io/4trmn/files/a46g8>. Results indicated that a total of 35 participants per group (N = 70) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under standard-quality webcam conditions. Because this analysis only examines overall proportions and we plan to also examine effects across time, we will plan to recruit 50 participants in each group (*N* = 100 total). We will run our study until we have 100 usable participants (50 in each group). For the calibration analysis (see below), all participants who enter the study will be included.
+We conducted an a priori power analysis via Monte Carlo simulation in R. Data from 21 participants, collected online using the Gorilla experimental platform during the development of the {webgazeR} [@gellerLanguageBordersStepbystep2025f] package and employing the same stimuli and VVWP design, were used to seed the simulations. In these data, we observed a cohort effect of approximately 3%. Using this value as our seed, we collapsed the data across time bins to compute binomial counts per trial and fit a binomial generalized linear mixed model (GLMM) to obtain fixed-effect estimates. We then augmented the dataset by adding a between-subjects factor for webcam quality, with participants evenly assigned to high- and standard-quality groups. In the high-quality webcam group, we modeled both a higher overall fixation rate and a larger cohort effect, whereas in the standard-quality group the cohort effect was halved relative to the high-quality group. Simulated datasets were generated under this model, and the planned GLMM—including a condition × webcam interaction—was refit to each simulated dataset (N= 5000). Power was estimated as the proportion of simulations in which the interaction term exceeded \|z\| = 1.96. The analysis script to run this power analysis is located here: <https://osf.io/4trmn/files/a46g8>. Results indicated that a total of 35 participants per group (N = 70) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under standard-quality webcam conditions. Because this analysis only examines overall proportions and we plan to also examine effects across time, we will plan to recruit 50 participants in each group (*N* = 100 total). We will run our study until we have 100 usable participants (50 in each group). For the calibration analysis (see below), all participants who enter the study will be included.
 
 Participants will give informed consent before participating. At the present time these studies are approved by the ethics committee.
 
@@ -170,7 +169,7 @@ Auditory stimuli were recorded by a female monolingual speaker of English in a s
 
 ### Webcams
 
-To manipulate recording quality, two webcams will be used. In the high-quality condition, we will use a Logitech Brio webcam, which records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view and samples at 60 Hz. This setup provides high-fidelity video with greater spatial and temporal precision. In the standard-quality condition, we will use a Logitech C270 HD webcam, which records in 720p resolution and samples at 30 Hz, producing video quality comparable to that of a typical built-in laptop webcam and therefore simulating lower-quality online recordings (see [@jarvis2025]
+To manipulate recording quality, two webcams will be used. In the high-quality condition, we will use a Logitech Brio webcam, which records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view and samples at 60 Hz. This setup provides high-fidelity video with greater spatial and temporal precision. In the standard-quality condition, we will use a Logitech C270 HD webcam, which records in 720p resolution and samples at 30 Hz, producing video quality comparable to that of a typical built-in laptop webcam and therefore simulating lower-quality online recordings [@jarvis2025].
 
 Both webcams will be mounted in a fixed position above the monitor to maintain consistent framing across participants. Lighting will be standardized to ensure uniform image quality across all sessions.
 
@@ -224,6 +223,7 @@ To account for autocorrelation in the residuals, we will first fit the model wit
 
 Once the models are fit, we will extract predicted gaze curves for each condition using the {onsets} package [@verissimo2025novel]. The {onsets} procedure first simulates gaze curves across time from the fitted GAMMs (N = 10,000). For each simulated curve, the onset of the condition effect is identified by comparing the predicted log-odds at each timepoint to a predefined criterion. Within the package, onset is defined as the earliest time at which the predicted log-odds is significantly greater than the model-predicted log-odds at the first timepoint of the analysis window (here word onset). Repeating this procedure across 10,000 simulations yields a distribution of onset estimates, from which a 95% highest density interval (HDI) can be obtained. To derive between-condition comparisons, onset times from paired simulations are subtracted, producing a corresponding distribution with median onset difference and its associated 95% HDI (see @lst-onset for the analysis code).
 
+\small
 ```{r}
 #| eval: false
 #| lst-label: lst-pack
@@ -349,9 +349,13 @@ onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
                           seed = 1)                  # Random seed for reproducibility
 ```
 
+\normalsize
+
 ## Calibration (H3c)
 
 To examine whether webcam type affects calibration rejection, we will fit a logistic regression model using the `glm()` function (see @lst-glm). Calibration outcome will be coded as a binary variable, where *0* indicates that a participant failed to calibrate at either of the calibration phases, and *1* indicates that the participant successfully passed both calibration phases. This model will allow us to estimate whether the webcam condition reliably predicts the probability of successful calibration.
+
+\small
 
 ```{r}
 #| lst-label: lst-glm
@@ -361,6 +365,8 @@ To examine whether webcam type affects calibration rejection, we will fit a logi
 # fit glm model
 glm(calibration ~ camera, family = binomial(link = "logit"))
 ```
+
+\normalsize
 
 # Experiment 2: Head stabilization (chin rest) vs. no head stabilization (no chin rest)
 
@@ -386,6 +392,8 @@ We hypothesize several effects related to competition, onset, and attrition. The
 
 The sampling goal, materials, procedure, and analysis plan are the same as Experiment 1. The main difference is whether participants use a chin rest or not.
 
+{{< pagebreak >}}
+
 # Declarations
 
 ## Funding
@@ -400,20 +408,23 @@ The authors declare no conflicts of interest.
 
 This study was approved by the relevant ethics committee.
 
+## Conset for Publication
+
+I conset for my paper to be publihsed in BRM. 
+
 ## Consent to Participate
 
 All participants will provide informed consent prior to participation.
 
-## Availability of Data and Materials
+## Availability of Data, Code, and Materials
 
-All data and materials will be stored on OSF, GitHub, and archived on Zenodo.
+All data, code, and materials will be stored on OSF (https://osf.io/cf6xr/overview) and GitHub (https://github.com/jgeller112/Webcam2Lab-VWP). 
 
-## Code Availability
-
-All code will be made available on OSF, GitHub, and Zenodo.
 
 ## Authors’ Contributions
 
 -   JG - Writing—original draft
 -   JV - Writing—review & editing
 -   JD - Writing—review & editing
+
+{{< pagebreak >}}
