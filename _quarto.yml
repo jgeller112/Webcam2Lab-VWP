@@ -26,9 +26,4 @@ format:
   preprint-docx:
     output-file: web2lab-RR_stage1.docx
 
-comments:
-  hypothesis: true
 
-knitr:
-  opts_chunk:
-    dev: "ragg_png"
