@@ -28,3 +28,7 @@ format:
 
 comments:
   hypothesis: true
+
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
