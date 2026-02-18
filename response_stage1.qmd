@@ -1,0 +1,172 @@
+---
+title: Responses to editor and reviewer concerns
+format:
+  hikmah-response-typst: default
+---
+
+Thank you for giving us the opportunity to revise and resubmit our manuscript, "Improving Webcam Eye-Tracking: Impact of Hardware and Head Stabilization on Data Quality" (Manuscript ID `BR-Org-25-1067`). We found the Reviewers' comments to be very insightful and helpful and we have used these comments to rewrite and improve the manuscript in a number of ways. In this memo, we describe how we have revised the paper in response to these comments. The Reviewers' comments are cited or summarized in [red italicized text]{.memo-reviewer-inline}, and our responses are in black Roman text. We include excerpts from our revised manuscript in [blue]{.memo-excerpt-inline}.
+
+Both reviewers offered thoughtful suggestions for alternative experimental manipulations. We greatly appreciated these suggestions and agree that there are multiple additional factors that could be examined to further improve webcam-based eye-tracking. For the present Stage 1 Registered Report, however, we elected to retain the originally proposed manipulations in order to maintain a focused and interpretable experimental design.
+
+Importantly, both reviewers acknowledged the merit of the current manipulations and their relevance for addressing the primary research questions. Expanding the design to incorporate additional manipulations at this stage would substantially increase complexity and reduce the clarity of the planned comparisons. We therefore would like to proceed with the current design as specified, while incorporating the reviewers’ suggestions into the theoretical framing and discussion of the work.
+
+We view the present study as a foundational step rather than an exhaustive evaluation of all possible methodological factors influencing webcam eye-tracking. We hope that the results will motivate future experiments—by us and by others—that explore alternative or complementary approaches, including additional forms of head stabilisation and platform-specific implementations.
+
+# Reviewer 1
+
+## Major Concern
+
+::: {.memo-reviewer}
+***Reviewer 1***: While these experiments are expected to provide clear answers to the research questions, I think they are likely to have a minimal impact on how researchers conduct web-based eye-tracking studies. The authors note that previous studies suggest clear relationships between webcam quality and calibration accuracy, and between head movement and calibration accuracy, so the planned experiments would be largely confirmatory in nature. Additionally, the preference for using a higher-quality webcam and a chin rest already exists, and empirically showing effects of webcam quality and the use of a chin rest is unlikely to change methodological considerations of the researchers.  
+
+:::
+
+We respectfully disagree with the reviewer’s assessment that the present work will have minimal impact on how researchers conduct web-based eye-tracking studies. Although many webcam eye-tracking studies are conducted “in the wild,” this methodology is increasingly being adopted for controlled laboratory use, particularly by researchers for whom access to dedicated eye-tracking hardware is limited by cost or infrastructure. In such contexts, concrete guidance about which webcams may need to be excluded and how sensitive results are to head movement is highly consequential for study design and data quality.
+
+While prior work has noted associations between webcam quality, head movement, and calibration accuracy, these relationships have largely been observational or descriptive in nature. The present study goes beyond this by experimentally testing how these factors impact eye-movement data quality and downstream measures, thereby allowing stronger inferences about their practical importance. This distinction is critical for informing methodological decisions, such as whether a virtual chin rest meaningfully improves data quality or whether certain classes of webcams should be avoided altogether.
+
+As such, we view the contribution of this work not as merely confirmatory, but as providing empirical constraints on methodological choices that are currently guided largely by intuition, convention, or anecdotal best practices. We believe these findings will be valuable both for researchers conducting web-based eye tracking remotely and for those seeking cost-effective alternatives within laboratory settings.
+
+::: {.memo-reviewer}
+***Reviewer 1***: The authors may wish to examine the effects of other factors that have a larger impact on researchers' methodological decisions or instructions given to participants. For example, how eye-movement data quality is affected by the relative position of a ceiling light or a desk lamp, or the relative height of the laptop. Answers to these questions will be informative as there currently seem to be no standard instructions about these aspects in webcam eye-tracking studies.
+:::
+
+We thank the reviewer for this thoughtful suggestion. We agree that factors such as ambient lighting conditions (e.g., ceiling lights vs. desk lamps) and device positioning (e.g., laptop height) are likely to influence eye-movement data quality in webcam-based eye tracking. Unfortunately, due to practical constraints related to time and resources, we were unable to systematically investigate these additional factors in the present study. We view this as an important direction for future research and hope that subsequent work will be able to more comprehensively examine how such environmental and setup variables affect data quality and inform the development of standardized participant instructions.
+
+
+## Minor 
+
+::: {.memo-reviewer}
+***Reviewer 1***:  p. 5: “if (H2a)” Is this a typo?
+:::
+
+Thanks for spotting this. It should just read "(H2a)"
+
+
+::: {.memo-reviewer}
+***Reviewer 1***:  p. 7: “Eye movements are recorded continuously during each .” The final word appears to be missing.
+
+:::
+
+We have changed this accordingly. 
+
+::: {.memo-excerpt}
+Eye movements are recorded continuously during the final image display. After the main task, participants complete a brief demographic questionnaire and are thanked for their participation.
+:::
+
+::: {.memo-reviewer}
+***Reviewer 1***: p. 8: “Concretely, For each trial…” -> “Concretely, for each trial…”
+:::
+
+We have corrected this. 
+
+## Reviewer 2
+
+::: {.memo-reviewer}
+***Reviewer 3***: 
+Suggestion 1: Head stabilisation manipulation Experiment 2
+The suggestion that would lead to the most substantial changes concerns Experiment 2.
+Although I see the merit of the chin rest manipulation, Experiment 2 might have greater impact if
+head stabilisation were manipulated in a way that better reflects remote testing, which is the
+most common use of webcam eye-tracking. In particular, the authors note in the introduction to
+Experiment 2 (p. 14) that platforms like labvanced can warn participants whenever they move
+their head too much. I think that the impact of Experiment 2 would be stronger if head
+stabilisation were manipulated as a “warning” vs. “non-warning” condition, rather than using a
+chin rest. This approach would not only test the effect of head stabilisation, but now in a way
+that it could potentially offer a practical, off-the-shelf solution for researchers that will use
+webcam eye-tracking in remote settings.
+:::
+
+We thank the reviewer for this constructive suggestion and agree that a manipulation based on real-time head-movement warnings, as implemented in platforms such as Labvanced, would be highly relevant for fully remote webcam eye-tracking studies.
+
+For the present Stage 1 Registered Report, however, we elected to manipulate head stabilisation using a chin rest in a controlled laboratory setting. This choice was made at the design stage to ensure precise experimental control over head movement while holding all other aspects of the task and platform constant. At present, the experimental platform used in this study (Gorilla) does not provide real-time head-tracking or automated movement warnings, and comparable functionality is not natively available in widely used open-source platforms such as jsPsych or PsychoPy. As a result, implementing a warning-based manipulation would require a different platform with proprietary tracking methods, introducing additional sources of variability that would complicate interpretation at this preregistration stage.
+
+Importantly, the goal of Experiment 2 is not to evaluate a specific commercial implementation of head-movement warnings, but to test the causal role of head stabilisation on calibration quality and gaze precision in webcam eye-tracking. The chin-rest manipulation provides a principled and conservative test of this mechanism by directly constraining head movement. The resulting estimates can therefore serve as an upper bound on the benefits that any form of head-stabilisation—whether via participant instruction, automated warnings, or future software-based solutions—might yield in both laboratory and remote contexts.
+
+We now clarify this rationale in the manuscript and explicitly frame the chin-rest manipulation as a theoretically motivated proxy for head-stabilisation instructions and emerging software-based approaches, rather than as a direct analogue of existing warning systems.
+
+::: {.memo-excerpt}
+### Webcam Calibration
+In Experiment 2, we will use the same standard-quality external webcam as in Experiment 1, but will manipulate head stability by comparing a chin-rest condition to a no–chin-rest condition. @hessels2014 offered evidence that head movement can impact the accuracy and reliability of eye-tracking estimates, showing that even moderate deviations in head position can produce systematic calibration drift, increased data loss, and slower recovery when gaze is reacquired. Importantly, their study demonstrates that these effects are not limited to extreme movements and can arise during typical participant behavior when head position is not constrained.
+
+Some online platforms, such as Labvanced [@Finger2017LabVanced], attempt to mitigate head motion by warning participants when they move outside a predefined region. However, such approaches rely on proprietary head-tracking solutions and, at present, it remains unclear how warning-based motion control interacts with WebGazer.js estimates of event detection, onset latency, and gaze competition. Moreover, comparable real-time head-movement warnings are not currently available in commonly used platforms such as Gorilla, jsPsych, or PsychoPy, limiting the feasibility of implementing such a manipulation within a single preregistered design.
+
+In laboratory-based eye-tracking, chin rests are routinely used to stabilize the head in a fixed position so that only the eyes move during the experiment. Although chin rests are uncommon in fully remote testing, introducing a chin-rest manipulation provides a controlled and conservative test of the causal role of head stability in webcam-based eye-tracking. Specifically, the chin-rest condition serves as a theoretically motivated proxy for head-stabilisation instructions and emerging software-based warning systems, and allows us to estimate an upper bound on the benefits that head-movement control may provide for calibration quality, competition effects, event-detection timing, and participant attrition. We therefore test the following hypotheses regarding competition, onset, and attrition.
+:::
+::: {.memo-reviewer}
+***Reviewer 2***: Suggestion 2: Omit the rhyme picture from the experimental display
+I was surprised that the experimental display included a rhyme competitor, which is (as I
+understand it) not directly related to the hypotheses or analysed in the results. While I
+understand that any effects of the rhyme competitor would likely impact both webcam
+conditions equally (and thus not affect the main conclusions), I wonder why this rhyme
+competitor is necessary.
+In fact, it might be preferable to replace the rhyme picture with an unrelated one. If anything,
+including a rhyme competitor might reduce looks to the target and perhaps even the cohort
+(albeit at a later, theoretically less relevant timepoint in the trial), which would unnecessarily
+shrink the effect of interest (i.e., the competitor effect at the word onset). Considering this, I
+would recommend the authors to either replace the rhyme pictures, or describe why including
+this picture is relevant to the hypotheses/analyses.
+:::
+
+We thank the reviewer for this suggestion and agree that including a rhyme competitor is not necessary for the hypotheses or analyses in the present study. The inclusion of rhyme competitors in earlier versions of the task was based on convenience and consistency with a prior validation study conducted during the development of the {webgazeR} package, rather than theoretical necessity for the current work. Because rhyme competitors were not relevant to our hypotheses and could plausibly dilute early target–cohort competition effects, we have revised the design to omit rhyme images entirely. In the revised experiment, all trials are of the TCUU type, containing one target, one onset cohort competitor, and two unrelated images. This change more directly isolates the competitor effect of interest at word onset.
+
+::: {.memo-excerpt}
+Stimuli were adapted from @colby2023. Each stimulus set comprised four images. For the webcam study, we used 60 stimulus sets (30 monosyllabic, 30 bisyllabic). In each trial, only the target and its onset cohort competitor were auditory-relevant. All trials were of the TCUU type (target–cohort–unrelated–unrelated), in which a target, its onset cohort competitor, and two unrelated images were displayed (e.g., MOUTH, mouse, house, chain). This design yielded 60 trials in total, with each stimulus set contributing one trial. A custom MATLAB script (R2024a; https://osf.io/x3frv) generated a unique randomized trial list for each participant, pseudo-randomizing display positions such that the target, cohort, and unrelated images were approximately equally likely to appear in each quadrant across participants.
+:::
+
+
+
+
+::: {.memo-reviewer}
+***Reviewer 3***: Suggestion 4: Network control
+The authors argue that the experiments will be carried out with “controlled network settings”.
+This is very important, because internet speed can affect webcam performance a great deal
+even with high-end webcams (think of freezes in a videocall). Therefore, I’m happy to hear that
+the authors take this into account, but I would like to know more details about how the network
+settings will be controlled. Will the authors use some procedure to ensure that internet speed is
+stabilised for all experimental sessions? Or, is the network controlled insofar that all
+participants take part from the same computer and network? In case of the latter, I would
+recommend to do a short internet speed check prior to each experimental session, because
+internet speed can still vary.
+Also, I would recommend not only controlling the internet speech, but also the browser speed
+as this might affect the speed in which WebGazer’s functions are executed. Because all
+participants will use the same browser (version) and hardware, I think that making sure to clear
+the browser cache before each experimental session could already be enough.
+:::
+
+Thank you for pointing this out and excellent suggestions. It is important to adeqetly describe this in a bit more detail. Computers will be hardwired into the campus network. In additon, per your suggestion, we will clear the browser cahce before each experimental session and also run a speed check on each computer. 
+
+
+::: {.memo-reviewer}
+***Reviewer 3***: Suggestion 3: Calibration and attrition
+The authors expect that attrition rates are lower in the high-quality webcam condition. This is
+interesting, but the way in which the hypotheses and analyses related to this expectation are
+written up was somewhat confusing. In particular, the hypothesis related to attrition is
+described in terms of attrition (p.5), but its associated analysis is described in terms of
+calibration (p. 13). Does this imply that the experiment stopped for participants who failed to
+calibrate?
+Moreover, I thought the description of the calibration scores was a bit unclear. How are these
+scores analysed? And are the calibration scores described on p. 8 (which are values between 0
+to 1, binarised with a cut-off at 0.5) the same as the calibration scores included in the analyses
+described on 0. 13? I would recommend the authors to create a (sub)section in which the
+calibration procedure and its scores is explained in more detail.
+:::
+
+We are sorry this was not made clear. Attrition is tied to calibrarion. If individuals fail calibration they are not allowed to continue (if they passed the first calibration but not the second) or start the task (failed the first calibration task). We tried to make this clearler and have added a calibration subsection as requested. 
+
+::: {.memo-excerpt}
+### Webcam Calibration
+To ensure that participants understood how webcam-based eye tracking works, they first viewed an instructional video demonstrating the calibration procedure (available on OSF here: [link]). Calibration was completed twice—once at the beginning of the experiment and again after 30 trials. Each calibration session allowed up to three attempts.
+
+During calibration, participants completed a passive calibration task in which nine red targets were presented sequentially on the screen. Participants were instructed to look directly at each target while it was visible. We used default system parameters for the calibration procedure, including the required fixation duration per target (200 ms), the number of gaze samples used per prediction (10 prediction points), and the transition time before data collection began (1000 ms).
+
+Immediately following calibration, validation was performed using five green targets presented one at a time. Participants were again instructed to look directly at each target. During validation, the eye-tracking system evaluated calibration quality by comparing the predicted gaze location to the known target location. Calibration was considered unsuccessful if more than two validation points deviated from their intended target location (i.e., predicted gaze was misaligned with another calibration point).
+
+Participants who failed any calibration check were branched to the end of the experiment and asked to complete a brief demographic questionnaire.
+:::
+
+Confidence and convergene are not tied to calibration but to the accuracy model predictions. We added more information about these metrics here
+
+::: {.memo-excerpt}
+In addition, Gorilla provides two eye-tracking quality metrics derived from the underlying face-tracking model: convergence and confidence. Convergence (range: 0–1) reflects the model’s certainty that a face has been successfully detected, with higher values indicating poorer convergence on a face. Confidence (range: 0–1) reflects the support vector machine (SVM) classifier’s confidence in the detected face. Trials will be excluded if convergence exceeds 0.5 (indicating unreliable face detection) or if confidence falls below 0.5 (indicating low classifier certainty).
+:::
