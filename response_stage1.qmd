@@ -86,13 +86,13 @@ Importantly, the goal of Experiment 2 is not to evaluate a specific commercial i
 We now clarify this rationale in the manuscript and explicitly frame the chin-rest manipulation as a theoretically motivated proxy for head-stabilisation instructions and emerging software-based approaches, rather than as a direct analogue of existing warning systems.
 
 ::: {.memo-excerpt}
-### Webcam Calibration
 In Experiment 2, we will use the same standard-quality external webcam as in Experiment 1, but will manipulate head stability by comparing a chin-rest condition to a no–chin-rest condition. @hessels2014 offered evidence that head movement can impact the accuracy and reliability of eye-tracking estimates, showing that even moderate deviations in head position can produce systematic calibration drift, increased data loss, and slower recovery when gaze is reacquired. Importantly, their study demonstrates that these effects are not limited to extreme movements and can arise during typical participant behavior when head position is not constrained.
 
 Some online platforms, such as Labvanced [@Finger2017LabVanced], attempt to mitigate head motion by warning participants when they move outside a predefined region. However, such approaches rely on proprietary head-tracking solutions and, at present, it remains unclear how warning-based motion control interacts with WebGazer.js estimates of event detection, onset latency, and gaze competition. Moreover, comparable real-time head-movement warnings are not currently available in commonly used platforms such as Gorilla, jsPsych, or PsychoPy, limiting the feasibility of implementing such a manipulation within a single preregistered design.
 
 In laboratory-based eye-tracking, chin rests are routinely used to stabilize the head in a fixed position so that only the eyes move during the experiment. Although chin rests are uncommon in fully remote testing, introducing a chin-rest manipulation provides a controlled and conservative test of the causal role of head stability in webcam-based eye-tracking. Specifically, the chin-rest condition serves as a theoretically motivated proxy for head-stabilisation instructions and emerging software-based warning systems, and allows us to estimate an upper bound on the benefits that head-movement control may provide for calibration quality, competition effects, event-detection timing, and participant attrition. We therefore test the following hypotheses regarding competition, onset, and attrition.
 :::
+
 ::: {.memo-reviewer}
 ***Reviewer 2***: Suggestion 2: Omit the rhyme picture from the experimental display
 I was surprised that the experimental display included a rhyme competitor, which is (as I
@@ -111,34 +111,11 @@ this picture is relevant to the hypotheses/analyses.
 We thank the reviewer for this suggestion and agree that including a rhyme competitor is not necessary for the hypotheses or analyses in the present study. The inclusion of rhyme competitors in earlier versions of the task was based on convenience and consistency with a prior validation study conducted during the development of the {webgazeR} package, rather than theoretical necessity for the current work. Because rhyme competitors were not relevant to our hypotheses and could plausibly dilute early target–cohort competition effects, we have revised the design to omit rhyme images entirely. In the revised experiment, all trials are of the TCUU type, containing one target, one onset cohort competitor, and two unrelated images. This change more directly isolates the competitor effect of interest at word onset.
 
 ::: {.memo-excerpt}
-Stimuli were adapted from @colby2023. Each stimulus set comprised four images. For the webcam study, we used 60 stimulus sets (30 monosyllabic, 30 bisyllabic). In each trial, only the target and its onset cohort competitor were auditory-relevant. All trials were of the TCUU type (target–cohort–unrelated–unrelated), in which a target, its onset cohort competitor, and two unrelated images were displayed (e.g., MOUTH, mouse, house, chain). This design yielded 60 trials in total, with each stimulus set contributing one trial. A custom MATLAB script (R2024a; https://osf.io/x3frv) generated a unique randomized trial list for each participant, pseudo-randomizing display positions such that the target, cohort, and unrelated images were approximately equally likely to appear in each quadrant across participants.
+Stimuli were adapted from @colby2023. Each stimulus set comprised four images. For the webcam study, we used 60 stimulus sets (30 monosyllabic, 30 bisyllabic). All trials were of the TCUU type (target–cohort–unrelated–unrelated), in which a target, its onset cohort competitor, and two unrelated images were displayed (e.g., MOUTH, mouse, house, chain). This design yielded 60 trials in total, with each stimulus set contributing one trial. A custom MATLAB script (R2024a; https://osf.io/x3frv) generated a unique randomized trial list for each participant, pseudo-randomizing display positions such that the target, cohort, and unrelated images were approximately equally likely to appear in each quadrant across participants.
 :::
 
-
-
-
 ::: {.memo-reviewer}
-***Reviewer 3***: Suggestion 4: Network control
-The authors argue that the experiments will be carried out with “controlled network settings”.
-This is very important, because internet speed can affect webcam performance a great deal
-even with high-end webcams (think of freezes in a videocall). Therefore, I’m happy to hear that
-the authors take this into account, but I would like to know more details about how the network
-settings will be controlled. Will the authors use some procedure to ensure that internet speed is
-stabilised for all experimental sessions? Or, is the network controlled insofar that all
-participants take part from the same computer and network? In case of the latter, I would
-recommend to do a short internet speed check prior to each experimental session, because
-internet speed can still vary.
-Also, I would recommend not only controlling the internet speech, but also the browser speed
-as this might affect the speed in which WebGazer’s functions are executed. Because all
-participants will use the same browser (version) and hardware, I think that making sure to clear
-the browser cache before each experimental session could already be enough.
-:::
-
-Thank you for pointing this out and excellent suggestions. It is important to adeqetly describe this in a bit more detail. Computers will be hardwired into the campus network. In additon, per your suggestion, we will clear the browser cahce before each experimental session and also run a speed check on each computer. 
-
-
-::: {.memo-reviewer}
-***Reviewer 3***: Suggestion 3: Calibration and attrition
+***Reviewer 2***: Suggestion 3: Calibration and attrition
 The authors expect that attrition rates are lower in the high-quality webcam condition. This is
 interesting, but the way in which the hypotheses and analyses related to this expectation are
 written up was somewhat confusing. In particular, the hypothesis related to attrition is
@@ -152,7 +129,9 @@ described on 0. 13? I would recommend the authors to create a (sub)section in wh
 calibration procedure and its scores is explained in more detail.
 :::
 
-We are sorry this was not made clear. Attrition is tied to calibrarion. If individuals fail calibration they are not allowed to continue (if they passed the first calibration but not the second) or start the task (failed the first calibration task). We tried to make this clearler and have added a calibration subsection as requested. 
+We are sorry this was not made clearer. Attrition is tied to calibration. That is,  if individuals fail calibration they are not allowed to continue (if they passed the first calibration but not the second) or start the task (failed the first calibration task). 
+
+We have made this clearer throughout the manuscript and have also added a subsection with more details about the calibration as requested. 
 
 ::: {.memo-excerpt}
 ### Webcam Calibration
@@ -170,3 +149,185 @@ Confidence and convergene are not tied to calibration but to the accuracy model 
 ::: {.memo-excerpt}
 In addition, Gorilla provides two eye-tracking quality metrics derived from the underlying face-tracking model: convergence and confidence. Convergence (range: 0–1) reflects the model’s certainty that a face has been successfully detected, with higher values indicating poorer convergence on a face. Confidence (range: 0–1) reflects the support vector machine (SVM) classifier’s confidence in the detected face. Trials will be excluded if convergence exceeds 0.5 (indicating unreliable face detection) or if confidence falls below 0.5 (indicating low classifier certainty).
 :::
+
+
+::: {.memo-reviewer}
+***Reviewer 2***: Suggestion 4: Network control
+The authors argue that the experiments will be carried out with “controlled network settings”.
+This is very important, because internet speed can affect webcam performance a great deal
+even with high-end webcams (think of freezes in a videocall). Therefore, I’m happy to hear that
+the authors take this into account, but I would like to know more details about how the network
+settings will be controlled. Will the authors use some procedure to ensure that internet speed is
+stabilised for all experimental sessions? Or, is the network controlled insofar that all
+participants take part from the same computer and network? In case of the latter, I would
+recommend to do a short internet speed check prior to each experimental session, because
+internet speed can still vary.
+Also, I would recommend not only controlling the internet speech, but also the browser speed
+as this might affect the speed in which WebGazer’s functions are executed. Because all
+participants will use the same browser (version) and hardware, I think that making sure to clear
+the browser cache before each experimental session could already be enough.
+:::
+
+Thank you for pointing this out and excellent suggestions. It is important to adeqetly describe this in a bit more detail. Computers will be hardwired into the campus network. In additon, per your suggestion, we will clear the browser cahce before each experimental session and also run a speed check on each computer. 
+
+::: {.memo-reviewer}
+***Reviewer 2***: On p.3 (line 34), the authors argue that “no study has directly tested how environmental
+and hardware constraints impact webcam-based eye-tracking data”. Like I already
+described at the start of this review, this is not entirely true, as Semmelmann & Weigelt
+(2018) and Slim, Kandel et al., (2024) have also provided insights into this matter.
+:::
+
+We have added a discussion of lab-based experiments using webgazeR to the introduction. 
+
+
+::: {.memo-reviewer}
+***Reviewer 2***: On p.3 (line 34), the authors argue that “no study has directly tested how environmental
+and hardware constraints impact webcam-based eye-tracking data”. Like I already
+described at the start of this review, this is not entirely true, as Semmelmann & Weigelt
+(2018) and Slim, Kandel et al., (2024) have also provided insights into this matter.
+:::
+
+We have added added a dicusion of Semmelamnn & Weigelt and Silm et al in realtion to lab-based use of webgazeR. 
+
+::: {.memo-excerpt}
+Several studies have examined the performance of WebGazer-based eye-tracking in controlled laboratory settings relative to online data collection, with mixed results. For example, @semmelmann2018 reported reduced spatial noise when WebGazer was used in the laboratory compared to online settings, whereas @slim2024 found largely comparable effects between lab-based and remote samples. Importantly, however, these comparisons primarily captured broad differences between controlled and uncontrolled testing contexts and were not designed to isolate the effects of specific hardware characteristics or environmental constraints.
+
+More targeted evidence suggests that hardware quality may nonetheless contribute to variability in webcam-based eye-tracking data. For instance, @slim2023 reported a positive association between sampling rate and calibration accuracy, and @gellerLanguageBordersStepbystep2025f found that participants who failed calibration more frequently were more likely to report using standard-quality built-in webcams and completing the study in suboptimal environments (e.g., natural lighting). To date, no study has directly examined the impact of head stabilization on webcam-based eye-tracking, despite extensive evidence from laboratroy eye-tracking with research-grade eye-trackers showing that head movement can substantially reduce both spatial accuracy and precision [@hessels2014]. Together, this body of work suggests that while general hardware variation may exert relatively small effects on webcam-based eye-tracking outcomes, the isolated contributions of webcam quality and participant stability remain poorly understood. Accordingly, in the present research we directly manipulate two factors—hardware selection (webcam quality) and participant stability—across two experiments to more precisely characterize their impact on data quality.
+:::
+
+
+::: {.memo-reviewer}
+***Reviewer 2***: On page 2, it’s described that webcam-based eye-tracking is implemented in several
+online experiment platforms like PsychoPy, jsPsych, Gorilla, or PCIbex. It could be made
+explicit that all these platforms involve some version of the WebGazer algorithm, which
+is introduced several paragraphs later. Perhaps a more logical order of this section
+would be to first introduce the WebGazer algorithm, and then describe that this
+algorithm has been implemented in several popular experiment platforms.
+:::
+
+
+Thank you for this helpful suggestion. We have revised the organization of the Introduction to first introduce the WebGazer algorithm and then describe its implementation across commonly used experimental platforms (e.g., PsychoPy, jsPsych, Gorilla, and PCIbex). We believe this reordering improves the logical flow and clarity of the section.
+
+
+::: {.memo-reviewer}
+***Reviewer 2***: The (general) introduction of the paper discusses the potential impact of
+hardware/webcam quality on webcam-based eye-tracking, while the potential impact of
+
+head stabilisation is described more in-depth in the specific introduction of Experiment
+2 (p. 14). Given that head stabilisation is the main motivation for Experiment 2, a
+discussion of its (potential) effects warrants a more prominent place in the general
+introduction as well.
+:::
+
+Thank you for this helpful suggestion. We have revised the general Introduction to include a more explicit discussion of the potential role of head stabilization in webcam-based eye-tracking. In the revised manuscript, we now introduce head stabilization alongside hardware considerations in the general Introduction, reflecting its central role as the motivation for Experiment 2, and clarifying the rationale for manipulating hardware selection and participant stability across the two experiments.
+
+::: {.memo-reviewer}
+***Reviewer 2***:
+The authors determined their sample size based on a power analysis. I was wondering
+whether this meant that participants that are excluded will be replaced (I think the
+answer to this is “yes”, because the authors describe that they will run the study until
+they have 100 “usable” participants, but it would be clearer if this were described
+explicitly).
+:::
+
+This is correct. We have updated our sampling plan section to make this clearer. 
+
+::: {.memo-excerpt}
+Data collection will continue until 100 usable participants are obtained (50 per webcam-quality group). That is, participants will be replaced if they fail calibration at any point.  For analyses of attrition (i.e., failed calibration attempts) (see below), all participants who enter the study will be included, thus we might have more than 100 participants total. 
+:::
+
+::: {.memo-reviewer}
+***Reviewer 2***:
+The authors are planning to aggregate the data into 50 ms time bins. Although I
+understand that such 50 ms time bins provide quite some temporal precision in the
+analyses, I wonder whether it would be more realistic to aggregate into 100 ms time
+bins. In my experience, WebGazer’s sampling resolution is quite inconsistent within
+participants – and even within trials. Therefore, I worry whether you might end up with a
+relatively large number of empty time bins (especially in the standard-quality webcam
+condition).
+:::
+
+Thank you for this thoughtful comment. We agree that sampling irregularity is an important consideration when selecting temporal bin widths for webcam-based eye-tracking data, particularly given known variability in WebGazer’s effective sampling rate both within and across participants.
+
+Our initial motivation for using 50 ms time bins was driven by the planned GAMM analyses, which benefit from higher temporal resolution when modeling fine-grained time-course effects. Because data collection for the present study occurs in a controlled laboratory setting, we expect more stable sampling than is typical for fully remote webcam studies. In the revised protocol, we therefore clarify that participants with effective sampling rates below 30 Hz will be excluded, rather than the previously stated 15 Hz threshold. Under these conditions, 50 ms bins should generally contain at least one sample per bin, even in the standard-quality webcam condition.
+
+At the same time, we recognize the reviewer’s concern that sampling irregularities may still lead to empty or sparsely populated bins, particularly for lower-quality webcams. To address this, we have added a contingency plan to the manuscript: if inspection of the data reveals a substantial proportion of empty time bins or excessive participant exclusion due to sampling instability, we will aggregate the data into 100 ms time bins. This approach provides a more conservative temporal resolution while ensuring robust estimation and minimizing data loss.
+
+Together, this strategy balances the analytic advantages of finer temporal resolution with the practical constraints of webcam-based eye-tracking and ensures that our conclusions are not driven by artifacts of sampling variability.
+
+::: {.memo-reviewer}
+***Reviewer 2***:
+The description of the dependent variable was not very clear to me (i.e., “gaze counts to
+cohorts compared to unrelated items”). What is meant with “gaze counts” here? Is it the
+number of frames (within a time bin) in which WebGazer detected a look to the cohort
+item minus the number of frames (within a timebin) in which WebGazer detected a look
+to an unrelated item? In general, I would suggest binarising dependent variables in eye-tracking data: If
+a participant looks at a specific region of interest (e.g., the cohort) within a given
+time bin, the fixation to that region could be coded as ‘1’ for that time bin. This
+conceptualisation of the dependent variable more closely reflects the nature of
+gaze behaviour (i.e., you either look at something or you don’t). That said, my
+expertise with GAMMs is limited, so there may be model-specific reasons for
+implementing the dependent variable differently that I am not aware of. 
+:::
+
+We have made our analysis plan a bit cleaer here and we are indeed binarising our variable. 
+
+::: {.memo-excerpt}
+For analysis, gaze data were segmented into 100-ms time bins. A look was defined as any time point at which the WebGazer.js algorithm returned a valid gaze estimate. Within each time bin, gaze samples falling on the target item were excluded. The remaining samples were classified as directed toward either the cohort competitor or an unrelated competitor, with looks to either unrelated item collapsed into a single unrelated category. For each participant × trial × time bin, we counted the number of gaze samples falling on the cohort and on unrelated items. Each bin was then coded as cohort-dominant (1) if the cohort received more samples than the unrelated category, and as 0 otherwise. These binary values were subsequently summed across trials, yielding, for each participant × time bin, the number of trials in which gaze favored the cohort vs. unrelated looks. This cohort-dominance count served as the dependent measure for statistical modeling and summary analyses.
+
+This simplified analysis approach offers several advantages. First, aggregating gaze data into binomial outcomes substantially reduces data dimensionality and mitigates issues related to temporal autocorrelation that are common in high-frequency eye-tracking data [@verissimo2025novel]. Second, within a generalized additive mixed-model (GAMM) framework, using a binomial response allows temporal autocorrelation to be modeled directly, which we implement in the analyses described below.
+:::
+
+
+We did ask participants about internal or external web cameras in that experiment but we just used this data as a upper bound for the power simulations. We assumed that higher quality webcams would have higher proportions than standard webcameras and ran simualtions based ont his. 
+
+
+## Minor
+
+::: {.memo-reviewer}
+***Reviewer 2***: I think spelling out “VWP” as “visual world paradigm” in the paper’s keywords might
+enhance visibility of the paper.
+:::
+
+The keyword VWP in the abstract has been changed to visual world paradigm. 
+
+::: {.memo-reviewer}
+***Reviewer 2***: P. 5: Replacing the period (.) with a colon (‘:’) after the sentence “We hypothesize several
+effects related to competition, onset, and attrition” would warn the reader that the
+specific hypotheses are coming up.
+:::
+
+This has been rewritten to be clearer. 
+
+
+::: {.memo-reviewer}
+***Reviewer 2***: P.5: The “if” in “if (H2a) Each webcam condition will show ...” seems misplaced
+:::
+
+This has been changed.
+
+::: {.memo-reviewer}
+***Reviewer 2***:  P.6: The abbreviations “TCRU” and “TCUU” are not spelled out (although they are spelled
+out later in the paper, on p. 8
+:::
+
+We have spelled out TCUU early on. We have removed mention of TCRU as now we will only show TCUU trials. 
+
+::: {.memo-reviewer}
+***Reviewer 2***: P. 7 (line 23): there is a typo: “auditory” is spelled out as “audiotry”
+:::
+
+This has been fixed. 
+
+::: {.memo-reviewer}
+***Reviewer 2***: P. 7 (line 42): the word “trial” is missing between “each...” and “Following...”
+:::
+
+This has been fixed. 
+
+::: {.memo-reviewer}
+***Reviewer 2***: If possible, a figure showing an example trial/display in the description of the
+experimental materials would be helpful for people less familiar with VWP studies.
+:::
+
+We have now added a figure. 
