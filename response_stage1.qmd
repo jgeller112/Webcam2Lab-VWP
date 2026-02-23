@@ -383,4 +383,4 @@ This has been fixed.
 experimental materials would be helpful for people less familiar with VWP studies.
 :::
 
-We have now added a figure. 
+Thank you for this suggestion. We have now added a figure highlighting the task. 
