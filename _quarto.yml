@@ -20,10 +20,10 @@ format:
     code-tools: true
     code-fold: true
     code-summary: "Show R code"
+    comments:
+      hypothesis: true
     execute:
       echo: true
 
   preprint-docx:
     output-file: web2lab-RR_stage1.docx
-
-
