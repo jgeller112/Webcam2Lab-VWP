@@ -162,7 +162,7 @@ All stimuli (audio and images), code, and data (raw and summary) will be placed 
 
 **Using these data, we computed a binarized *Looks* variable within each time bin. For each bin, the condition with the greater number of looks was coded as 1. To mitigate potential inflation effects for unrelated conditions, we retained the maximum value across unrelated competitors. We then contrast-coded condition such that cohort was coded as 0.5 and unrelated as −0.5, and fit a binomial generalized linear mixed-effects model (GLMM) to obtain fixed-effect estimates.**
 
-**We specified a smallest effect size of interest (SESOI) of 0.54 on the log-odds scale, corresponding to a medium-sized effect (cohen's d = 0.3) for the cohort versus unrelated comparison. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the target effect exceeded \|z\| = 1.96.**
+**We specified a small effect the log-odds scale (.10), corresponding to a small-sized effect for the cohort versus unrelated comparison. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the target effect exceeded \|z\| = 1.96.**
 
 **The full analysis script used to conduct this power analysis is available on OSF (<https://osf.io/4trmn/files/a46g8>). Although this approach simplifies the planned design, it provides a conservative lower-bound estimate of the effects expected in the current study.**
 
