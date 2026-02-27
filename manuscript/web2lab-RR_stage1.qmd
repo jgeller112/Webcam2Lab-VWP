@@ -31,7 +31,7 @@ author:
       - id: 2
         name: "University of Lisbon"
         department: School of Arts and Humanities
-  - name: Julia Droulin
+  - name: Julia Drouin
     orcid: 0000-0003-0798-3268
     affiliations:
      - id: 3
@@ -158,11 +158,11 @@ All stimuli (audio and images), code, and data (raw and summary) will be placed 
 
 ## Sampling Goal
 
-**We conducted an *a priori* power analysis using the {mixedPower} package [@kumle2021] in R. Data from 21 participants, collected online using the Gorilla experimental platform during development of the {webgazeR} package \[@gellerLanguageBordersStepbystep2025f\] and employing the same stimuli and visual-world word paradigm (VWP) design, were used to seed the simulations. We focused specifically on the cohort effect in TCUU trials. Importantly, these pilot data did not manipulate webcam quality or head stabilization.**
+**We conducted an *a priori* power analysis using the {mixedPower} package [@kumle2021] in R. Data from 21 participants, collected online using the Gorilla experimental platform during development of the {webgazeR} package [@gellerLanguageBordersStepbystep2025f] and employing the same stimuli and visual-world word paradigm (VWP) design, were used to seed the simulations. We focused specifically on the cohort effect in TCUU trials. Importantly, these pilot data did not manipulate webcam quality or head stabilization.**
 
 **Using these data, we computed a binarized *Looks* variable within each time bin. For each bin, the condition with the greater number of looks was coded as 1. To mitigate potential inflation effects for unrelated conditions, we retained the maximum value across unrelated competitors. We then contrast-coded condition such that cohort was coded as 0.5 and unrelated as −0.5, and fit a binomial generalized linear mixed-effects model (GLMM) to obtain fixed-effect estimates.**
 
-**We specified a small effect the log-odds scale (.10), corresponding to a small-sized effect for the cohort versus unrelated comparison. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the target effect exceeded \|z\| = 1.96.**
+**We specified a small effect on the log-odds scale (.10) for the cohort versus unrelated comparison. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the target effect exceeded \|z\| = 1.96.**
 
 **The full analysis script used to conduct this power analysis is available on OSF (<https://osf.io/4trmn/files/a46g8>). Although this approach simplifies the planned design, it provides a conservative lower-bound estimate of the effects expected in the current study.**
 
@@ -184,7 +184,7 @@ Auditory stimuli were recorded by a female monolingual speaker of English in a s
 
 ### Webcams
 
-To manipulate recording quality, two webcams will be used. In the high-quality condition, we will use a Logitech Brio webcam, which records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view and samples at 60 Hz. This setup provides high-fidelity video with greater spatial and temporal precision. In the standard-quality condition, we will use a Logitech C270 HD webcam, which records in 720p resolution and samples at 30 Hz, producing video quality comparable to that of a typical built-in laptop webcam and therefore simulating lower-quality online recordings [@jarvis2025].
+To manipulate recording quality, two webcams will be used. In the high-quality condition, we will use a Logitech Brio webcam, which records in 4K resolution (up to 4096 × 2160 px) with a 90° field of view and samples at 60 Hz. This setup provides high-fidelity video with greater spatial and temporal precision. In the standard-quality condition, we will use a Logitech C270 HD webcam, which records in 720p resolution and samples at 30 Hz, producing video quality comparable to that of a typical built-in laptop webcam and therefore simulating lower-quality online recordings [see @jarvis2025 for similar use case].
 
 Both webcams will be mounted in a fixed position above the monitor to maintain consistent framing across participants. Lighting will be standardized to ensure uniform image quality across all sessions.
 
@@ -206,7 +206,7 @@ Experimental tasks were fixed and presented in the following order: informed con
 
 **After calibration**, participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. **Eye movements will be recorded continuously during the final image display.** Please see Figure 1 for a schematic of the trial. After the main task, participants complete a brief demographic questionnaire and are thanked for their participation.
 
-![Trial Schematic for webcam VWP.](/manuscript/vwp_trial.png){fig-align="center"}
+![](trial.png)
 
 ### **Demographic Questioniare**
 
