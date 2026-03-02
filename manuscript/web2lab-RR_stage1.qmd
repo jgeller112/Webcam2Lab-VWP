@@ -104,7 +104,7 @@ However, there are several limitations associated with webgazer-based eye tracki
 
 **Spatial accuracy refers to the extent to which estimated gaze positions deviate from the true point of gaze, whereas precision reflects the consistency of these estimates over time [@carter2020]. In webcam-based systems, spatial accuracy often exceeds 1° of visual angle, with WebGazer.js achieving approximately 4° under laboratory conditions [@semmelmann2018]. Such spatial imprecision can limit the reliable detection of brief or subtle gaze shifts, particularly in tasks that rely on small areas of interest or fine-grained gaze dynamics.**
 
-**Temporal resolution in webcam-based eye tracking reflects not only the nominal sampling rate of the webcam—typically at or below 30 Hz (the mean/median is \~20 hz; see @prystauka2024; @gellerLanguageBordersStepbystep2025f\]—but also variability in sampling, execution-time delays, and the alignment of gaze samples with experimental events. Although a 30-Hz sampling rate may be sufficient to capture relatively slow eye-movement latencies, reduced temporal fidelity arising from timing variability and misalignment can impair the estimation of gaze onset, offset, and event-locked dynamics in paradigms requiring precise temporal alignment. Consistent with this, prior work has reported substantial variability in apparent effect timing across tasks and implementations, in some cases exceeding several hundred milliseconds [@semmelmann2018; @slim2024; @slim2023].**
+**Temporal resolution in webcam-based eye tracking reflects not only the nominal sampling rate of the webcam—typically at or below 30 Hz (the mean/median is \~20 Hz; see @prystauka2024; @gellerLanguageBordersStepbystep2025f\]—but also variability in sampling, execution-time delays, and the alignment of gaze samples with experimental events. Although a 30-Hz sampling rate may be sufficient to capture relatively slow eye-movement latencies, reduced temporal fidelity arising from timing variability and misalignment can impair the estimation of gaze onset, offset, and event-locked dynamics in paradigms requiring precise temporal alignment. Consistent with this, prior work has reported substantial variability in apparent effect timing across tasks and implementations, in some cases exceeding several hundred milliseconds [@semmelmann2018; @slim2024; @slim2023].**
 
 **Together, these limitations make webcam-based eye tracking less suitable for paradigms requiring fine-grained spatial or temporal fidelity—such as tasks involving small or densely spaced areas of interest, rapid stimulus sequences, or millisecond-level event timing [@jamesWhatParadigmsCan2025; @slim2024]. An open question is whether these limitations primarily stem from the WebGazer.js algorithm itself or from environmental and hardware constraints—and, critically, whether improvements to experimental setup (e.g., webcam quality, head stabilization, and execution timing) can meaningfully mitigate these issues. Addressing this question is essential for determining whether webcam eye tracking should be viewed as fundamentally limited or as a method whose performance can be substantially improved through better implementation..**
 
@@ -138,19 +138,19 @@ To address this, participants will complete the same VWP task using one of two w
 
 We hypothesize several effects related to competition, onset, and attrition:
 
-### Competition Effects
+### Competition Effects (H1a)
 
-(H1a) Participants will show an overall greater proportion of looks to competitors. (H1b) Webcam quality (high vs. standard) will influence the overall proportion of looks, with higher-quality webcams detecting a greater proportion of looks.
+Webcam quality (high vs. standard) will influence the overall proportion of looks, with higher-quality webcams detecting a greater proportion of looks to competitors.
 
 To quantify the effect of webcam quality on the proportion of looks within the time window of interest, we will use Cohen’s h—a standardized measure of effect size appropriate for comparisons between two proportions.
 
-### Timing/Onset Effects
+### Timing/Onset Effects (H1b)
 
-(H1b) Each webcam condition will show a change in the proportion of looks across time. More specifically we hypothesize the proportion change will be non-linear across time and that there will be a difference between the two conditions across time. (H2b) For standard-quality webcams vs. high-quality webcam, onsets will be detected later due to increased noise.
+Each webcam condition will show a change in the proportion of looks to cohorts across time. More specifically we hypothesize the proportion change will be non-linear across time and that there will be a difference between the two conditions across time. For standard-quality webcams vs. high-quality webcam, onsets will be detected later due to increased noise.
 
-### Attrition
+### **Attrition  (Calibration failure) (H1c)**
 
-(H1c) Attrition rates will be lower in the high-quality webcam condition than in the standard-quality webcam condition.
+**Attrition rates due to calibration failure** will be lower in the high-quality webcam condition than in the standard-quality webcam condition.
 
 # Method
 
@@ -160,7 +160,7 @@ All stimuli (audio and images), code, and data (raw and summary) will be placed 
 
 **We conducted an *a priori* power analysis using the {mixedPower} package [@kumle2021] in R. Data from 21 participants, collected online using the Gorilla experimental platform during development of the {webgazeR} package [@gellerLanguageBordersStepbystep2025f] and employing the same stimuli and visual-world word paradigm (VWP) design, were used to seed the simulations. We focused specifically on the cohort effect in TCUU trials. Importantly, these pilot data did not manipulate webcam quality or head stabilization.**
 
-**Using these data, we computed a binarized *Looks* variable within each time bin. For each bin, the condition with the greater number of looks was coded as 1. To mitigate potential inflation effects for unrelated conditions, we retained the maximum value across unrelated competitors. We then contrast-coded condition such that cohort was coded as 0.5 and unrelated as −0.5, and fit a binomial generalized linear mixed-effects model (GLMM) to obtain fixed-effect estimates.**
+**Using these data, we computed a binarized Looks variable within each time bin, effectively downsampling the data. In the simulation, gaze data were aggregated into 100-ms bins (10 Hz). Within each bin, the condition receiving the greater number of looks was coded as 1. To reduce potential inflation effects across unrelated competitor conditions, we retained the maximum value among unrelated competitors for each bin. Condition was contrast-coded (cohort = 0.5, unrelated = −0.5), and a binomial generalized linear mixed-effects model (GLMM) was fit to estimate fixed effects.**
 
 **We specified a small effect on the log-odds scale (.10) for the cohort versus unrelated comparison. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the target effect exceeded \|z\| = 1.96.**
 
@@ -226,11 +226,13 @@ Areas of Interest (AOIs) will be defined in normalized coordinates as the four s
 
 ### GAMMs
 
-**Before fitting the GAMM, the eye-tracking data were processed to obtain a binomial response suitable for model fitting. Gaze samples were binned into 100-ms** **intervals within each trial. Within each trial and time bin per participant, we computed the number of valid gaze samples (Looks) assigned to the cohort image and to each unrelated competitor. Bins containing no looks to any relevant image were excluded from further analysis. Each remaining bin was then binarised by coding it as 1 if the cohort image received more Looks than the strongest unrelated competitor in that bin, and 0 otherwise. This winner-take-all binarisation yields a single binary observation per time bin in each trial, effectively downsampling the gaze-sample stream while preserving time-resolved preference dynamics.We refer to these 0/1 observations as *looks* (rather than *fixations*) to emphasise that the dependent measure is defined over gaze samples rather than oculomotor events.**
+**Before fitting the GAMM, the eye-tracking data were processed to obtain a binomial response suitable for model fitting. Gaze samples were binned into 50-ms** **intervals within each trial**[^2]**. Within each trial and time bin per participant, we computed the number of valid gaze samples (Looks) assigned to the cohort image and to each unrelated competitor. Bins containing no looks to any relevant image were excluded from further analysis. Each remaining bin was then binarized by coding it as 1 if the cohort image received more looks than the strongest unrelated competitor in that bin, and 0 otherwise. This winner-take-all binarisation yields a single binary observation per time bin in each trial, effectively downsampling the gaze-sample stream while preserving time-resolved preference dynamics. We refer to these 0/1 observations as *looks* (rather than *fixations*) to emphasise that the dependent measure is defined over gaze samples rather than oculomotor events (i.e., fixations).**
 
-**After binarisation, trial-level 0/1 looks were aggregated across trials to obtain binomial counts for each participant × condition × time-bin combination: the number of trials coded as 1 (*cohort_looks*) and the number of trials contributing valid data (*total_looks*). These binomial counts (*cohort_looks* out of *total_looks*) constituted the response variable in the GAMM. Although *cohort_looks / total_looks* can be interpreted descriptively as the proportion of cohort-dominant bins, proportions were not precomputed for model fitting. Instead, the GAMM was fit directly to the binomial counts on a latent log-odds scale, and time-course estimates were obtained as predicted probabilities from the fitted model.**
+[^2]: **If inspection of the data reveals that each participant × trial × time bin does not contain at least one valid sample, we will aggregate the data into 100 ms time bins and relax the 30 Hz sampling rate requirement (use 15 Hz instead). This approach provides a more conservative temporal resolution while ensuring robust parameter estimation and minimizing unnecessary data loss.**
 
-**This simplified analysis approach offers several advantages. First, aggregating gaze data into binomial outcomes substantially reduces data dimensionality and mitigates issues related to temporal autocorrelation that are common in high-frequency eye-tracking data \[\@verissimo2025novel\]. Second, within a generalized additive mixed-model (GAMM) framework, using a binomial response allows temporal autocorrelation to be modeled directly, which we implement in the analyses described below.**
+**After binarization, trial-level 0/1 looks were aggregated across trials to obtain binomial counts for each participant × condition × time-bin combination: the number of trials coded as 1 (*cohort_looks*) and the number of trials contributing valid data (*total_looks*). These binomial counts (*cohort_looks* out of *total_looks*) constituted the response variable in the GAMM. Although *cohort_looks / total_looks* can be interpreted descriptively as the proportion of cohort-dominant bins, proportions were not precomputed for model fitting. Instead, the GAMM was fit directly to the binomial counts on a latent log-odds scale, and time-course estimates were obtained as predicted probabilities from the fitted model.**
+
+**This simplified analysis approach offers several advantages. First, aggregating gaze data into binomial outcomes substantially reduces data dimensionality and attenuates the extreme temporal autocorrelation that is common in high-frequency eye-tracking data [@verissimo2025novel] . Rather than enabling autocorrelation to be modeled directly, aggregation makes the remaining autocorrelation more tractable. Second, this aggregation strategy permits the use of more parsimonious models that are faster to fit, less computationally intensive to simulate from, and less prone to overfitting [@baayen2017].**
 
 To analyze overall competition effects and onset latency, we will use generalized additive mixed models [GAMMs; @Wood2017]. GAMMs extends the generalized linear modeling framework by modeling effects that are expected to vary non-linearly over time–a common feature in the VWP [@brown-schmidt2025; @mitterer2025; @verissimo2025novel; @ito2022]. These models capture non-linear effects by fitting smoothing splines to the data using data-driven, machine-learning-based methods, with the amount of non-linearity captured by how "wiggly" the time course is (one can think of this as the number of bowpoints of a curve). A benefit of this approach is that it reduces the risk of over-fitting and eliminates the need to use polynomial terms, as required in traditional growth curve models [@mirman2014growth] . Importantly, GAMMs also allow researchers to account for autocorrelation in time-series data, which is especially critical in gaze analyses where successive samples are not independent. By modeling the autocorrelation structure, GAMMs provide more accurate estimates of temporal effects and prevent inflation of Type I error rates [@vanrij2019]. In addition to this, fitting GAMMs allow us to estimate the onset of the competition effect in each condition [see @verissimo2025novel].
 
@@ -295,7 +297,7 @@ start_event = start_event(., column = "Time", # for ar
 # quick rho estimate (fit once without AR to get residual ACF ~ lag1)
 
 m0 <- 
-bam(cbind(fix_cohort, fix_unrelated) ~ 1 + 
+bam(cbind(look_cohort, look_unrelated) ~ 1 + 
     camera + s(time, by = camera, k = 10) + 
     s(participant, by=camera, bs = "re") +
     s(time, participant, by=camera, bs = "re"), 
@@ -307,7 +309,7 @@ rho  <- acf(residuals(m0, type = "pearson"), plot = FALSE)$acf[2]
 # final model with AR(1) to handle within-series autocorrelation
 
 m1 <- 
-bam(cbind(fix_cohort, fix_unrelated) ~ 1 + 
+bam(cbind(look_cohort, look_unrelated) ~ 1 + 
     camera + s(time, by = camera, k = 10) + 
     s(participant, by=camera, bs = "re") +
     s(time, participant, by=camera, bs = "re") + 
@@ -331,7 +333,7 @@ start_event = start_event(., column = "Time", # for ar
 # quick rho estimate (fit once without AR to get residual ACF ~ lag1)
 
 m0 <- 
-bam(cbind(fix_cohort, fix_unrelated) ~ 1 + 
+bam(cbind(look_cohort, look_unrelated) ~ 1 + 
     1 + Condition_ord + s(Time) + 
     s(Time, by=Condition_ord) + 
     (Participant, bs="re") + 
@@ -346,7 +348,7 @@ rho  <- acf(residuals(m0, type = "pearson"), plot = FALSE)$acf[2]
 # final model with AR(1) to handle within-series autocorrelation
 
 m1 <- 
-bam(cbind(fix_cohort, fix_unrelated) ~ 1 + 
+bam(cbind(look_cohort, look_unrelated) ~ 1 + 
     1 + Condition_ord + s(Time) + 
     s(Time, by=Condition_ord) + 
     (Participant, bs="re") + 
@@ -420,11 +422,13 @@ In Experiment 2, we use the same standard-quality external webcam as in Experime
 
 ### Competition Effects (H2a)
 
-Participants will show an overall greater proportion of looks to competitors. (H1b) Head stabilization (chin rest vs. no chin rest) will influence the overall proportion of looks, with chin rest condition detecting a greater proportion of looks.
+Heads stability (chin rest vs. no chin rest) will influence the overall proportion of looks, with the chin rest condition detecting a greater proportion of competitor looks
+
+To quantify the effect of head stabilization on the proportion of looks within the time window of interest, we will use Cohen’s h—a standardized measure of effect size appropriate for comparisons between two proportions.
 
 ### Timing/Onset Effects (H2b)
 
-Each condition will show a change in the proportion of looks across time. More specifically we hypothesize the proportion change will be non-linear across time and that there will be a difference between the two conditions across time. (H2b) For the no chin-rest condition compared to the chin-rest condition, onsets will be detected later due to increased noise.
+Each condition will show a change in the proportion of looks across time. More specifically we hypothesize the proportion change will be non-linear across time and that there will be a difference between the two conditions across time. For the no chin-rest condition compared to the chin-rest condition, onsets will be detected later due to increased noise.
 
 ### Attrition (Calibration failure) (H2c)
 
