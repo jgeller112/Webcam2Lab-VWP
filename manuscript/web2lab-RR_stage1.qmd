@@ -200,9 +200,9 @@ Experimental tasks were fixed and presented in the following order: informed con
 
 #### VWP
 
-**After calibration**, participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. **Eye movements will be recorded continuously during the final image display.** Please see Figure 1 for a schematic of the trial. After the main task, participants complete a brief demographic questionnaire and are thanked for their participation.
+**After calibration**, participants will then complete four practice trials to familiarize themselves with the task. Each trial begins with a 500 ms central fixation cross, followed by a preview display of four images located in the screen’s corners. After 1500 ms, a start button appears at the center; participants click it to confirm fixation before hearing the spoken word. The images remain visible throughout the trial, and participants indicate their response by clicking the image corresponding to the spoken target. A response deadline of 5 seconds will be used. **Eye movements will be recorded continuously during the final image display.** Please see @fig-vwp for a schematic of the trial. After the main task, participants complete a brief demographic questionnaire and are thanked for their participation.
 
-![](trial.png)
+![Trial schematic for VWP task](trial.png){#fig-vwp fig-align="center"}
 
 ### **Demographic Questioniare**
 
