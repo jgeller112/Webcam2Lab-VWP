@@ -90,6 +90,8 @@ execute:
   fig-dpi: 500
 ---
 
+{{< pagebreak >}}
+
 Online experimentation in the behavioral sciences has advanced considerably since its introduction at the 1996 Society for Computers in Psychology (SCiP) conference in Chicago, IL [@reips2021]. One methodological domain that has shown particular promise in moving online is eye tracking. Traditionally, eye-tracking studies required controlled laboratory settings equipped with specialized and costly hardware—a process that is both resource- and time-intensive. More recently, however, a growing body of research has shown that eye tracking can be successfully adapted to online environments [e.g., @bogdan2024; @bramlett2024; @özsoy2023; @prystauka2024; @slim2023; @slim2024; @vandercruyssen2023; @vos2022; @jamesWhatParadigmsCan2025; @yangWebcambasedOnlineEyetracking2021]. By leveraging computers with webcams, researchers can now record eye movements remotely, making it possible to collect data from virtually any location at any time. This shift not only enhances scalability, but also broadens access to more diverse and representative participant samples.
 
 **Webcam-based eye tracking has become an increasingly viable and accessible method for behavioral research. Implementation typically requires only a standard computing device (e.g., laptop, desktop, tablet, or smartphone) equipped with a built-in or external webcam. Data are collected through a web browser running dedicated software capable of recording and estimating gaze position in real time.**
@@ -104,7 +106,7 @@ However, there are several limitations associated with webgazer-based eye tracki
 
 **Spatial accuracy refers to the extent to which estimated gaze positions deviate from the true point of gaze, whereas precision reflects the consistency of these estimates over time [@carter2020]. In webcam-based systems, spatial accuracy often exceeds 1° of visual angle, with WebGazer.js achieving approximately 4° under laboratory conditions [@semmelmann2018]. Such spatial imprecision can limit the reliable detection of brief or subtle gaze shifts, particularly in tasks that rely on small areas of interest or fine-grained gaze dynamics.**
 
-**Temporal resolution in webcam-based eye tracking reflects not only the nominal sampling rate of the webcam—typically at or below 30 Hz (the mean/median is \~20 Hz; see @prystauka2024; @gellerLanguageBordersStepbystep2025f\]—but also variability in sampling, execution-time delays, and the alignment of gaze samples with experimental events. Although a 30-Hz sampling rate may be sufficient to capture relatively slow eye-movement latencies, reduced temporal fidelity arising from timing variability and misalignment can impair the estimation of gaze onset, offset, and event-locked dynamics in paradigms requiring precise temporal alignment. Consistent with this, prior work has reported substantial variability in apparent effect timing across tasks and implementations, in some cases exceeding several hundred milliseconds [@semmelmann2018; @slim2024; @slim2023].**
+**Temporal resolution in webcam-based eye tracking reflects not only the nominal sampling rate of the webcam—most often it is below 30 Hz [@prystauka2024; @gellerLanguageBordersStepbystep2025f] – but also variability in sampling, execution-time delays, and the alignment of gaze samples with experimental events. Although a 30-Hz sampling rate may be sufficient to capture relatively slow eye-movement latencies, reduced temporal fidelity arising from timing variability and misalignment can impair the estimation of gaze onset, offset, and event-locked dynamics in paradigms requiring precise temporal alignment. Consistent with this, prior work has reported substantial variability in apparent effect timing across tasks and implementations, in some cases exceeding several hundred milliseconds [@semmelmann2018; @slim2024; @slim2023].**
 
 **Together, these limitations make webcam-based eye tracking less suitable for paradigms requiring fine-grained spatial or temporal fidelity—such as tasks involving small or densely spaced areas of interest, rapid stimulus sequences, or millisecond-level event timing [@jamesWhatParadigmsCan2025; @slim2024]. An open question is whether these limitations primarily stem from the WebGazer.js algorithm itself or from environmental and hardware constraints—and, critically, whether improvements to experimental setup (e.g., webcam quality, head stabilization, and execution timing) can meaningfully mitigate these issues. Addressing this question is essential for determining whether webcam eye tracking should be viewed as fundamentally limited or as a method whose performance can be substantially improved through better implementation..**
 
@@ -158,15 +160,11 @@ All stimuli (audio and images), code, and data (raw and summary) will be placed 
 
 ## Sampling Goal
 
-**We conducted an *a priori* power analysis using the {mixedPower} package [@kumle2021] in R. Data from 21 participants, collected online using the Gorilla experimental platform during development of the {webgazeR} package [@gellerLanguageBordersStepbystep2025f] and employing the same stimuli and visual-world word paradigm (VWP) design, were used to seed the simulations. We focused specifically on the cohort effect in TCUU trials. Importantly, these pilot data did not manipulate webcam quality or head stabilization.**
+**We conducted an *a priori* power analysis using the {simr} package in R [@green2016]. Data from 21 participants, collected online using the Gorilla experimental platform during development of the {webgazeR} package [@gellerLanguageBordersStepbystep2025f] and employing the same stimuli and visual-world word paradigm (VWP) design, were used to seed the simulations. We focused specifically on the cohort effect in TCUU trials. Importantly, these pilot data did not manipulate webcam quality or head stabilization.**
 
-**Using these data, we computed a binarized Looks variable within each time bin, effectively downsampling the data. In the simulation, gaze data were aggregated into 100-ms bins (10 Hz). Within each bin, the condition receiving the greater number of looks was coded as 1. To reduce potential inflation effects across unrelated competitor conditions, we retained the maximum value among unrelated competitors for each bin. Condition was contrast-coded (cohort = 0.5, unrelated = −0.5), and a binomial generalized linear mixed-effects model (GLMM) was fit to estimate fixed effects.**
+**Using these data, we constructed a binarized Looks variable within each time bin, thereby downsampling the gaze data. In the simulation, gaze samples were aggregated into 100-ms bins (10 Hz). Within each bin, the cohort image was coded as 1 if it received more looks than the unrelated image; otherwise, it was coded as 0. These binarized values were then aggregated across trial × time bin to obtain counts of looks to the cohort and total looks. We fit an intercept-only generalized linear mixed-effects model (GLMM) to these aggregated data. To simulate the expected effect, we specified a small effect size on the log-odds scale (b = 0.10) for the cohort versus unrelated contrast. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the absolute z-value for the target effect exceeded 1.96. The full analysis script used to conduct this power analysis is available on OSF (<https://osf.io/4trmn/files/2v3e4>). Although this approach simplifies the planned design, it provides a conservative lower-bound estimate of the effects expected in the current study.**
 
-**We specified a small effect on the log-odds scale (.10) for the cohort versus unrelated comparison. Simulated datasets were generated under this model, and the planned GLMM was refit to each simulated dataset (5,000 simulations). Statistical power was estimated as the proportion of simulations in which the target effect exceeded \|z\| = 1.96.**
-
-**The full analysis script used to conduct this power analysis is available on OSF (<https://osf.io/4trmn/files/a46g8>). Although this approach simplifies the planned design, it provides a conservative lower-bound estimate of the effects expected in the current study.**
-
-**Results indicated that a sample size of 35 participants per group (N = 70 total) would provide approximately 90% power to detect the hypothesized reduction in the cohort effect and overall fixation rate under standard-quality webcam conditions. Because this analysis focused on overall fixation proportions and we additionally plan to examine effects across time, we will recruit 50 participants per group (N = 100 total). Data collection will continue until 100 usable participants are obtained (50 per webcam-quality group). That is, participants will be replaced if they fail calibration at any point. For analyses of attrition (i.e., failed calibration attempts) (see below), all participants who enter the study will be included, thus we might have more than 100 participants total.**
+**Results indicated that a sample size of 40 participants per group (N = 80 total) would provide approximately 90% power to detect the hypothesized cohort effect. Because this analysis focused on overall fixation proportions and we additionally plan to examine effects across time, we will recruit 50 participants per group (N = 100 total). Data collection will continue until 100 usable participants are obtained (50 per webcam-quality group). That is, participants will be replaced if they fail calibration at any point. For analyses of attrition (i.e., failed calibration attempts) (see below), all participants who enter the study will be included, thus we might have more than 100 participants total.**
 
 ## Materials
 
@@ -174,7 +172,7 @@ All stimuli (audio and images), code, and data (raw and summary) will be placed 
 
 #### Picture Stimuli
 
-**Stimuli were adapted from @colby2023. Each stimulus set comprised four images. For the webcam study, we used 60 stimulus sets (30 monosyllabic, 30 bisyllabic). All trials were of the TCUU type (target–cohort–unrelated–unrelated), in which a target, its onset cohort competitor, and two unrelated images were displayed (e.g., MOUTH, mouse, house, chain). This design yielded 60 trials in total, with each stimulus set contributing one trial. A custom MATLAB script (R2024a; <https://osf.io/x3frv>) generated a unique randomized trial list for each participant, pseudo-randomizing display positions such that the target, cohort, and unrelated images were approximately equally likely to appear in each quadrant across participants.**
+**Stimuli were adapted from @colby2023. Each stimulus set comprised four images. For the webcam study, we used 60 stimulus sets (30 monosyllabic, 30 bisyllabic). All trials were of the TCUU type (target–cohort–unrelated–unrelated), in which a target, its onset cohort competitor, and two unrelated images were displayed (e.g., MOUTH, mouse, chain, house). This design yielded 60 trials in total, with each stimulus set contributing one trial. A custom MATLAB script (R2024a; <https://osf.io/x3frv>) generated a unique randomized trial list for each participant, pseudo-randomizing display positions such that the target, cohort, and unrelated images were approximately equally likely to appear in each quadrant across participants.**
 
 All 120 images were drawn from a commercial clipart database, selected by a small focus group of students, and edited using a standard lab protocol to ensure a cohesive visual style [@mcmurray2010]. All images were scaled to 300 × 300 pixels.
 
@@ -224,7 +222,7 @@ Areas of Interest (AOIs) will be defined in normalized coordinates as the four s
 
 ### GAMMs
 
-**Before fitting the GAMM, the eye-tracking data were processed to obtain a binomial response suitable for model fitting. Gaze samples were binned into 50-ms** **intervals within each trial**[^1]**. Within each trial and time bin per participant, we computed the number of valid gaze samples (Looks) assigned to the cohort image and to each unrelated competitor. Bins containing no looks to any relevant image were excluded from further analysis. Each remaining bin was then binarized by coding it as 1 if the cohort image received more looks than the strongest unrelated competitor in that bin, and 0 otherwise. This winner-take-all binarisation yields a single binary observation per time bin in each trial, effectively downsampling the gaze-sample stream while preserving time-resolved preference dynamics. We refer to these 0/1 observations as *looks* (rather than *fixations*) to emphasise that the dependent measure is defined over gaze samples rather than oculomotor events (i.e., fixations).**
+**Before fitting the GAMM, the eye-tracking data were processed to obtain a binomial response suitable for model fitting. Gaze samples were first binned into 50-ms intervals within each trial.**[^1] For each participant, trial, and time bin, we computed the number of valid gaze samples (“looks”) directed to the cohort image and to the unrelated image. For the present analysis, we included only the unrelated competitor that was fully unrelated to the target. A second competitor, which was phonologically related to the cohort but not to the target, was excluded from this analysis. Bins containing no looks to either relevant image were excluded from further analysis. Each remaining bin was then binarized using a winner-take-all procedure: a bin was coded as 1 if the cohort image received more looks than the unrelated competitor in that bin, and 0 otherwise. This binarization yields a single binary observation per time bin within each trial, effectively downsampling the gaze-sample stream while preserving time-resolved preference dynamics. We refer to these 0/1 observations as *looks* (rather than *fixations*) to emphasize that the dependent measure is defined over gaze samples rather than discrete oculomotor events.
 
 [^1]: **If inspection of the data reveals that each participant × trial × time bin does not contain at least one valid sample, we will aggregate the data into 100 ms time bins and relax the 30 Hz sampling rate requirement (use 15 Hz instead). This approach provides a more conservative temporal resolution while ensuring robust parameter estimation and minimizing unnecessary data loss.**
 
@@ -287,7 +285,7 @@ options(contrasts = rep("contr.treatment", 2)) # treament code variables
 dat$camera <- as.factor(dat$camera)
 
 # get start event for AR
-start_event = start_event(., column = "Time", # for ar
+start_event = start_event(dat, column = "Time", # for ar
                                      event = c("subj", "Trial"), 
                                      label = "start.event",
                                      label.event = NULL, 
@@ -323,7 +321,7 @@ bam(cbind(look_cohort, look_unrelated) ~ 1 +
 dat$camera_ord <- factor(dat$camera, ordered = T)
 
 # get start event for AR
-start_event = start_event(., column = "Time", # for ar
+start_event = start_event(dat, column = "Time", # for ar
                                      event = c("subject", "Trial"), 
                                      label = "start.event",
                                      label.event = NULL, 
@@ -420,7 +418,7 @@ In Experiment 2, we use the same standard-quality external webcam as in Experime
 
 ### Competition Effects (H2a)
 
-Heads stability (chin rest vs. no chin rest) will influence the overall proportion of looks, with the chin rest condition detecting a greater proportion of competitor looks
+Heads stability (chin rest vs. no chin rest) will influence the overall proportion of looks, with the chin rest condition detecting a greater proportion of competitor looks.
 
 To quantify the effect of head stabilization on the proportion of looks within the time window of interest, we will use Cohen’s h—a standardized measure of effect size appropriate for comparisons between two proportions.
 
