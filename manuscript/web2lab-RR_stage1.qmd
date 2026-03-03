@@ -248,7 +248,7 @@ In a second instantiation of the model (see @lst-gamm-ordered), we will include 
 
 This specification allows the model to capture the same effects above with one key difference: By including an ordered factor we must include separate smooths for time (the reference) and time x webcam type. This model estimates a baseline smooth for the standard-quality webcam and a difference smooth for the high-quality webcam. Because the webcam factor is ordered, the difference smooth directly represents how the trajectory for high-quality deviates from the standard-quality trajectory. This structure enables inferences about the timing and dynamics of cohort effects across webcam conditions. We will also look at how changing the order affects inferences.
 
-For both models, we use default arguments for the smooth functions. We use *k* = 9 (number of knots) to capture the "wigglyness" of the smooths. Smooths were fit with a thin plate regression spline. This default seems to work generally well [@oltrogge2025]; however deviations from this default will reported and robustness will be tested.
+For both models, we use default arguments for the smooth functions; however deviations from this default will reported and robustness will be tested.
 
 Although “maximal” random-effects structures are often recommended in linear mixed-effects models [@barr2013], such specifications can be computationally prohibitive in GAMMs. The present specification follows the recommendations of @verissimo2025novel. Statistical significance will be assessed at $\alpha$ = .05. When fitting difference curves with ordered factors with simultaneous CIs, we will correct for multiple comparisons using a Bonferroni correction [@krause2024].
 
@@ -330,7 +330,7 @@ start_event = start_event(dat, column = "Time", # for ar
 
 m0 <- 
 bam(cbind(look_cohort, look_unrelated) ~ 1 + 
-    1 + Condition_ord + s(Time) + 
+    Condition_ord + s(Time) + 
     s(Time, by=Condition_ord) + 
     (Participant, bs="re") + 
     s(Participant, by=Condition_ord, bs="re") + 
@@ -345,7 +345,7 @@ rho  <- acf(residuals(m0, type = "pearson"), plot = FALSE)$acf[2]
 
 m1 <- 
 bam(cbind(look_cohort, look_unrelated) ~ 1 + 
-    1 + Condition_ord + s(Time) + 
+     Condition_ord + s(Time) + 
     s(Time, by=Condition_ord) + 
     (Participant, bs="re") + 
     s(Participant, by=Condition_ord, bs="re") + 
