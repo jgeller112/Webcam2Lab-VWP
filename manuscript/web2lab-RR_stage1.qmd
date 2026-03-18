@@ -277,7 +277,7 @@ library(onsets)  # onset differences
 
 
 # set contrasts
-options(contrasts = rep("contr.treatment", 2)) # treament code variables
+options(contrasts = rep("contr.treatment", 2)) # treatment code variables
 
 # combine levels of both factors into one factor 
 dat$camera <- as.factor(dat$camera)
@@ -359,7 +359,7 @@ bam(cbind(look_cohort, look_unrelated) ~ 1 +
 #| eval: false
 #| lst-label: lst-onset
 #| lst-cap: Getting onset differences using the {onsets} package for unordered model
-# Obain onsets in each condition (and their differences)
+# Obtain onsets in each condition (and their differences)
 
 onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
                        time_var = "time",           # Name of time variabl
@@ -373,7 +373,7 @@ onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
 #| eval: false
 #| lst-label: lst-onset-ordered
 #| lst-cap: Getting onset differences using the {onsets} package for ordered model
-# Obain onsets in each condition (and their differences)
+# Obtain onsets in each condition (and their differences)
 
 onsets_comp <- get_onsets(model = m1,               # Fitted GAMM
                        time_var = "time",           # Name of time variabl
@@ -448,7 +448,7 @@ This study was approved by the relevant ethics committee.
 
 ## Conset for Publication
 
-I conset for my paper to be publihsed in BRM.
+I consent for my paper to be published in BRM.
 
 ## Consent to Participate
 
@@ -456,7 +456,7 @@ All participants will provide informed consent prior to participation.
 
 ## Availability of Data, Code, and Materials
 
-All data, code, and materials will be stored on OSF and GitHub.
+All data, code, and materials will be stored on OSF ([https://osf.io/cf6xr/](https://osf.io/cf6xr/overview))
 
 ## Authors’ Contributions
 
