@@ -1,1 +1,13 @@
 /.luarc.json
+
+/.quarto/
+**/*.quarto_ipynb
+
+.DS_Store
+**/.DS_Store
+.Rprofile
+
+# Quarto cache and freeze
+**/*_cache/
+**/*_files/
+/_freeze/
