@@ -10,7 +10,7 @@ csl: apa.csl
 format:
   preprint-typst:
     wordcount: true
-    leading: 1em
+    line-number: true
   html: 
     theme: cosmo
     toc: true
