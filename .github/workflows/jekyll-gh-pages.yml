@@ -1,30 +1,24 @@
 name: Render and Deploy Quarto manuscript
-
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
 env:
   QMD_PATH: manuscript/web2lab-RR_stage1.qmd
   OUTDIR: public
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,25 +26,27 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      # --- Install R (required for R chunks in Quarto) ---
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: 'release'
-          use-public-rspm: true   # faster installs on Linux
+          use-public-rspm: true
 
-      # --- Install needed R packages (edit this list) ---
       - name: Install R packages
-        run: |
-         Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org")); install.packages(c("knitr", "rmarkdown", "tidyverse", "broom","ggplot2"))'
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::knitr
+            any::rmarkdown
+            any::tidyverse
+            any::broom
+            any::ggplot2
 
-      # --- Install Quarto ---
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          tinytex: false  # only needed for PDFs
+          tinytex: false
 
-      # --- Render the manuscript ---
       - name: Render Quarto document
         run: |
           set -euo pipefail
@@ -58,29 +54,23 @@ jobs:
           test -f "$QMD_PATH" || { echo "::error::Missing $QMD_PATH"; exit 1; }
           quarto render "$QMD_PATH" --to html
 
-      # --- Prepare for GitHub Pages ---
       - name: Prepare site for deployment
         run: |
           set -euo pipefail
           mkdir -p "$OUTDIR"
-
           HTML="${QMD_PATH%.qmd}.html"
           STEM="$(basename "${HTML%.html}")"
           SRC_DIR="$(dirname "$HTML")"
-
           cp "$HTML" "$OUTDIR/index.html"
-
           if [ -d "${SRC_DIR}/${STEM}_files" ]; then
             cp -r "${SRC_DIR}/${STEM}_files" "$OUTDIR/"
           fi
           [ -f "${SRC_DIR}/${STEM}.pdf" ] && cp "${SRC_DIR}/${STEM}.pdf" "$OUTDIR/"
           [ -f "${SRC_DIR}/${STEM}.docx" ] && cp "${SRC_DIR}/${STEM}.docx" "$OUTDIR/"
           [ -d "${SRC_DIR}/Figures" ] && cp -r "${SRC_DIR}/Figures" "$OUTDIR/"
-
           echo "Deployment folder contents:"
           ls -lah "$OUTDIR"
 
-      # --- Deploy to GitHub Pages ---
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
