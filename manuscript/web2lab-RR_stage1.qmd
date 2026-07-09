@@ -100,7 +100,7 @@ Webcam-based eye tracking has become an increasingly viable and accessible metho
 
 To reliably estimate where users are looking, webcam-based eye tracking typically relies on appearance-based methods, which infer gaze direction directly from visual features of the eye region (e.g., pupil and iris appearance) [@chengAppearancebasedGazeEstimation2024; @saxenaDeepLearningModels2024]. Recent work has extended these methods using deep learning to learn gaze–appearance mappings directly from data [e.g., @Kaduk2024; @saxenaDeepLearningModels2024]. This contrasts with research-grade eye trackers, which use model-based algorithms combining infrared illumination with geometric modeling of the pupil and corneal reflections [@chengAppearancebasedGazeEstimation2024].
 
-The most widely used library for webcam eye tracking is WebGazer.js [@papoutsakiWebGazerScalableWebcam2016a; @patterson2025]. WebGazer.js is an open-source JavaScript library that performs real-time gaze estimation using standard webcams. It is an appearance-based method that leverages computer vision techniques to detect the face and eyes, extract image features, and map these features onto known screen coordinates during a brief calibration procedure. Once trained, gaze locations on the screen are estimated via machine learning [@papoutsakiWebGazerScalableWebcam2016a]. Webgazer.js has been implemented in several experimental platforms, including Gorilla [@Anwyl-Irvine2020], PsychoPy/PsychoJS [@Peirce2019], jsPsych [@de2015], PCIbex [@zehr2022], and Labvanced [@Kaduk2024], making it widely accessible to researchers.
+The most widely used library for webcam eye tracking is WebGazer.js [@papoutsakiWebGazerScalableWebcam2016a; @patterson2025]. WebGazer.js is an open-source JavaScript library that performs real-time gaze estimation using standard webcams. It is an appearance-based method that leverages computer vision techniques to detect the face and eyes, extract image features, and map these features onto known screen coordinates during a brief calibration procedure. Once trained, gaze locations on the screen are estimated via machine learning [@papoutsakiWebGazerScalableWebcam2016a]. Webgazer.js has been implemented in several experimental platforms, including Gorilla [@Anwyl-Irvine2020], PsychoPy/PsychoJS [@Peirce2019], jsPsych [@de2015], and PCIbex [@zehr2022], making it widely accessible to researchers.
 
 Although webcam eye-tracking is still relatively new, validation efforts are steadily accumulating and the results are encouraging. Researchers have successfully applied webcam eye-tracking with WebGazer.js to domains such as psycholinguistics [@bramlettArtWranglingWorking2025; @prystauka2024; @gellerLanguageBordersStepbystep2025f; @van2024], judgment and decision-making [e.g., @yangWebcambasedOnlineEyetracking2021], and memory [@jamesWhatParadigmsCan2025]. Collectively, this work demonstrates that webcam eye-tracking can yield interpretable and meaningful results that are comparable to those obtained with traditional lab-based systems.
 
@@ -271,7 +271,6 @@ library(onsets) # onset differences
 #| lst-label: lst-gamm 
 #| lst-cap: GAMM model set--up unordered camera factor
 #| eval: false
-
 
 # set contrasts
 options(contrasts = rep("contr.treatment", 2)) # treatment code variables
