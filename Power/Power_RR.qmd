@@ -1,0 +1,118 @@
+---
+title: "power_RR1"
+format: html
+editor: visual
+---
+
+
+Use the VWP data from webgazeR to get TCUU trials we have file called gaze_sub that captures this information. 
+
+```{r}
+library(simr)
+library(tidyverse)
+```
+
+
+```{r}
+
+gaze_sub
+
+```
+
+```{r}
+gaze_head2head <- gaze_sub %>%
+  
+  filter(trialtype == "TCUU",
+         condition %in% c("cohort", "unrelated")) %>%
+  
+  group_by(subject, trial, time_bin) %>%
+  summarise(
+    cohort    = sum(Looks[condition == "cohort"], na.rm = TRUE),
+    unrelated = sum(Looks[condition == "unrelated"], na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  
+  filter(cohort + unrelated > 0) %>%
+  
+  mutate(
+    cohort_win = case_when(
+      cohort > unrelated ~ 1L,
+      cohort < unrelated ~ 0L,
+      TRUE ~ NA_integer_
+    )
+  ) %>%
+  
+  filter(!is.na(cohort_win))
+
+```
+
+```{r}
+gg_counts=gaze_head2head |> summarise(cohort_looks=sum(cohort_win), all_looks=n(), .by=c("subject")) |> 
+  mutate(subject=as.numeric(subject))
+
+```
+
+
+```{r}
+
+ m <- glmer(cbind(cohort_looks, all_looks-cohort_looks) ~ 1 + (1|subject),
+            family = binomial, data = gg_counts)
+                     
+summary(m)
+
+
+```
+
+
+```{r}
+
+
+
+## -----------------------------
+## extend model
+## -----------------------------
+m_ext <- extend(m, along = "subject", n = 60)
+
+fixef(m_ext)["(Intercept)"] <- 0.15
+
+test_int <- simr::fixed("(Intercept)")
+
+## sample sizes
+breaks <- c(30, 40, 50, 60)
+
+set.seed(123)
+
+pc <- powerCurve(
+  m_ext,
+  along    = "subject",
+  breaks   = c(30, 40, 50, 60),
+  test     = test_int,
+  nsim     = 5000,
+  progress = TRUE
+)
+
+pc
+
+
+```
+```{r}
+# sample sizes
+n_vals <- pc@along
+
+# extract power and CI from each simulation
+power_vals <- sapply(pc@ps, function(x) x@power)
+lower_vals <- sapply(pc@ps, function(x) x@lower)
+upper_vals <- sapply(pc@ps, function(x) x@upper)
+
+# build dataframe manually
+pc_df <- data.frame(
+  n = n_vals,
+  power = power_vals,
+  lower = lower_vals,
+  upper = upper_vals
+)
+
+
+
+```
+
