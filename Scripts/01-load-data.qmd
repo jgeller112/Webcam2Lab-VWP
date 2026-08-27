@@ -1,0 +1,377 @@
+---
+title: "01-data-load"
+format: html
+---
+
+## Overview
+
+This script loads and tidies the raw data exported from Gorilla for the
+webcam-based Visual World Paradigm (VWP) study. There are three data
+sources:
+
+1. **Gaze data** — per-frame webcam eye-tracking samples (one CSV per
+   participant/session, uploaded as a "screen" recording), merged into a
+   single tidy data frame with `webgazeR::merge_webcam_files()`.
+2. **Behavioral data** — trial-level accuracy, reaction time, and display
+   metadata exported as one combined task CSV.
+3. **Questionnaire data** — one-time, per-participant demographics
+   (age, sex, dialect, race/ethnicity, vision correction, etc.)
+   exported as its own CSV.
+
+The output of this script (`edat`, `emstr`, `audio_rt`, `quest`,
+`trial_data`) feeds the downstream cleaning/analysis scripts.
+
+## Load Packages
+
+```{r}
+options(stringsAsFactors = FALSE) # never auto-convert strings to factors on import
+options("scipen" = 100, "digits" = 10) # print RTs/timestamps in full instead of scientific notation
+
+# webgazeR is not on CRAN - install once from GitHub if needed:
+# install.packages("remotes")
+# remotes::install_github("jgeller112/webgazeR")
+
+library(webgazeR) # merges/processes raw Gorilla webcam gaze files
+library(dplyr) # data wrangling
+library(tidyr) # reshaping helpers
+library(ggplot2) # plotting (used in later scripts)
+library(knitr) # kable() for nicer table output in this document
+```
+
+## Load and Merge Webcam Gaze Data
+
+### Find the raw per-participant gaze files
+
+Gorilla exports one gaze CSV per uploaded webcam recording, plus a
+separate calibration CSV per session that we don't want to analyze.
+
+```{r}
+# All CSVs exported for this task
+vwp_files <- list.files(
+  here::here("Data", "data_exp_272183-vall", "uploads"),
+  pattern = "\\.csv$",
+  full.names = TRUE
+)
+
+# Drop the calibration recordings - we only want the trial gaze data
+vwp_paths_filtered <- vwp_files[!grepl("calibration", vwp_files)]
+
+kable(head(basename(vwp_files)), col.names = "file")
+```
+
+### Merge the per-participant files into one tidy data frame
+
+`col_map` tells `merge_webcam_files()` which raw Gorilla column names
+correspond to subject ID, trial number, timestamp, and the normalized
+(0-1) gaze coordinates. `screen_index = 4` selects the recording screen
+that contains the VWP display (Gorilla numbers each screen shown to
+participants, and the eye-tracking screen is the 4th).
+
+```{r}
+# Gorilla writes gaze files as full paths, so working directory doesn't
+# strictly matter here, but merge_webcam_files() expects it to be set to
+# the folder containing the uploads.
+setwd(here::here("Data", "data_exp_272183-vall", "uploads"))
+
+edat <- merge_webcam_files(
+  vwp_paths_filtered,
+  screen_index = 4,
+  kind = "gorilla",
+  col_map = list(
+    subject = "`Participant Private ID`",
+    trial = "`Spreadsheet Index`",
+    time = "Elapsed",
+    x = "`Predicted Gaze X Normalised",
+    y = "Predicted Gaze Y Normalised"
+  )
+)
+```
+
+```{r}
+kable(head(edat))
+```
+
+## Behavioral (Trial) Data
+
+### Read the raw task-level export
+
+This is the combined "tasks" CSV Gorilla produces, containing one row
+per logged event (display change, response, audio playback, etc.) across
+all participants.
+
+```{r}
+agg_eye_data <- read.csv(
+  here::here("Data", "data_exp_272183-vall", "data_exp_272183-vall_tasks.csv")
+)
+```
+
+### Clean, filter, and rename the trial-level fields
+
+We keep only the rows logged during the eye-tracking display (`ET`) where
+the event was an actual participant response, then rename Gorilla's
+verbose column names to short, analysis-friendly labels.
+
+```{r}
+emstr <- agg_eye_data %>%
+
+  janitor::clean_names() %>%
+
+  # Keep only the columns needed for accuracy/RT analysis, plus
+  # object_name (which quadrant image the response/fixation refers to) and
+  # participant_public_id (encodes condition - see mutate() below)
+  dplyr::select(
+    participant_private_id,
+    participant_public_id,
+    correct,
+    spreadsheet_tlpic,
+    spreadsheet_trpic,
+    spreadsheet_blpic,
+    spreadsheet_brpic,
+    spreadsheet_trialtype,
+    spreadsheet_targetword,
+    display,
+    spreadsheet_tlcode,
+    spreadsheet_trcode,
+    spreadsheet_blcode,
+    spreadsheet_brcode,
+    reaction_time,
+    trial_number,
+    response_type,
+    object_name,
+    response
+  ) %>%
+
+  # Restrict to the eye-tracking display, and to rows that record the
+  # participant's actual response (drops audio/fixation-only log rows)
+  dplyr::filter(display == "ET", response_type == "response") %>%
+
+  # Rename Gorilla's verbose spreadsheet column names to short labels
+  dplyr::rename(
+    "TL" = "spreadsheet_tlpic", # top-left image
+    "TR" = "spreadsheet_trpic", # top-right image
+    "BL" = "spreadsheet_blpic", # bottom-left image
+    "BR" = "spreadsheet_brpic", # bottom-right image
+    "targ_loc" = "object_name", # which quadrant held the target
+    "subject" = "participant_private_id",
+    "trial" = "trial_number",
+    "acc" = "correct",
+    "RT" = "reaction_time"
+  ) %>%
+
+  # RT is read in as character by default; subject/trial are IDs, not
+  # continuous numbers, so treat them as factors
+  mutate(
+    RT = as.numeric(RT),
+    subject = as.factor(subject),
+    trial = as.factor(trial),
+    # participant_public_id encodes condition as a leading counterbalance
+    # number followed by a condition code, e.g. "1HQC" -> "HQC"; strip the
+    # number to recover the condition label
+    condition = as.factor(sub("^[0-9]+", "", participant_public_id))
+  ) %>%
+
+  # Drop columns that are now redundant: participant_public_id's only
+  # useful content (condition) has been extracted above, and display/
+  # response_type are constant ("ET"/"response") now that we've filtered
+  # on them, so they carry no remaining information
+  dplyr::select(-participant_public_id, -display, -response_type)
+
+kable(head(emstr))
+```
+
+## Extract Audio Onset Times
+
+The target word is played as audio partway through each trial. We pull
+out the timestamp at which playback started for each trial so gaze data
+can later be time-locked to audio (rather than trial) onset.
+
+```{r}
+audio_rt <- agg_eye_data %>%
+
+  janitor::clean_names() %>%
+
+  # participant_public_id/condition are already carried by emstr, and
+  # object_name/response are only needed to find the onset rows below -
+  # keep just what's needed to identify the row and its timestamp
+  dplyr::select(
+    participant_private_id,
+    object_name,
+    trial_number,
+    reaction_time,
+    response
+  ) %>%
+
+  # "Audio" rows log playback events; "audio started" marks the onset
+  dplyr::filter(object_name == "Audio", response == "audio started") %>%
+  dplyr::distinct() %>%
+
+  dplyr::rename(
+    "subject" = "participant_private_id",
+    "trial" = "trial_number",
+    "RT_audio" = "reaction_time"
+  ) %>%
+  # Drop object_name/response - they were only needed to filter down to
+  # the onset rows and are now constant ("Audio"/"audio started"), so
+  # keeping them would just be redundant, unlabeled duplicates of that
+  # filter plus a name collision with emstr's own "response" column
+  dplyr::select(-object_name, -response) %>%
+  dplyr::mutate(RT_audio = as.numeric(RT_audio))
+
+kable(head(audio_rt))
+```
+
+## Questionnaire (Demographics) Data
+
+Participants also completed a consent form and a demographics
+questionnaire, both exported together in one "questionnaires" CSV (one
+row per completed task, not one row per participant). We keep only the
+demographics task rows and tidy them into a single row per subject.
+
+```{r}
+agg_quest_data <- read.csv(
+  here::here("Data", "data_exp_272183-vall", "data_exp_272183-vall_questionnaires.csv")
+)
+```
+
+```{r}
+quest <- agg_quest_data %>%
+
+  janitor::clean_names() %>%
+
+  # Consent-form rows carry no demographic answers - keep only the
+  # demographics task
+  dplyr::filter(task_name == "Questionnaire (new)") %>%
+
+  # Gorilla exported two questions ("dialect" and "make up") with a
+  # duplicate column name; read.csv/janitor split each into a blank
+  # original and a second copy that actually holds the answer
+  # (response_3_object_6_response / response_10_object_2_make_up_1) -
+  # keep only the populated one and give everything readable names
+  dplyr::select(
+    participant_private_id,
+    participant_public_id,
+    age = response_1_object_4_value,
+    sex = response_2_object_5_response,
+    dialect = response_3_object_6_response,
+    ethnicity = response_4_object_7_response,
+    medication_impairment = response_9_object_3_response,
+    high_prescription = response_8_object_9_response,
+    english_before_4 = multiple_choice_object_10_response,
+    eye_glasses = response_10_object_2_eye_glasses,
+    contacts = response_10_object_2_contacts,
+    make_up = response_10_object_2_make_up_1,
+    hat = response_10_object_2_hat,
+    eyelashes = response_10_object_2_strip_individual_eyelashes,
+    race_american_indian_alaska_native = response_5_object_8_american_indian_alaska_native,
+    race_asian = response_5_object_8_asian,
+    race_native_hawaiian_pacific_islander = response_5_object_8_native_hawaiian_or_other_pacific_islander,
+    race_black_african_american = response_5_object_8_black_or_african_american,
+    race_white = response_5_object_8_white,
+    race_more_than_one = response_5_object_8_more_than_one_race,
+    race_decline_to_state = response_5_object_8_decline_to_state
+  ) %>%
+
+  dplyr::rename("subject" = "participant_private_id") %>%
+
+  mutate(
+    subject = as.factor(subject),
+    age = as.numeric(age),
+    # same condition code embedded in participant_public_id as in emstr
+    condition = as.factor(sub("^[0-9]+", "", participant_public_id))
+  ) %>%
+
+  # Drop the raw public ID now that condition has been extracted from it
+  dplyr::select(-participant_public_id)
+
+kable(head(quest))
+```
+
+### Summary Table of Questionnaire Responses
+
+For a quick demographic snapshot, we reshape `quest` to one row per
+question/response pair and report how many participants gave each
+response (and what percent of respondents that is). `age` is continuous
+rather than categorical, so it's summarized separately below instead of
+folded into the percentage table; `subject`/`condition` are IDs/group
+assignment rather than questionnaire responses, so they're excluded too.
+
+```{r}
+# Helper to turn "race_more_than_one" into "Race More Than One"
+title_case <- function(x) {
+  words <- strsplit(gsub("_", " ", x), " ")
+  vapply(words, function(w) {
+    paste0(toupper(substring(w, 1, 1)), substring(w, 2), collapse = " ")
+  }, character(1))
+}
+
+demo_summary <- quest %>%
+
+  dplyr::select(-subject, -age, -condition) %>%
+
+  # Blank strings are unanswered items; the vision/race items are coded
+  # 0/1 checkboxes, so relabel them as No/Yes for a readable table
+  dplyr::mutate(dplyr::across(dplyr::everything(), ~ dplyr::na_if(as.character(.x), ""))) %>%
+  dplyr::mutate(dplyr::across(
+    dplyr::everything(),
+    ~ ifelse(.x == "1", "Yes", ifelse(.x == "0", "No", .x))
+  )) %>%
+
+  tidyr::pivot_longer(dplyr::everything(), names_to = "question", values_to = "response") %>%
+  tidyr::drop_na(response) %>%
+
+  # Count how often each response was given, as a percent of participants
+  # who answered that particular question
+  dplyr::count(question, response, name = "n") %>%
+  dplyr::group_by(question) %>%
+  dplyr::mutate(percent = round(100 * n / sum(n), 1)) %>%
+  dplyr::ungroup() %>%
+
+  dplyr::mutate(question = title_case(question)) %>%
+  dplyr::arrange(question, dplyr::desc(percent))
+
+kable(
+  demo_summary,
+  col.names = c("Question", "Response", "N", "Percent (%)"),
+  align = c("l", "l", "r", "r")
+)
+```
+
+```{r}
+# Age is continuous, so report it as a single summary row instead
+kable(
+  data.frame(
+    Question = "Age",
+    Mean = round(mean(quest$age, na.rm = TRUE), 1),
+    SD = round(sd(quest$age, na.rm = TRUE), 1),
+    Min = min(quest$age, na.rm = TRUE),
+    Max = max(quest$age, na.rm = TRUE)
+  )
+)
+```
+
+```{r}
+
+trial_data_rt <- merge(emstr, audio_rt, by = c("subject", "trial"))
+
+head(trial_data_rt) %>%
+  head() %>%
+  kable()
+```
+
+
+
+```{r}
+
+samp_rate <- analyze_sampling_rate(edat, summary_stat = "Median")
+```
+
+```{r}
+
+samp_rate$subject <- as.factor(samp_rate$subject)
+samp_rate$trial <- as.factor(samp_rate$trial)
+
+
+trial_data <- left_join(trial_data_rt, samp_rate, by = c("subject", "trial"))
+
+head(trial_data)
+```
